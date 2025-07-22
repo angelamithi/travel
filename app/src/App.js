@@ -1,227 +1,162 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './App.css';
+// src/App.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import "./App.css";
+
+const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 
 const App = () => {
-  const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
-  const chatRef = useRef(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
 
-  const threadId = 'default';
-  const userId = localStorage.getItem('user_id') || generateUserId();
+  const userId = useRef(localStorage.getItem("user_id") || uuidv4());
+  const threadId = useRef(localStorage.getItem("thread_id") || "default");
 
-  function generateUserId() {
-    const newId = 'user_' + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem('user_id', newId);
-    return newId;
-  }
-
-  // Load messages from localStorage or fetch from backend
   useEffect(() => {
-    const saved = localStorage.getItem('tara_chat_history');
-    if (saved) {
-      setMessages(JSON.parse(saved));
-    } else {
-      fetch(`http://127.0.0.1:8000/history?user_id=${userId}&thread_id=${threadId}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.history) {
-            setMessages(data.history);
-            localStorage.setItem('tara_chat_history', JSON.stringify(data.history));
-          }
-        })
-        .catch(err => console.error('Failed to load chat history:', err));
-    }
+    localStorage.setItem("user_id", userId.current);
+    localStorage.setItem("thread_id", threadId.current);
+    fetchHistory();
   }, []);
 
-  // Persist messages to localStorage
-  useEffect(() => {
-    localStorage.setItem('tara_chat_history', JSON.stringify(messages));
-    scrollToBottom();
-  }, [messages]);
-
-  // Update theme
-  useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const scrollToBottom = () => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch(`${BACKEND_URL}/history?user_id=${userId.current}&thread_id=${threadId.current}`);
+      const data = await res.json();
+      setMessages(data.history);
+    } catch (err) {
+      console.error("Failed to load history", err);
     }
   };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+    setMessages((prev) => [...prev, { role: "user", content: input }]);
+    setInput("");
+    setLoading(true);
 
-    const userMessage = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsTyping(true);
+    const response = await fetch(`${BACKEND_URL}/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId.current,
+        thread_id: threadId.current,
+        message: input,
+      }),
+    });
 
-    try {
-      const response = await fetch('http://127.0.0.1:8000/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input, thread_id: threadId, user_id: userId }),
-      });
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let aiMessage = "";
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantMessage = '';
-
+    const readChunk = async () => {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
 
+        const lines = chunk.split("\n").filter((line) => line.startsWith("data:"));
         for (let line of lines) {
-          if (line.startsWith('data:')) {
-            const text = line.replace(/^data:\s*/, '');
+          const content = line.replace("data:", "").trim();
+          if (content === "[DONE]") {
+            setLoading(false);
 
-            // Add space only when appropriate
-            if (
-              assistantMessage.length > 0 &&
-              !/\s$/.test(assistantMessage) &&
-              !/^[.,!?;:]/.test(text)
-            ) {
-              assistantMessage += ' ';
-            }
+            // Replace "assistant-temp" with final assistant message
+            setMessages((prev) => [
+              ...prev.filter((msg) => msg.role !== "assistant-temp"),
+              { role: "assistant", content: aiMessage.trim() },
+            ]);
 
-            assistantMessage += text;
-
-            // Update the streaming message
-            setMessages(prev => {
-              const existing = prev.filter(msg => msg.role !== 'streaming');
-              return [...existing, { role: 'streaming', content: assistantMessage }];
-            });
+            return;
           }
+
+          // Add a space if necessary (basic heuristic)
+          const needsSpace =
+            aiMessage.length > 0 &&
+            !aiMessage.endsWith(" ") &&
+            !content.startsWith(" ") &&
+            !content.startsWith(".") &&
+            !content.startsWith(",") &&
+            !content.startsWith("!") &&
+            !content.startsWith("?") &&
+            !content.startsWith("'") &&
+            !content.startsWith('"') &&
+            !content.startsWith("\n");
+
+          aiMessage += needsSpace ? ` ${content}` : content;
+
+          // Update temporary assistant message
+          setMessages((prev) => [
+            ...prev.filter((msg) => msg.role !== "assistant-temp"),
+            { role: "assistant-temp", content: aiMessage },
+          ]);
         }
       }
+      setLoading(false);
+    };
 
-      // Finalize the assistant message
-      setMessages(prev => {
-        const existing = prev.filter(msg => msg.role !== 'streaming');
-        return [...existing, { role: 'assistant', content: assistantMessage }];
-      });
 
-    } catch (error) {
-      console.error('Streaming error:', error);
-    } finally {
-      setIsTyping(false);
-    }
+
+    readChunk();
   };
 
-  const clearChat = () => {
-    setMessages([]);
-    localStorage.removeItem('tara_chat_history');
-  };
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  const getAvatar = (role) => {
+    return role === "user" ? "🧑" : "🤖";
   };
 
   return (
-    <div className="app-container">
-      <button
-        className="sidebar-toggle"
-        onClick={() => setSidebarOpen(prev => !prev)}
-      >
-        ☰
-      </button>
-
-      <div className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
-        <div className="emoji-header">🌍</div>
-        <h2 style={{ marginTop: '20px', fontSize: '30px' }}>Travel Assistant</h2>
-
-        <div className="instructions">
-          <ul>
-            <li>🛫 Find flights</li>
-            <li>🏨 Book hotels</li>
-            <li>🗺️ Discover places</li>
-            <li>📅 Plan itineraries</li>
-          </ul>
-        </div>
-
-        <div className="spacer" />
-
-        <div className="theme-toggle">
-          <label>
-            <input type="checkbox" checked={theme === 'dark'} onChange={toggleTheme} />
-            {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
-          </label>
-        </div>
-      </div>
-
-      <div className="chat-container">
-        <div className="chat-header">
-          <h1>Tara - Your Travel Mate</h1>
-          <p>✈️ Let’s plan the perfect trip together 🌴</p>
-        </div>
-
-        <div className="chat-window" ref={chatRef}>
-          {messages.map((msg, index) => (
+    <div className="app">
+      <aside className="sidebar">
+        <h2>🧠 FlightBot</h2>
+        <button
+          onClick={fetchHistory}
+          className="sidebar-button"
+        >
+          🔄 Refresh History
+        </button>
+        <button
+          onClick={async () => {
+            await fetch(`${BACKEND_URL}/clear_context?user_id=${userId.current}&thread_id=${threadId.current}`, {
+              method: "POST",
+            });
+            setMessages([]);
+          }}
+          className="sidebar-button red"
+        >
+          🧹 Clear Chat
+        </button>
+      </aside>
+      <main className="chat-container">
+        <div className="chat-box">
+          {messages.map((msg, idx) => (
             <div
-  key={index}
-  className={`chat-message-wrapper ${msg.role}`}
->
-  {msg.role === 'assistant' || msg.role === 'streaming' ? (
-    <>
-      <div className="avatar emoji">🌍</div>
-
-      <div className={`chat-message ${msg.role}`}>
-        <div className="chat-bubble">{msg.content}</div>
-      </div>
-    </>
-  ) : (
-    <>
-      <div
-  className={`chat-message ${msg.role}`}
-  style={{
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginRight: '50px', // pushes it away from right edge
-    marginLeft: 'auto',  // pushes it to the right side
-  }}
->
-  
-  <div className="chat-bubble">{msg.content}</div>
-  <div className="avatar emoji" style={{ marginRight: '15px' }}>🧑</div>
-</div>
-
-
-    </>
-  )}
-</div>
-
-
-          ))}
-          {isTyping && (
-            <div className="chat-message assistant typing">
-              Tara is typing<span className="dots">...</span>
+              key={idx}
+              className={`message ${msg.role === "user" ? "user" : "assistant"}`}
+            >
+              <span className="avatar">{getAvatar(msg.role)}</span>
+              <span>{msg.content}</span>
             </div>
-          )}
+          ))}
+          <div ref={chatEndRef} />
         </div>
-
-        <div className="input-area">
+        <div className="input-bar">
           <input
-            type="text"
             value={input}
-            placeholder="Ask Tara anything about your trip..."
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && sendMessage()}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask me about flights..."
           />
-          <button onClick={sendMessage}>Send</button>
-          <button className="clear-button" onClick={clearChat}>🧹</button>
+          <button onClick={sendMessage} disabled={loading}>
+            {loading ? "Loading..." : "Send"}
+          </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -1,0 +1,395 @@
+2025-07-22 12:35:26,425 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 12:35:26,426 - INFO - Current context: None
+2025-07-22 14:00:27,966 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:00:27,967 - INFO - Current context: None
+2025-07-22 14:01:02,590 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:01:02,591 - INFO - Current context: None
+2025-07-22 14:05:30,533 - INFO - Received message from user_id=user_7tyy0gtsg, thread_id=default
+2025-07-22 14:05:30,534 - INFO - Current context: []
+2025-07-22 14:05:30,535 - ERROR - Error in /chat endpoint: Runner.run_streamed() got an unexpected keyword argument 'agent'
+2025-07-22 14:08:33,319 - INFO - Received message from user_id=user_7tyy0gtsg, thread_id=default
+2025-07-22 14:08:33,319 - INFO - Current context: []
+2025-07-22 14:08:33,320 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'output_type'
+2025-07-22 14:22:57,782 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:22:57,782 - INFO - Current context: []
+2025-07-22 14:22:57,783 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'output_type'
+2025-07-22 14:23:17,672 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:23:17,673 - INFO - Current context: []
+2025-07-22 14:23:17,674 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'output_type'
+2025-07-22 14:50:32,269 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:50:32,269 - INFO - Current context before message: []
+2025-07-22 14:50:32,272 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, triage_agent)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 14:59:29,096 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 14:59:29,097 - INFO - Current context before message: []
+2025-07-22 14:59:29,100 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, [triage_agent])  # 👈 wrap it in a list
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:00:26,535 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:00:26,536 - INFO - Current context before message: []
+2025-07-22 15:00:26,539 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, [triage_agent])  # 👈 wrap it in a list
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:02:43,101 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:02:43,101 - INFO - Current context before message: []
+2025-07-22 15:02:43,105 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, triage_agent)  # ✅ Correct
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:03:16,423 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:03:16,424 - INFO - Current context before message: []
+2025-07-22 15:03:16,426 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, triage_agent)  # ✅ Correct
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:06:01,806 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:06:01,807 - INFO - Current context before message: []
+2025-07-22 15:06:01,810 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, triage_agent)  # ✅ Correct
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:06:20,799 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:06:20,800 - INFO - Current context before message: []
+2025-07-22 15:06:20,802 - ERROR - Error in /chat endpoint: 'list' object has no attribute 'get_all_tools'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run(context, triage_agent)  # ✅ Correct
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 206, in run
+    return await runner.run(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 374, in run
+    all_tools = await AgentRunner._get_all_tools(current_agent, context_wrapper)
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/agents/run.py", line 1176, in _get_all_tools
+    return await agent.get_all_tools(context_wrapper)
+AttributeError: 'list' object has no attribute 'get_all_tools'
+2025-07-22 15:13:09,812 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:13:09,813 - INFO - Current context before message: []
+2025-07-22 15:13:09,816 - ERROR - Error in /chat endpoint: object RunResultStreaming can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run_streamed(triage_agent,context)  # ✅ Correct
+TypeError: object RunResultStreaming can't be used in 'await' expression
+2025-07-22 15:17:45,471 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:17:45,472 - INFO - Current context before message: []
+2025-07-22 15:17:45,474 - ERROR - Error in /chat endpoint: object RunResultStreaming can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 74, in chat
+    result = await Runner.run_streamed(triage_agent,context,)  # ✅ Correct
+TypeError: object RunResultStreaming can't be used in 'await' expression
+2025-07-22 15:19:28,540 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:19:28,541 - INFO - Current context before message: []
+2025-07-22 15:19:28,548 - INFO - >>> Starting streaming response
+2025-07-22 15:19:28,549 - INFO - Streaming chunk: AgentUpdatedStreamEvent(new_agent=Agent(name='Triage Agent', handoff_description=None, tools=[], mcp_servers=[], mcp_config={}, instructions='\nYou are the Triage Travel Agent. Automatically detect the user’s intent based on their message and route it to the appropriate specialized agent.\n\n🎯 Your primary role is to classify the user\'s request and forward it to one of the following agents:\n\n- ✈️ **FlightAgent**: For booking flights, checking flight options, times, and related details.\n- 🏨 **AccommodationAgent**: For hotel bookings, accommodations, or lodging inquiries.\n- 💰 **PriceCalculator**: For calculating total trip costs (flight + accommodation), flight-only cost, or accommodation-only cost.\n\n🧠 Context-Aware Handling:\n- If the user asks for accommodation without specifying a destination, check for a saved `last_flight_destination` in context for the current `user_id` and `thread_id`.\n    - If found, ask: “Would you like to search for accommodation in [destination]?”\n- If both a flight and an accommodation exist in context for the current `user_id` and `thread_id` (i.e., context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n\n- If the user asks for a total price:\n    - If both a flight and an accommodation exist in  context for the current `user_id` and `thread_id`. (i.e. context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n    - If only one of the two is available, calculate the known part and ask the user (in a conversational way) whether they would like to include the other.\n    - If neither is available, ask:\n        “Would you like to start by booking a flight, finding accommodation, or both? I’ll then calculate the total cost for you.”\n        \n🌐 Multi-user Awareness:\nEach user is uniquely identified by a `user_id` and each conversation has a `thread_id`. Always pass these values to sub-agents and tools when routing or fetching context.\n\nRetrieve or store variables like `last_flight_destination` and `last_accommodation_destination` in a way that is **scoped to the current user and thread** to avoid any data mix-up.\n\n💬 Conversational Guidance:\n- When collecting missing information (e.g., destination, dates, number of travelers), ask for details gradually and naturally.\n- Do **not** bombard the user with a list of questions all at once.\n- Keep the tone friendly, patient, and interactive—like a helpful human agent would.\n- Use simple follow-up questions like: “And when would you like to travel?” or “Would you prefer a budget or luxury hotel?”\n\n📌 Responsibilities:\n-  Automatically determine the user’s intent and pass the request to the appropriate sub-agent, including the current `user_id` and `thread_id` as part of the request.\n- Detect whether the user is asking for:\n    - Flight booking\n    - Accommodation booking\n    - Total cost (flight + accommodation)\n    - Price of flight only\n    - Price of accommodation only\n- Use available context to personalize and complete the request.\n- Confirm assumptions when inferring missing details (e.g., destination).\n- If the topic is not travel-related, politely inform the user that this assistant only handles travel-related queries.\n\n🧠 Always check if needed information exists in context for the given `user_id` and `thread_id` before asking the user to provide it.\n\n🧾 Context Variables to track:\n- `last_flight_destination`\n- `last_accommodation_destination`\n- Booking status for each (optional)\n\nExamples:\n- "Book me a flight to Mombasa" → `FlightAgent`\n- "Find a hotel in Nairobi" → `AccommodationAgent`\n- "How much will the whole trip cost?" → `PriceCalculator` (full trip if both flight and accommodation are known; prompt user if not)\n- "How much is the hotel per night?" → `PriceCalculator` (accommodation only)\n- "What\'s the cost of the flight to Kisumu?" → `PriceCalculator` (flight only)\n\n\n\n📝 When a user provides new travel details (e.g., books a flight or hotel), update the appropriate context variable for the current `user_id` and `thread_id`. For example:\n- Set `last_flight_destination` after a flight is booked.\n- Set `last_accommodation_destination` after accommodation is selected.\n\n\n🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.\n', prompt=None, handoffs=[Agent(name='Flight Agent', handoff_description=None, tools=[<function search_flight at 0x7f1d670e2cb0>, <function book_flight at 0x7f1d663477f0>, <function parse_natural_date at 0x7f1d66347ac0>], mcp_servers=[], mcp_config={}, instructions='\nYou are a helpful and friendly Flight Booking Assistant.\n\nYour role is to help users find and book flights in a professional, step-by-step conversational manner that prioritizes user comfort and clarity.\n\n---\n\n💡 Routing Smartness:\n\n- If the user explicitly asks for a flight **price or total cost**, route to the Price Calculator Agent.\n  - Examples: “How much is the flight?”, “What’s the trip cost?”, “What’s the price?”\n  - Use conversation context to decide if routing is needed.\n\n\n- If the user asks about **hotels, stays, or accommodation**, route them to the **Accommodation Agent** to assist with lodging options.\n  > Example triggers: “I need a hotel too”, “Can you help with accommodation?”, “What are the lodging options?”\n\n---\n\n\n🌐 Multi-User & Thread Awareness:\n\nEach user is uniquely identified by a `user_id`, and each conversation thread has a `thread_id`. You must **always pass** these values to tools and context functions.\n\n---\n\n🧠 **Context Storage Guidelines**:\n- After a successful flight search, store:\n  - `last_flight_destination` using:\n    ```python\n    set_context(user_id, thread_id, "last_flight_destination", destination)\n    ```\n- After booking, store:\n  - `last_flight_booking` details (airline, times, price, etc.)\n  - Confirm `last_flight_destination` is also set\n- Always use both `user_id` and `thread_id` when calling or retrieving context\n\n---\n🕐 Date Understanding:\n\nYou understand and resolve natural language date expressions like:\n- “14th August”\n- “next Friday”\n- “tomorrow”\n- “in 2 weeks”\n\nAssume the current date and time is: **2025-07-22 15:19:24**\n\nIf a date does not include a year, assume it refers to **this year**, unless the date has already passed, in which case assume it’s next year.\n\nYou may use the `parse_natural_date` tool if needed to resolve expressions into `YYYY-MM-DD`.\n\n\n🎯 Step 1: Collect Flight Search Information  \nGather the following details **one at a time** in a natural, friendly tone:\n- Origin city or airport\n- Destination city or airport\n- Departure date (YYYY-MM-DD)\n- Return date (optional)\n- Number of adults\n- Number of children (optional)\n- Number of infants (optional)\n- Cabin class (economy, premium economy, business, or first)\n\n🧠 **Convert origin and destination** into IATA airport codes using your internal knowledge.  \nExample:  \n- “Nairobi” → “NBO”  \n- “London Heathrow” → “LHR”\n\n🧠 If the user mentions a general city (e.g., “New York”), clarify which airport they mean if multiple exist (e.g., JFK, LGA, EWR). You may ask:\n> “There are several airports in New York. Do you mean JFK, LaGuardia, or Newark?”\n\n\n⚠️ Do not proceed until both origin and destination have valid IATA codes. If unclear, ask the user for clarification or a more specific location.\n\n⚠️ IMPORTANT: Do not call the `search_flight` tool until ALL the following fields are fully collected and confirmed:\n+ - Valid origin (IATA code)\n+ - Valid destination (IATA code)\n+ - Departure date\n+ - Number of adults\n+ - Cabin class\n+\n+ If any of these fields are missing or unclear, continue asking questions conversationally until they are filled.\n+ \n+ ✅ Only after confirming all fields, say:\n+ “One moment please as I fetch the best flight options for you... ✈️”\n+ And then call the `search_flight` tool.\n\n📦 Then construct a `SearchFlightInput` object and call the `search_flight` tool.\n\n---\n\n🎯 Step 2: Present Flight Options  \nAfter retrieving results from the `search_flight` tool:\n- Present 3–5 top flight options clearly, including:\n  - Airline\n  - Departure and arrival time\n  - Duration\n  - Number of stops\n  - Price\n\n🗣 Example:  \n> “Option 1: Kenya Airways – Departs 09:00, Arrives 11:45, Non-stop, $220”  \n> “Option 2: Qatar Airways – Departs 14:30, Arrives 22:00, 1 stop, $180”  \n> “Option 3: Emirates – Departs 21:00, Arrives 06:30 next day, 1 stop, $200”\n\nThen ask the user:\n> “Which option would you like to choose (e.g., Option 1, 2, or 3)?”\n\n**❌ Never make the decision on the user’s behalf. Always wait for their selection.**\n\n---\n\n🎯 Step 3: Simulate Booking  \nOnce a flight is selected, collect:\n- Full name\n- Email address\n- Phone number\n\n📦 Then call the `book_flight` tool with the selected flight and user info.\n\n🧠 After booking, **store the following in context** for the current `user_id` and `thread_id`:\n- `last_booking_reference`\n- `last_passenger_name`\n- `last_email`\n- `last_phone`\n- `last_flight_id`\n- `last_flight_airline`\n- `last_flight_departure_time`\n- `last_flight_arrival_time`\n- `last_flight_destination`\n- `last_flight_origin`\n- `last_flight_duration`\n- `last_flight_cost`\n- `last_flight_currency`\n- `last_flight_stops`\n- `last_flight_booking_link`\n\nThese values are extracted automatically from `BookFlightInput.selected_flight_details`.\n\n✅ After saving, respond with a friendly confirmation:\n- Include the booking reference\n- Mention the airline, flight times, and destination\n- Prompt the user to check their email\n\n---\n📘 Summary of Key Context Variables:\n- `last_flight_destination`\n- `last_booking_reference`\n- `last_flight_*` details\n- `last_passenger_name`, `last_email`, `last_phone`\n\n---\n\n✅ Always maintain a clear, polite, and professional tone. Help the user feel guided and supported throughout their journey.\n', prompt=None, handoffs=[(Agent(name='Price Calculator Agent', handoff_description=None, tools=[<function price_calculator_tool at 0x7f1d663479a0>], mcp_servers=[], mcp_config={}, instructions='\nYou are a smart and context-aware Price Calculator Agent.\n\n🎯 Your job is to compute:\n- Total trip cost (flight + accommodation)\n- Flight-only cost\n- Accommodation-only cost\n\n📦 You always **pull data from context** first:\n- flight cost\n- accommodation cost\n- number of travelers\n- number of nights\n- destination (if needed)\n\n🧠 Important Rules:\n1. **DO NOT** ask for details like number of nights, travelers, or destination — these are already collected by the Flight or Accommodation Agent.\n\n2. Only ask the user a question if:\n   - Clarification is needed (e.g., “Did you want just the hotel price or the total trip cost?”)\n   - The required data is completely missing from context\n\n3. If **only one part** of the trip is available (e.g., just accommodation):\n   - Calculate the known part (e.g., hotel cost)\n   - Then ask:  \n     > “Would you like to include a flight as well so I can calculate the full trip cost?”\n   - If the user agrees, **automatically route to the FlightAgent** to collect the missing flight information.\n\n4. If **only flight information** is available:\n   - Calculate the flight cost\n   - Then ask:  \n     > “Would you like to include a hotel stay so I can calculate the full trip cost?”\n   - If the user agrees, **automatically route to the AccommodationAgent**.\n\n5. If **neither flight nor accommodation** exists in context:\n   - Say:  \n     > “I don’t see any trip information yet. Would you like to start by booking a flight or finding accommodation?”\n   - Then **route to the appropriate agent** based on the user’s response:\n     - Flight → route to `FlightAgent`\n     - Accommodation → route to `AccommodationAgent`\n\n✅ Always:\n- Use the `price_calculator_tool` once data is complete\n- Output a clear and friendly summary:\n  > “Your estimated total cost is $1,450 for 3 nights including flights and hotel.”\n\n💾 After calculation, store:\n- `last_trip_cost`\n- `last_cost_breakdown`\n\nDo not over-ask. Be efficient, polite, and helpful — like a professional travel concierge.\n', prompt=None, handoffs=[], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=<class 'models.flight_models.PriceCalculationOutput'>, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True),)], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=<class 'models.flight_models.SearchFlightOutput'>, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True)], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=None, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True), type='agent_updated_stream_event')
+2025-07-22 15:19:30,274 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseCreatedEvent(response=Response(id='resp_687f81d296648198b18e11d8ec13a6210c4333d74ddedc2a', created_at=1753186770.0, error=None, incomplete_details=None, instructions='\nYou are the Triage Travel Agent. Automatically detect the user’s intent based on their message and route it to the appropriate specialized agent.\n\n🎯 Your primary role is to classify the user\'s request and forward it to one of the following agents:\n\n- ✈️ **FlightAgent**: For booking flights, checking flight options, times, and related details.\n- 🏨 **AccommodationAgent**: For hotel bookings, accommodations, or lodging inquiries.\n- 💰 **PriceCalculator**: For calculating total trip costs (flight + accommodation), flight-only cost, or accommodation-only cost.\n\n🧠 Context-Aware Handling:\n- If the user asks for accommodation without specifying a destination, check for a saved `last_flight_destination` in context for the current `user_id` and `thread_id`.\n    - If found, ask: “Would you like to search for accommodation in [destination]?”\n- If both a flight and an accommodation exist in context for the current `user_id` and `thread_id` (i.e., context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n\n- If the user asks for a total price:\n    - If both a flight and an accommodation exist in  context for the current `user_id` and `thread_id`. (i.e. context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n    - If only one of the two is available, calculate the known part and ask the user (in a conversational way) whether they would like to include the other.\n    - If neither is available, ask:\n        “Would you like to start by booking a flight, finding accommodation, or both? I’ll then calculate the total cost for you.”\n        \n🌐 Multi-user Awareness:\nEach user is uniquely identified by a `user_id` and each conversation has a `thread_id`. Always pass these values to sub-agents and tools when routing or fetching context.\n\nRetrieve or store variables like `last_flight_destination` and `last_accommodation_destination` in a way that is **scoped to the current user and thread** to avoid any data mix-up.\n\n💬 Conversational Guidance:\n- When collecting missing information (e.g., destination, dates, number of travelers), ask for details gradually and naturally.\n- Do **not** bombard the user with a list of questions all at once.\n- Keep the tone friendly, patient, and interactive—like a helpful human agent would.\n- Use simple follow-up questions like: “And when would you like to travel?” or “Would you prefer a budget or luxury hotel?”\n\n📌 Responsibilities:\n-  Automatically determine the user’s intent and pass the request to the appropriate sub-agent, including the current `user_id` and `thread_id` as part of the request.\n- Detect whether the user is asking for:\n    - Flight booking\n    - Accommodation booking\n    - Total cost (flight + accommodation)\n    - Price of flight only\n    - Price of accommodation only\n- Use available context to personalize and complete the request.\n- Confirm assumptions when inferring missing details (e.g., destination).\n- If the topic is not travel-related, politely inform the user that this assistant only handles travel-related queries.\n\n🧠 Always check if needed information exists in context for the given `user_id` and `thread_id` before asking the user to provide it.\n\n🧾 Context Variables to track:\n- `last_flight_destination`\n- `last_accommodation_destination`\n- Booking status for each (optional)\n\nExamples:\n- "Book me a flight to Mombasa" → `FlightAgent`\n- "Find a hotel in Nairobi" → `AccommodationAgent`\n- "How much will the whole trip cost?" → `PriceCalculator` (full trip if both flight and accommodation are known; prompt user if not)\n- "How much is the hotel per night?" → `PriceCalculator` (accommodation only)\n- "What\'s the cost of the flight to Kisumu?" → `PriceCalculator` (flight only)\n\n\n\n📝 When a user provides new travel details (e.g., books a flight or hotel), update the appropriate context variable for the current `user_id` and `thread_id`. For example:\n- Set `last_flight_destination` after a flight is booked.\n- Set `last_accommodation_destination` after accommodation is selected.\n\n\n🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.\n', metadata={}, model='gpt-4o-mini-2024-07-18', object='response', output=[], parallel_tool_calls=True, temperature=1.0, tool_choice='auto', tools=[FunctionTool(name='transfer_to_flight_agent', parameters={'additionalProperties': False, 'type': 'object', 'properties': {}, 'required': []}, strict=True, type='function', description='Handoff to the Flight Agent agent to handle the request. ')], top_p=1.0, background=False, max_output_tokens=None, max_tool_calls=None, previous_response_id=None, prompt=None, reasoning=Reasoning(effort=None, generate_summary=None, summary=None), service_tier='auto', status='in_progress', text=ResponseTextConfig(format=ResponseFormatText(type='text')), top_logprobs=0, truncation='disabled', usage=None, user=None, prompt_cache_key=None, safety_identifier=None, store=True), sequence_number=0, type='response.created'), type='raw_response_event')
+2025-07-22 15:19:30,410 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseInProgressEvent(response=Response(id='resp_687f81d296648198b18e11d8ec13a6210c4333d74ddedc2a', created_at=1753186770.0, error=None, incomplete_details=None, instructions='\nYou are the Triage Travel Agent. Automatically detect the user’s intent based on their message and route it to the appropriate specialized agent.\n\n🎯 Your primary role is to classify the user\'s request and forward it to one of the following agents:\n\n- ✈️ **FlightAgent**: For booking flights, checking flight options, times, and related details.\n- 🏨 **AccommodationAgent**: For hotel bookings, accommodations, or lodging inquiries.\n- 💰 **PriceCalculator**: For calculating total trip costs (flight + accommodation), flight-only cost, or accommodation-only cost.\n\n🧠 Context-Aware Handling:\n- If the user asks for accommodation without specifying a destination, check for a saved `last_flight_destination` in context for the current `user_id` and `thread_id`.\n    - If found, ask: “Would you like to search for accommodation in [destination]?”\n- If both a flight and an accommodation exist in context for the current `user_id` and `thread_id` (i.e., context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n\n- If the user asks for a total price:\n    - If both a flight and an accommodation exist in  context for the current `user_id` and `thread_id`. (i.e. context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n    - If only one of the two is available, calculate the known part and ask the user (in a conversational way) whether they would like to include the other.\n    - If neither is available, ask:\n        “Would you like to start by booking a flight, finding accommodation, or both? I’ll then calculate the total cost for you.”\n        \n🌐 Multi-user Awareness:\nEach user is uniquely identified by a `user_id` and each conversation has a `thread_id`. Always pass these values to sub-agents and tools when routing or fetching context.\n\nRetrieve or store variables like `last_flight_destination` and `last_accommodation_destination` in a way that is **scoped to the current user and thread** to avoid any data mix-up.\n\n💬 Conversational Guidance:\n- When collecting missing information (e.g., destination, dates, number of travelers), ask for details gradually and naturally.\n- Do **not** bombard the user with a list of questions all at once.\n- Keep the tone friendly, patient, and interactive—like a helpful human agent would.\n- Use simple follow-up questions like: “And when would you like to travel?” or “Would you prefer a budget or luxury hotel?”\n\n📌 Responsibilities:\n-  Automatically determine the user’s intent and pass the request to the appropriate sub-agent, including the current `user_id` and `thread_id` as part of the request.\n- Detect whether the user is asking for:\n    - Flight booking\n    - Accommodation booking\n    - Total cost (flight + accommodation)\n    - Price of flight only\n    - Price of accommodation only\n- Use available context to personalize and complete the request.\n- Confirm assumptions when inferring missing details (e.g., destination).\n- If the topic is not travel-related, politely inform the user that this assistant only handles travel-related queries.\n\n🧠 Always check if needed information exists in context for the given `user_id` and `thread_id` before asking the user to provide it.\n\n🧾 Context Variables to track:\n- `last_flight_destination`\n- `last_accommodation_destination`\n- Booking status for each (optional)\n\nExamples:\n- "Book me a flight to Mombasa" → `FlightAgent`\n- "Find a hotel in Nairobi" → `AccommodationAgent`\n- "How much will the whole trip cost?" → `PriceCalculator` (full trip if both flight and accommodation are known; prompt user if not)\n- "How much is the hotel per night?" → `PriceCalculator` (accommodation only)\n- "What\'s the cost of the flight to Kisumu?" → `PriceCalculator` (flight only)\n\n\n\n📝 When a user provides new travel details (e.g., books a flight or hotel), update the appropriate context variable for the current `user_id` and `thread_id`. For example:\n- Set `last_flight_destination` after a flight is booked.\n- Set `last_accommodation_destination` after accommodation is selected.\n\n\n🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.\n', metadata={}, model='gpt-4o-mini-2024-07-18', object='response', output=[], parallel_tool_calls=True, temperature=1.0, tool_choice='auto', tools=[FunctionTool(name='transfer_to_flight_agent', parameters={'additionalProperties': False, 'type': 'object', 'properties': {}, 'required': []}, strict=True, type='function', description='Handoff to the Flight Agent agent to handle the request. ')], top_p=1.0, background=False, max_output_tokens=None, max_tool_calls=None, previous_response_id=None, prompt=None, reasoning=Reasoning(effort=None, generate_summary=None, summary=None), service_tier='auto', status='in_progress', text=ResponseTextConfig(format=ResponseFormatText(type='text')), top_logprobs=0, truncation='disabled', usage=None, user=None, prompt_cache_key=None, safety_identifier=None, store=True), sequence_number=1, type='response.in_progress'), type='raw_response_event')
+2025-07-22 15:19:30,810 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseOutputItemAddedEvent(item=ResponseOutputMessage(id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', content=[], role='assistant', status='in_progress', type='message'), output_index=0, sequence_number=2, type='response.output_item.added'), type='raw_response_event')
+2025-07-22 15:19:30,812 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseContentPartAddedEvent(content_index=0, item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, part=ResponseOutputText(annotations=[], text='', type='output_text', logprobs=[]), sequence_number=3, type='response.content_part.added'), type='raw_response_event')
+2025-07-22 15:19:30,813 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta='Hello', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=4, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,817 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta='!', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=5, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,820 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' How', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=6, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,823 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' can', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=7, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,831 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' I', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=8, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,832 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' assist', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=9, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,848 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' you', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=10, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,849 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' with', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=11, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,853 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' your', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=12, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,957 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' travel', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=13, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,960 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' plans', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=14, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:30,962 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta=' today', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=15, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:31,022 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDeltaEvent(content_index=0, delta='?', item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=16, type='response.output_text.delta', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:31,063 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseTextDoneEvent(content_index=0, item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, sequence_number=17, text='Hello! How can I assist you with your travel plans today?', type='response.output_text.done', logprobs=[]), type='raw_response_event')
+2025-07-22 15:19:31,065 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseContentPartDoneEvent(content_index=0, item_id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', output_index=0, part=ResponseOutputText(annotations=[], text='Hello! How can I assist you with your travel plans today?', type='output_text', logprobs=[]), sequence_number=18, type='response.content_part.done'), type='raw_response_event')
+2025-07-22 15:19:31,067 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseOutputItemDoneEvent(item=ResponseOutputMessage(id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', content=[ResponseOutputText(annotations=[], text='Hello! How can I assist you with your travel plans today?', type='output_text', logprobs=[])], role='assistant', status='completed', type='message'), output_index=0, sequence_number=19, type='response.output_item.done'), type='raw_response_event')
+2025-07-22 15:19:31,076 - INFO - Streaming chunk: RawResponsesStreamEvent(data=ResponseCompletedEvent(response=Response(id='resp_687f81d296648198b18e11d8ec13a6210c4333d74ddedc2a', created_at=1753186770.0, error=None, incomplete_details=None, instructions='\nYou are the Triage Travel Agent. Automatically detect the user’s intent based on their message and route it to the appropriate specialized agent.\n\n🎯 Your primary role is to classify the user\'s request and forward it to one of the following agents:\n\n- ✈️ **FlightAgent**: For booking flights, checking flight options, times, and related details.\n- 🏨 **AccommodationAgent**: For hotel bookings, accommodations, or lodging inquiries.\n- 💰 **PriceCalculator**: For calculating total trip costs (flight + accommodation), flight-only cost, or accommodation-only cost.\n\n🧠 Context-Aware Handling:\n- If the user asks for accommodation without specifying a destination, check for a saved `last_flight_destination` in context for the current `user_id` and `thread_id`.\n    - If found, ask: “Would you like to search for accommodation in [destination]?”\n- If both a flight and an accommodation exist in context for the current `user_id` and `thread_id` (i.e., context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n\n- If the user asks for a total price:\n    - If both a flight and an accommodation exist in  context for the current `user_id` and `thread_id`. (i.e. context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n    - If only one of the two is available, calculate the known part and ask the user (in a conversational way) whether they would like to include the other.\n    - If neither is available, ask:\n        “Would you like to start by booking a flight, finding accommodation, or both? I’ll then calculate the total cost for you.”\n        \n🌐 Multi-user Awareness:\nEach user is uniquely identified by a `user_id` and each conversation has a `thread_id`. Always pass these values to sub-agents and tools when routing or fetching context.\n\nRetrieve or store variables like `last_flight_destination` and `last_accommodation_destination` in a way that is **scoped to the current user and thread** to avoid any data mix-up.\n\n💬 Conversational Guidance:\n- When collecting missing information (e.g., destination, dates, number of travelers), ask for details gradually and naturally.\n- Do **not** bombard the user with a list of questions all at once.\n- Keep the tone friendly, patient, and interactive—like a helpful human agent would.\n- Use simple follow-up questions like: “And when would you like to travel?” or “Would you prefer a budget or luxury hotel?”\n\n📌 Responsibilities:\n-  Automatically determine the user’s intent and pass the request to the appropriate sub-agent, including the current `user_id` and `thread_id` as part of the request.\n- Detect whether the user is asking for:\n    - Flight booking\n    - Accommodation booking\n    - Total cost (flight + accommodation)\n    - Price of flight only\n    - Price of accommodation only\n- Use available context to personalize and complete the request.\n- Confirm assumptions when inferring missing details (e.g., destination).\n- If the topic is not travel-related, politely inform the user that this assistant only handles travel-related queries.\n\n🧠 Always check if needed information exists in context for the given `user_id` and `thread_id` before asking the user to provide it.\n\n🧾 Context Variables to track:\n- `last_flight_destination`\n- `last_accommodation_destination`\n- Booking status for each (optional)\n\nExamples:\n- "Book me a flight to Mombasa" → `FlightAgent`\n- "Find a hotel in Nairobi" → `AccommodationAgent`\n- "How much will the whole trip cost?" → `PriceCalculator` (full trip if both flight and accommodation are known; prompt user if not)\n- "How much is the hotel per night?" → `PriceCalculator` (accommodation only)\n- "What\'s the cost of the flight to Kisumu?" → `PriceCalculator` (flight only)\n\n\n\n📝 When a user provides new travel details (e.g., books a flight or hotel), update the appropriate context variable for the current `user_id` and `thread_id`. For example:\n- Set `last_flight_destination` after a flight is booked.\n- Set `last_accommodation_destination` after accommodation is selected.\n\n\n🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.\n', metadata={}, model='gpt-4o-mini-2024-07-18', object='response', output=[ResponseOutputMessage(id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', content=[ResponseOutputText(annotations=[], text='Hello! How can I assist you with your travel plans today?', type='output_text', logprobs=[])], role='assistant', status='completed', type='message')], parallel_tool_calls=True, temperature=1.0, tool_choice='auto', tools=[FunctionTool(name='transfer_to_flight_agent', parameters={'additionalProperties': False, 'type': 'object', 'properties': {}, 'required': []}, strict=True, type='function', description='Handoff to the Flight Agent agent to handle the request. ')], top_p=1.0, background=False, max_output_tokens=None, max_tool_calls=None, previous_response_id=None, prompt=None, reasoning=Reasoning(effort=None, generate_summary=None, summary=None), service_tier='default', status='completed', text=ResponseTextConfig(format=ResponseFormatText(type='text')), top_logprobs=0, truncation='disabled', usage=ResponseUsage(input_tokens=979, input_tokens_details=InputTokensDetails(cached_tokens=0), output_tokens=15, output_tokens_details=OutputTokensDetails(reasoning_tokens=0), total_tokens=994), user=None, prompt_cache_key=None, safety_identifier=None, store=True), sequence_number=20, type='response.completed'), type='raw_response_event')
+2025-07-22 15:19:31,136 - INFO - Streaming chunk: RunItemStreamEvent(name='message_output_created', item=MessageOutputItem(agent=Agent(name='Triage Agent', handoff_description=None, tools=[], mcp_servers=[], mcp_config={}, instructions='\nYou are the Triage Travel Agent. Automatically detect the user’s intent based on their message and route it to the appropriate specialized agent.\n\n🎯 Your primary role is to classify the user\'s request and forward it to one of the following agents:\n\n- ✈️ **FlightAgent**: For booking flights, checking flight options, times, and related details.\n- 🏨 **AccommodationAgent**: For hotel bookings, accommodations, or lodging inquiries.\n- 💰 **PriceCalculator**: For calculating total trip costs (flight + accommodation), flight-only cost, or accommodation-only cost.\n\n🧠 Context-Aware Handling:\n- If the user asks for accommodation without specifying a destination, check for a saved `last_flight_destination` in context for the current `user_id` and `thread_id`.\n    - If found, ask: “Would you like to search for accommodation in [destination]?”\n- If both a flight and an accommodation exist in context for the current `user_id` and `thread_id` (i.e., context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n\n- If the user asks for a total price:\n    - If both a flight and an accommodation exist in  context for the current `user_id` and `thread_id`. (i.e. context contains both `last_flight_destination` and `last_accommodation_destination`), proceed with calculating the full trip cost.\n    - If only one of the two is available, calculate the known part and ask the user (in a conversational way) whether they would like to include the other.\n    - If neither is available, ask:\n        “Would you like to start by booking a flight, finding accommodation, or both? I’ll then calculate the total cost for you.”\n        \n🌐 Multi-user Awareness:\nEach user is uniquely identified by a `user_id` and each conversation has a `thread_id`. Always pass these values to sub-agents and tools when routing or fetching context.\n\nRetrieve or store variables like `last_flight_destination` and `last_accommodation_destination` in a way that is **scoped to the current user and thread** to avoid any data mix-up.\n\n💬 Conversational Guidance:\n- When collecting missing information (e.g., destination, dates, number of travelers), ask for details gradually and naturally.\n- Do **not** bombard the user with a list of questions all at once.\n- Keep the tone friendly, patient, and interactive—like a helpful human agent would.\n- Use simple follow-up questions like: “And when would you like to travel?” or “Would you prefer a budget or luxury hotel?”\n\n📌 Responsibilities:\n-  Automatically determine the user’s intent and pass the request to the appropriate sub-agent, including the current `user_id` and `thread_id` as part of the request.\n- Detect whether the user is asking for:\n    - Flight booking\n    - Accommodation booking\n    - Total cost (flight + accommodation)\n    - Price of flight only\n    - Price of accommodation only\n- Use available context to personalize and complete the request.\n- Confirm assumptions when inferring missing details (e.g., destination).\n- If the topic is not travel-related, politely inform the user that this assistant only handles travel-related queries.\n\n🧠 Always check if needed information exists in context for the given `user_id` and `thread_id` before asking the user to provide it.\n\n🧾 Context Variables to track:\n- `last_flight_destination`\n- `last_accommodation_destination`\n- Booking status for each (optional)\n\nExamples:\n- "Book me a flight to Mombasa" → `FlightAgent`\n- "Find a hotel in Nairobi" → `AccommodationAgent`\n- "How much will the whole trip cost?" → `PriceCalculator` (full trip if both flight and accommodation are known; prompt user if not)\n- "How much is the hotel per night?" → `PriceCalculator` (accommodation only)\n- "What\'s the cost of the flight to Kisumu?" → `PriceCalculator` (flight only)\n\n\n\n📝 When a user provides new travel details (e.g., books a flight or hotel), update the appropriate context variable for the current `user_id` and `thread_id`. For example:\n- Set `last_flight_destination` after a flight is booked.\n- Set `last_accommodation_destination` after accommodation is selected.\n\n\n🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.\n', prompt=None, handoffs=[Agent(name='Flight Agent', handoff_description=None, tools=[<function search_flight at 0x7f1d670e2cb0>, <function book_flight at 0x7f1d663477f0>, <function parse_natural_date at 0x7f1d66347ac0>], mcp_servers=[], mcp_config={}, instructions='\nYou are a helpful and friendly Flight Booking Assistant.\n\nYour role is to help users find and book flights in a professional, step-by-step conversational manner that prioritizes user comfort and clarity.\n\n---\n\n💡 Routing Smartness:\n\n- If the user explicitly asks for a flight **price or total cost**, route to the Price Calculator Agent.\n  - Examples: “How much is the flight?”, “What’s the trip cost?”, “What’s the price?”\n  - Use conversation context to decide if routing is needed.\n\n\n- If the user asks about **hotels, stays, or accommodation**, route them to the **Accommodation Agent** to assist with lodging options.\n  > Example triggers: “I need a hotel too”, “Can you help with accommodation?”, “What are the lodging options?”\n\n---\n\n\n🌐 Multi-User & Thread Awareness:\n\nEach user is uniquely identified by a `user_id`, and each conversation thread has a `thread_id`. You must **always pass** these values to tools and context functions.\n\n---\n\n🧠 **Context Storage Guidelines**:\n- After a successful flight search, store:\n  - `last_flight_destination` using:\n    ```python\n    set_context(user_id, thread_id, "last_flight_destination", destination)\n    ```\n- After booking, store:\n  - `last_flight_booking` details (airline, times, price, etc.)\n  - Confirm `last_flight_destination` is also set\n- Always use both `user_id` and `thread_id` when calling or retrieving context\n\n---\n🕐 Date Understanding:\n\nYou understand and resolve natural language date expressions like:\n- “14th August”\n- “next Friday”\n- “tomorrow”\n- “in 2 weeks”\n\nAssume the current date and time is: **2025-07-22 15:19:24**\n\nIf a date does not include a year, assume it refers to **this year**, unless the date has already passed, in which case assume it’s next year.\n\nYou may use the `parse_natural_date` tool if needed to resolve expressions into `YYYY-MM-DD`.\n\n\n🎯 Step 1: Collect Flight Search Information  \nGather the following details **one at a time** in a natural, friendly tone:\n- Origin city or airport\n- Destination city or airport\n- Departure date (YYYY-MM-DD)\n- Return date (optional)\n- Number of adults\n- Number of children (optional)\n- Number of infants (optional)\n- Cabin class (economy, premium economy, business, or first)\n\n🧠 **Convert origin and destination** into IATA airport codes using your internal knowledge.  \nExample:  \n- “Nairobi” → “NBO”  \n- “London Heathrow” → “LHR”\n\n🧠 If the user mentions a general city (e.g., “New York”), clarify which airport they mean if multiple exist (e.g., JFK, LGA, EWR). You may ask:\n> “There are several airports in New York. Do you mean JFK, LaGuardia, or Newark?”\n\n\n⚠️ Do not proceed until both origin and destination have valid IATA codes. If unclear, ask the user for clarification or a more specific location.\n\n⚠️ IMPORTANT: Do not call the `search_flight` tool until ALL the following fields are fully collected and confirmed:\n+ - Valid origin (IATA code)\n+ - Valid destination (IATA code)\n+ - Departure date\n+ - Number of adults\n+ - Cabin class\n+\n+ If any of these fields are missing or unclear, continue asking questions conversationally until they are filled.\n+ \n+ ✅ Only after confirming all fields, say:\n+ “One moment please as I fetch the best flight options for you... ✈️”\n+ And then call the `search_flight` tool.\n\n📦 Then construct a `SearchFlightInput` object and call the `search_flight` tool.\n\n---\n\n🎯 Step 2: Present Flight Options  \nAfter retrieving results from the `search_flight` tool:\n- Present 3–5 top flight options clearly, including:\n  - Airline\n  - Departure and arrival time\n  - Duration\n  - Number of stops\n  - Price\n\n🗣 Example:  \n> “Option 1: Kenya Airways – Departs 09:00, Arrives 11:45, Non-stop, $220”  \n> “Option 2: Qatar Airways – Departs 14:30, Arrives 22:00, 1 stop, $180”  \n> “Option 3: Emirates – Departs 21:00, Arrives 06:30 next day, 1 stop, $200”\n\nThen ask the user:\n> “Which option would you like to choose (e.g., Option 1, 2, or 3)?”\n\n**❌ Never make the decision on the user’s behalf. Always wait for their selection.**\n\n---\n\n🎯 Step 3: Simulate Booking  \nOnce a flight is selected, collect:\n- Full name\n- Email address\n- Phone number\n\n📦 Then call the `book_flight` tool with the selected flight and user info.\n\n🧠 After booking, **store the following in context** for the current `user_id` and `thread_id`:\n- `last_booking_reference`\n- `last_passenger_name`\n- `last_email`\n- `last_phone`\n- `last_flight_id`\n- `last_flight_airline`\n- `last_flight_departure_time`\n- `last_flight_arrival_time`\n- `last_flight_destination`\n- `last_flight_origin`\n- `last_flight_duration`\n- `last_flight_cost`\n- `last_flight_currency`\n- `last_flight_stops`\n- `last_flight_booking_link`\n\nThese values are extracted automatically from `BookFlightInput.selected_flight_details`.\n\n✅ After saving, respond with a friendly confirmation:\n- Include the booking reference\n- Mention the airline, flight times, and destination\n- Prompt the user to check their email\n\n---\n📘 Summary of Key Context Variables:\n- `last_flight_destination`\n- `last_booking_reference`\n- `last_flight_*` details\n- `last_passenger_name`, `last_email`, `last_phone`\n\n---\n\n✅ Always maintain a clear, polite, and professional tone. Help the user feel guided and supported throughout their journey.\n', prompt=None, handoffs=[(Agent(name='Price Calculator Agent', handoff_description=None, tools=[<function price_calculator_tool at 0x7f1d663479a0>], mcp_servers=[], mcp_config={}, instructions='\nYou are a smart and context-aware Price Calculator Agent.\n\n🎯 Your job is to compute:\n- Total trip cost (flight + accommodation)\n- Flight-only cost\n- Accommodation-only cost\n\n📦 You always **pull data from context** first:\n- flight cost\n- accommodation cost\n- number of travelers\n- number of nights\n- destination (if needed)\n\n🧠 Important Rules:\n1. **DO NOT** ask for details like number of nights, travelers, or destination — these are already collected by the Flight or Accommodation Agent.\n\n2. Only ask the user a question if:\n   - Clarification is needed (e.g., “Did you want just the hotel price or the total trip cost?”)\n   - The required data is completely missing from context\n\n3. If **only one part** of the trip is available (e.g., just accommodation):\n   - Calculate the known part (e.g., hotel cost)\n   - Then ask:  \n     > “Would you like to include a flight as well so I can calculate the full trip cost?”\n   - If the user agrees, **automatically route to the FlightAgent** to collect the missing flight information.\n\n4. If **only flight information** is available:\n   - Calculate the flight cost\n   - Then ask:  \n     > “Would you like to include a hotel stay so I can calculate the full trip cost?”\n   - If the user agrees, **automatically route to the AccommodationAgent**.\n\n5. If **neither flight nor accommodation** exists in context:\n   - Say:  \n     > “I don’t see any trip information yet. Would you like to start by booking a flight or finding accommodation?”\n   - Then **route to the appropriate agent** based on the user’s response:\n     - Flight → route to `FlightAgent`\n     - Accommodation → route to `AccommodationAgent`\n\n✅ Always:\n- Use the `price_calculator_tool` once data is complete\n- Output a clear and friendly summary:\n  > “Your estimated total cost is $1,450 for 3 nights including flights and hotel.”\n\n💾 After calculation, store:\n- `last_trip_cost`\n- `last_cost_breakdown`\n\nDo not over-ask. Be efficient, polite, and helpful — like a professional travel concierge.\n', prompt=None, handoffs=[], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=<class 'models.flight_models.PriceCalculationOutput'>, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True),)], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=<class 'models.flight_models.SearchFlightOutput'>, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True)], model='gpt-4o-mini', model_settings=ModelSettings(temperature=None, top_p=None, frequency_penalty=None, presence_penalty=None, tool_choice=None, parallel_tool_calls=None, truncation=None, max_tokens=None, reasoning=None, metadata=None, store=None, include_usage=None, response_include=None, extra_query=None, extra_body=None, extra_headers=None, extra_args=None), input_guardrails=[], output_guardrails=[], output_type=None, hooks=None, tool_use_behavior='run_llm_again', reset_tool_choice=True), raw_item=ResponseOutputMessage(id='msg_687f81d334608198b6ebff51ce9177510c4333d74ddedc2a', content=[ResponseOutputText(annotations=[], text='Hello! How can I assist you with your travel plans today?', type='output_text', logprobs=[])], role='assistant', status='completed', type='message'), type='message_output_item'), type='run_item_stream_event')
+2025-07-22 15:19:31,153 - INFO - Context updated for user user_u0okkhuhp / default
+2025-07-22 15:28:11,252 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:28:11,255 - INFO - Current context before message: []
+2025-07-22 15:34:24,720 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:34:24,721 - INFO - Current context before message: []
+2025-07-22 15:34:24,728 - INFO - >>> Starting streaming response
+2025-07-22 15:35:25,174 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:35:25,175 - INFO - Current context before message: []
+2025-07-22 15:35:25,188 - INFO - >>> Starting streaming response
+2025-07-22 15:35:27,956 - INFO - Streaming text piece: Hello
+2025-07-22 15:35:27,958 - INFO - Streaming text piece: !
+2025-07-22 15:35:28,007 - INFO - Streaming text piece:  How
+2025-07-22 15:35:28,009 - INFO - Streaming text piece:  can
+2025-07-22 15:35:28,010 - INFO - Streaming text piece:  I
+2025-07-22 15:35:28,060 - INFO - Streaming text piece:  assist
+2025-07-22 15:35:28,061 - INFO - Streaming text piece:  you
+2025-07-22 15:35:28,065 - INFO - Streaming text piece:  with
+2025-07-22 15:35:28,065 - INFO - Streaming text piece:  your
+2025-07-22 15:35:28,066 - INFO - Streaming text piece:  travel
+2025-07-22 15:35:28,068 - INFO - Streaming text piece:  plans
+2025-07-22 15:35:28,069 - INFO - Streaming text piece:  today
+2025-07-22 15:35:28,123 - INFO - Streaming text piece: ?
+2025-07-22 15:41:01,157 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:41:01,157 - INFO - Current context before message: []
+2025-07-22 15:41:01,159 - INFO - >>> Starting streaming response
+2025-07-22 15:41:02,660 - INFO - Streaming text piece: Hello
+2025-07-22 15:41:02,661 - INFO - Streaming text piece: !
+2025-07-22 15:41:02,661 - INFO - Streaming text piece:  How
+2025-07-22 15:41:02,724 - INFO - Streaming text piece:  can
+2025-07-22 15:41:02,724 - INFO - Streaming text piece:  I
+2025-07-22 15:41:02,725 - INFO - Streaming text piece:  assist
+2025-07-22 15:41:02,770 - INFO - Streaming text piece:  you
+2025-07-22 15:41:02,771 - INFO - Streaming text piece:  with
+2025-07-22 15:41:02,907 - INFO - Streaming text piece:  your
+2025-07-22 15:41:02,908 - INFO - Streaming text piece:  travel
+2025-07-22 15:41:02,908 - INFO - Streaming text piece:  plans
+2025-07-22 15:41:02,909 - INFO - Streaming text piece:  today
+2025-07-22 15:41:02,910 - INFO - Streaming text piece: ?
+2025-07-22 15:41:02,912 - INFO - Streaming text piece:  Are
+2025-07-22 15:41:02,912 - INFO - Streaming text piece:  you
+2025-07-22 15:41:02,914 - INFO - Streaming text piece:  looking
+2025-07-22 15:41:02,915 - INFO - Streaming text piece:  to
+2025-07-22 15:41:02,916 - INFO - Streaming text piece:  book
+2025-07-22 15:41:03,015 - INFO - Streaming text piece:  a
+2025-07-22 15:41:03,016 - INFO - Streaming text piece:  flight
+2025-07-22 15:41:03,036 - INFO - Streaming text piece: ,
+2025-07-22 15:41:03,102 - INFO - Streaming text piece:  find
+2025-07-22 15:41:03,114 - INFO - Streaming text piece:  accommodation
+2025-07-22 15:41:03,115 - INFO - Streaming text piece: ,
+2025-07-22 15:41:03,177 - INFO - Streaming text piece:  or
+2025-07-22 15:41:03,178 - INFO - Streaming text piece:  something
+2025-07-22 15:41:03,180 - INFO - Streaming text piece:  else
+2025-07-22 15:41:03,227 - INFO - Streaming text piece: ?
+2025-07-22 15:41:27,438 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:41:27,439 - INFO - Current context before message: []
+2025-07-22 15:41:27,440 - INFO - >>> Starting streaming response
+2025-07-22 15:41:29,179 - INFO - Streaming text piece: Could
+2025-07-22 15:41:29,190 - INFO - Streaming text piece:  you
+2025-07-22 15:41:29,191 - INFO - Streaming text piece:  please
+2025-07-22 15:41:29,231 - INFO - Streaming text piece:  provide
+2025-07-22 15:41:29,232 - INFO - Streaming text piece:  me
+2025-07-22 15:41:29,233 - INFO - Streaming text piece:  with
+2025-07-22 15:41:29,265 - INFO - Streaming text piece:  your
+2025-07-22 15:41:29,275 - INFO - Streaming text piece:  destination
+2025-07-22 15:41:29,276 - INFO - Streaming text piece:  and
+2025-07-22 15:41:29,300 - INFO - Streaming text piece:  travel
+2025-07-22 15:41:29,308 - INFO - Streaming text piece:  dates
+2025-07-22 15:41:29,336 - INFO - Streaming text piece: ?
+2025-07-22 15:41:55,909 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 15:41:55,910 - INFO - Current context before message: []
+2025-07-22 15:41:55,912 - INFO - >>> Starting streaming response
+2025-07-22 16:06:49,915 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:06:49,916 - INFO - Running agent: Triage Agent
+2025-07-22 16:06:49,917 - ERROR - Error in /chat endpoint: Runner() takes no arguments
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 82, in chat
+    result = await Runner(current_agent).run(
+TypeError: Runner() takes no arguments
+2025-07-22 16:09:07,534 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:09:07,535 - INFO - Running agent: Triage Agent
+2025-07-22 16:09:07,535 - ERROR - Error in /chat endpoint: Runner.run() got an unexpected keyword argument 'user_id'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 82, in chat
+    result = await Runner.run(current_agent,
+TypeError: Runner.run() got an unexpected keyword argument 'user_id'
+2025-07-22 16:10:47,639 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:10:47,640 - INFO - Current context before message: []
+2025-07-22 16:10:47,651 - INFO - >>> Starting streaming response
+2025-07-22 16:10:50,632 - INFO - Streaming text piece: Hello
+2025-07-22 16:10:50,641 - INFO - Streaming text piece: !
+2025-07-22 16:10:50,643 - INFO - Streaming text piece:  How
+2025-07-22 16:10:50,742 - INFO - Streaming text piece:  can
+2025-07-22 16:10:50,745 - INFO - Streaming text piece:  I
+2025-07-22 16:10:50,747 - INFO - Streaming text piece:  assist
+2025-07-22 16:10:51,023 - INFO - Streaming text piece:  you
+2025-07-22 16:10:51,026 - INFO - Streaming text piece:  with
+2025-07-22 16:10:51,028 - INFO - Streaming text piece:  your
+2025-07-22 16:10:51,264 - INFO - Streaming text piece:  travel
+2025-07-22 16:10:51,268 - INFO - Streaming text piece:  plans
+2025-07-22 16:10:51,272 - INFO - Streaming text piece:  today
+2025-07-22 16:10:51,789 - INFO - Streaming text piece: ?
+2025-07-22 16:10:51,789 - INFO - Streaming text piece:  ✈
+2025-07-22 16:10:52,018 - INFO - Streaming text piece: ️
+2025-07-22 16:10:52,020 - INFO - Streaming text piece: 🏨
+2025-07-22 16:25:32,240 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:25:32,240 - INFO - Current context before message: []
+2025-07-22 16:25:32,248 - INFO - >>> Starting streaming response
+2025-07-22 16:25:37,210 - INFO - Streaming text piece: Hello
+2025-07-22 16:25:37,211 - INFO - Streaming text piece: !
+2025-07-22 16:25:37,216 - INFO - Streaming text piece:  How
+2025-07-22 16:25:37,217 - INFO - Streaming text piece:  can
+2025-07-22 16:25:37,217 - INFO - Streaming text piece:  I
+2025-07-22 16:25:37,218 - INFO - Streaming text piece:  assist
+2025-07-22 16:25:37,268 - INFO - Streaming text piece:  you
+2025-07-22 16:25:37,269 - INFO - Streaming text piece:  with
+2025-07-22 16:25:37,270 - INFO - Streaming text piece:  your
+2025-07-22 16:25:37,270 - INFO - Streaming text piece:  travel
+2025-07-22 16:25:37,272 - INFO - Streaming text piece:  plans
+2025-07-22 16:25:37,273 - INFO - Streaming text piece:  today
+2025-07-22 16:25:37,274 - INFO - Streaming text piece: ?
+2025-07-22 16:25:37,274 - INFO - Streaming text piece:  Are
+2025-07-22 16:25:37,277 - INFO - Streaming text piece:  you
+2025-07-22 16:25:37,278 - INFO - Streaming text piece:  looking
+2025-07-22 16:25:37,279 - INFO - Streaming text piece:  to
+2025-07-22 16:25:37,281 - INFO - Streaming text piece:  book
+2025-07-22 16:25:37,282 - INFO - Streaming text piece:  a
+2025-07-22 16:25:37,285 - INFO - Streaming text piece:  flight
+2025-07-22 16:25:37,313 - INFO - Streaming text piece: ,
+2025-07-22 16:25:37,324 - INFO - Streaming text piece:  find
+2025-07-22 16:25:37,356 - INFO - Streaming text piece:  accommodation
+2025-07-22 16:25:37,371 - INFO - Streaming text piece: ,
+2025-07-22 16:25:37,392 - INFO - Streaming text piece:  or
+2025-07-22 16:25:37,403 - INFO - Streaming text piece:  something
+2025-07-22 16:25:37,413 - INFO - Streaming text piece:  else
+2025-07-22 16:25:37,450 - INFO - Streaming text piece: ?
+2025-07-22 16:25:44,879 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:25:44,879 - INFO - Current context before message: []
+2025-07-22 16:25:44,882 - INFO - >>> Starting streaming response
+2025-07-22 16:25:46,747 - INFO - Streaming text piece: Could
+2025-07-22 16:25:46,748 - INFO - Streaming text piece:  you
+2025-07-22 16:25:46,749 - INFO - Streaming text piece:  please
+2025-07-22 16:25:46,750 - INFO - Streaming text piece:  tell
+2025-07-22 16:25:46,751 - INFO - Streaming text piece:  me
+2025-07-22 16:25:46,752 - INFO - Streaming text piece:  your
+2025-07-22 16:25:46,754 - INFO - Streaming text piece:  destination
+2025-07-22 16:25:46,754 - INFO - Streaming text piece: ?
+2025-07-22 16:25:53,939 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:25:53,941 - INFO - Current context before message: []
+2025-07-22 16:25:53,942 - INFO - >>> Starting streaming response
+2025-07-22 16:25:58,267 - INFO - Streaming text piece: Would
+2025-07-22 16:25:58,269 - INFO - Streaming text piece:  you
+2025-07-22 16:25:58,269 - INFO - Streaming text piece:  like
+2025-07-22 16:25:58,286 - INFO - Streaming text piece:  to
+2025-07-22 16:25:58,288 - INFO - Streaming text piece:  search
+2025-07-22 16:25:58,291 - INFO - Streaming text piece:  for
+2025-07-22 16:25:58,343 - INFO - Streaming text piece:  accommodation
+2025-07-22 16:25:58,345 - INFO - Streaming text piece:  in
+2025-07-22 16:25:58,534 - INFO - Streaming text piece:  Dubai
+2025-07-22 16:25:58,535 - INFO - Streaming text piece: ?
+2025-07-22 16:25:58,536 - INFO - Streaming text piece:  If
+2025-07-22 16:25:58,537 - INFO - Streaming text piece:  so
+2025-07-22 16:25:58,541 - INFO - Streaming text piece: ,
+2025-07-22 16:25:58,541 - INFO - Streaming text piece:  please
+2025-07-22 16:25:58,542 - INFO - Streaming text piece:  let
+2025-07-22 16:25:58,543 - INFO - Streaming text piece:  me
+2025-07-22 16:25:58,545 - INFO - Streaming text piece:  know
+2025-07-22 16:25:58,546 - INFO - Streaming text piece:  your
+2025-07-22 16:25:58,579 - INFO - Streaming text piece:  travel
+2025-07-22 16:25:58,580 - INFO - Streaming text piece:  dates
+2025-07-22 16:25:58,581 - INFO - Streaming text piece:  and
+2025-07-22 16:25:58,600 - INFO - Streaming text piece:  any
+2025-07-22 16:25:58,601 - INFO - Streaming text piece:  preferences
+2025-07-22 16:25:58,602 - INFO - Streaming text piece:  you
+2025-07-22 16:25:58,656 - INFO - Streaming text piece:  have
+2025-07-22 16:25:58,658 - INFO - Streaming text piece:  for
+2025-07-22 16:25:58,662 - INFO - Streaming text piece:  your
+2025-07-22 16:25:58,713 - INFO - Streaming text piece:  stay
+2025-07-22 16:25:58,727 - INFO - Streaming text piece: !
+2025-07-22 16:29:25,613 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:29:25,613 - INFO - Current context before message: []
+2025-07-22 16:29:25,616 - INFO - >>> Starting streaming response
+2025-07-22 16:39:28,726 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:39:28,727 - INFO - Current context before message: []
+2025-07-22 16:39:28,729 - ERROR - Error in /chat endpoint: Runner() takes no arguments
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 78, in chat
+    result = await Runner(current_agent).run(
+TypeError: Runner() takes no arguments
+2025-07-22 16:45:49,807 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:45:49,807 - INFO - Current context before message: []
+2025-07-22 16:45:49,808 - ERROR - Error in /chat endpoint: Runner.run() got an unexpected keyword argument 'user_id'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 77, in chat
+    result = await Runner.run(
+TypeError: Runner.run() got an unexpected keyword argument 'user_id'
+2025-07-22 16:50:07,028 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 16:50:07,028 - INFO - Current context before message: []
+2025-07-22 16:50:11,838 - INFO - >>> Starting streaming response
+2025-07-22 17:20:10,366 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 17:20:10,369 - INFO - Current context before message: []
+2025-07-22 17:20:10,393 - INFO - >>> Starting streaming response
+2025-07-22 18:58:49,728 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 18:58:49,730 - INFO - Current context before message: []
+2025-07-22 18:58:49,734 - INFO - >>> Starting streaming response
+2025-07-22 19:01:35,457 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:01:35,461 - INFO - Current context before message: []
+2025-07-22 19:01:35,466 - ERROR - Error in /chat endpoint: object RunResultStreaming can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 88, in chat
+    result_stream = await Runner.run_streamed(
+TypeError: object RunResultStreaming can't be used in 'await' expression
+2025-07-22 19:02:43,280 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:02:43,281 - INFO - Current context before message: []
+2025-07-22 19:02:43,294 - INFO - >>> Starting streaming response
+2025-07-22 19:04:34,624 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:04:34,626 - INFO - Current context before message: []
+2025-07-22 19:04:34,642 - INFO - >>> Starting streaming response
+2025-07-22 19:04:39,028 - INFO - Streaming text piece: Hello
+2025-07-22 19:04:39,030 - INFO - Streaming text piece: !
+2025-07-22 19:04:39,034 - INFO - Streaming text piece:  How
+2025-07-22 19:04:39,057 - INFO - Streaming text piece:  can
+2025-07-22 19:04:39,062 - INFO - Streaming text piece:  I
+2025-07-22 19:04:39,063 - INFO - Streaming text piece:  assist
+2025-07-22 19:04:39,077 - INFO - Streaming text piece:  you
+2025-07-22 19:04:39,079 - INFO - Streaming text piece:  with
+2025-07-22 19:04:39,175 - INFO - Streaming text piece:  your
+2025-07-22 19:04:39,176 - INFO - Streaming text piece:  travel
+2025-07-22 19:04:39,178 - INFO - Streaming text piece:  plans
+2025-07-22 19:04:39,179 - INFO - Streaming text piece:  today
+2025-07-22 19:04:39,188 - INFO - Streaming text piece: ?
+2025-07-22 19:04:39,213 - INFO - Streaming text piece:  Are
+2025-07-22 19:04:39,216 - INFO - Streaming text piece:  you
+2025-07-22 19:04:39,232 - INFO - Streaming text piece:  looking
+2025-07-22 19:04:39,249 - INFO - Streaming text piece:  to
+2025-07-22 19:04:39,256 - INFO - Streaming text piece:  book
+2025-07-22 19:04:39,298 - INFO - Streaming text piece:  a
+2025-07-22 19:04:39,323 - INFO - Streaming text piece:  flight
+2025-07-22 19:04:39,325 - INFO - Streaming text piece: ,
+2025-07-22 19:04:39,345 - INFO - Streaming text piece:  find
+2025-07-22 19:04:39,347 - INFO - Streaming text piece:  accommodation
+2025-07-22 19:04:39,350 - INFO - Streaming text piece: ,
+2025-07-22 19:04:39,365 - INFO - Streaming text piece:  or
+2025-07-22 19:04:39,377 - INFO - Streaming text piece:  calculate
+2025-07-22 19:04:39,379 - INFO - Streaming text piece:  trip
+2025-07-22 19:04:39,708 - INFO - Streaming text piece:  costs
+2025-07-22 19:04:39,716 - INFO - Streaming text piece: ?

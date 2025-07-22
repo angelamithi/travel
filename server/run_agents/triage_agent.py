@@ -2,6 +2,17 @@ from agents import Agent, Runner
 from run_agents.flight_agent import flight_agent
 # from run_agents.accommodation_agent import accommodation_agent
 from run_agents.price_calculator_agent import price_calculator_agent
+
+
+async def triage_agent_run(user_id: str, thread_id: str, message: str):
+    # Pass the message, user_id, and thread_id to the triage agent's runner
+    result = await Runner(triage_agent).run(
+        input=message,
+        user_id=user_id,
+        thread_id=thread_id
+    )
+    return result
+
 triage_agent = Agent (
     name="Triage Agent",
     instructions=
@@ -72,6 +83,6 @@ Examples:
 🤖 Be proactive, polite, and efficient. Your job is to smoothly direct the user to the correct service without asking them to choose agents manually.
 """,
 model="gpt-4o-mini",
-handoffs=[flight_agent,price_calculator_agent]
+handoffs=[flight_agent]
     )
    
