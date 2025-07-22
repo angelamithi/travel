@@ -10,13 +10,26 @@ import logging
 import uuid
 from tools.search_flight import search_flight
 from models.flight_models import SearchFlightInput
-from agents import Runner
+from agents import( Agent,
+    HandoffOutputItem,
+    ItemHelpers,
+    MessageOutputItem,
+    RunContextWrapper,
+    Runner,
+    ToolCallItem,
+    ToolCallOutputItem,
+    TResponseInputItem,
+    function_tool,
+    handoff,
+    trace,)
 from context import get_context, set_context, clear_context,get_all_context
 import json
 from typing import Optional
 from run_agents.triage_agent import triage_agent
 import asyncio
 from openai.types.responses import ResponseTextDeltaEvent
+from typing import Optional, AsyncGenerator
+
 
 
 # Load environment variables
@@ -62,43 +75,47 @@ class ChatMessage(BaseModel):
 async def chat(message: ChatMessage):
     print(">>> /chat endpoint hit")
     print(">>> Message:", message)
-    logger.info(f"Received message from user_id={message.user_id}, thread_id={message.thread_id}")
 
-    # Load or initialize conversation context
-    context = get_context(message.user_id, message.thread_id, "convo") or []
-    logger.info(f"Current context before message: {context}")
+    user_id = message.user_id
+    thread_id = message.thread_id
+    user_input = message.message
+    input_items = []
+    context = get_context(user_id, thread_id, "convo") or []
 
-    # Append the user message to context
-    context.append({"role": "user", "content": message.message})
+    context.append({"role": "user", "content": user_input})
+    input_items.append({"content": user_input, "role": "user"})
 
-    try:
-        # Use triage agent to route and handle the request
-        result = Runner.run_streamed(triage_agent, context)
+    current_agent = triage_agent
+    final_response = ""
 
-        # If result is a list, find one with `stream_events`
-        if isinstance(result, list):
-            for res in result:
-                if hasattr(res, "stream_events"):
-                    result = res
-                    break
+    with trace("travel service", group_id=thread_id):
+        result = await Runner.run(current_agent, input_items, context=context)
+
+        # Update current agent if there's a handoff
+        for new_item in result.new_items:
+            if isinstance(new_item, HandoffOutputItem):
+                print(f"Handed off from {new_item.source_agent.name} to {new_item.target_agent.name}")
+                current_agent = new_item.target_agent  # ← update the agent
+                # Optional: re-run the message under new agent
+                result = await Runner.run(current_agent, input_items, context=context)
+
+        # Collect assistant response
+        for new_item in result.new_items:
+            agent_name = new_item.agent.name
+            if isinstance(new_item, MessageOutputItem):
+                output_text = ItemHelpers.text_message_output(new_item)
+                print(f"{agent_name}: {output_text}")
+                final_response += output_text + " "
+            elif isinstance(new_item, ToolCallItem):
+                print(f"{agent_name}: Calling a tool")
+            elif isinstance(new_item, ToolCallOutputItem):
+                print(f"{agent_name}: Tool call output: {new_item.output}")
             else:
-                raise Exception("No valid result with stream_events found.")
+                print(f"{agent_name}: Skipping item: {new_item.__class__.__name__}")
 
-        # Define streaming generator using the proper event type
-        async def async_event_stream():
-            logger.info(">>> Starting streaming response")
-            async for event in result.stream_events():
-                if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
-                    text_piece = event.data.delta
-                    if text_piece:
-                        logger.info(f"Streaming text piece: {text_piece}")
-                        yield f"data: {text_piece}\n\n"
+    return {"role": "assistant", "content": final_response.strip()}
 
-        return StreamingResponse(async_event_stream(), media_type="text/event-stream")
-
-    except Exception as e:
-        logger.error(f"Error in /chat endpoint: {e}", exc_info=True)
-        return JSONResponse(status_code=500, content={"error": str(e)})
+    
 
 @app.post("/clear_context")
 def clear_chat_context(user_id: str, thread_id: str):

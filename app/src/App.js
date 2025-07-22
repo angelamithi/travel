@@ -29,13 +29,16 @@ const App = () => {
       console.error("Failed to load history", err);
     }
   };
+const sendMessage = async () => {
+  if (!input.trim()) return;
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
-    setInput("");
-    setLoading(true);
+  // Add user message
+  setMessages((prev) => [...prev, { role: "user", content: input }]);
+  const userInput = input;
+  setInput("");
+  setLoading(true);
 
+  try {
     const response = await fetch(`${BACKEND_URL}/chat`, {
       method: "POST",
       headers: {
@@ -44,64 +47,23 @@ const App = () => {
       body: JSON.stringify({
         user_id: userId.current,
         thread_id: threadId.current,
-        message: input,
+        message: userInput,
       }),
     });
 
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
-    let aiMessage = "";
+    const data = await response.json();
 
-    const readChunk = async () => {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
+    // Add assistant reply
+    if (data && data.role === "assistant" && data.content) {
+      setMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
+    }
+  } catch (error) {
+    console.error("Failed to send message:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
-        const lines = chunk.split("\n").filter((line) => line.startsWith("data:"));
-        for (let line of lines) {
-          const content = line.replace("data:", "").trim();
-          if (content === "[DONE]") {
-            setLoading(false);
-
-            // Replace "assistant-temp" with final assistant message
-            setMessages((prev) => [
-              ...prev.filter((msg) => msg.role !== "assistant-temp"),
-              { role: "assistant", content: aiMessage.trim() },
-            ]);
-
-            return;
-          }
-
-          // Add a space if necessary (basic heuristic)
-          const needsSpace =
-            aiMessage.length > 0 &&
-            !aiMessage.endsWith(" ") &&
-            !content.startsWith(" ") &&
-            !content.startsWith(".") &&
-            !content.startsWith(",") &&
-            !content.startsWith("!") &&
-            !content.startsWith("?") &&
-            !content.startsWith("'") &&
-            !content.startsWith('"') &&
-            !content.startsWith("\n");
-
-          aiMessage += needsSpace ? ` ${content}` : content;
-
-          // Update temporary assistant message
-          setMessages((prev) => [
-            ...prev.filter((msg) => msg.role !== "assistant-temp"),
-            { role: "assistant-temp", content: aiMessage },
-          ]);
-        }
-      }
-      setLoading(false);
-    };
-
-
-
-    readChunk();
-  };
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });

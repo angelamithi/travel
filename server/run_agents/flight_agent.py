@@ -171,13 +171,10 @@ customized_instructions = raw_instructions.replace("{{current_time}}", now)
 flight_agent =Agent (
    name="Flight Agent",
    instructions=customized_instructions,
-
-model="gpt-4o-mini",
-tools=[search_flight,book_flight,parse_natural_date],
-handoffs=[],
-output_type=SearchFlightOutput,
-
-    )
+   model="gpt-4o-mini",
+   tools=[search_flight,book_flight,parse_natural_date],
+   handoffs=[],
+   output_type=SearchFlightOutput,)
 try:
     from run_agents.price_calculator_agent import price_calculator_agent
     flight_agent.handoffs = [price_calculator_agent]

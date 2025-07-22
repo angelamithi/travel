@@ -393,3 +393,80 @@ TypeError: object RunResultStreaming can't be used in 'await' expression
 2025-07-22 19:04:39,379 - INFO - Streaming text piece:  trip
 2025-07-22 19:04:39,708 - INFO - Streaming text piece:  costs
 2025-07-22 19:04:39,716 - INFO - Streaming text piece: ?
+2025-07-22 19:17:26,980 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:17:26,986 - ERROR - Error during chat processing: Runner.run_streamed() got an unexpected keyword argument 'stream'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 77, in chat
+    result = await Runner.run_streamed(
+TypeError: Runner.run_streamed() got an unexpected keyword argument 'stream'
+2025-07-22 19:18:46,652 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:18:46,656 - ERROR - Error during chat processing: object RunResultStreaming can't be used in 'await' expression
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/main.py", line 77, in chat
+    result = await Runner.run_streamed(
+TypeError: object RunResultStreaming can't be used in 'await' expression
+2025-07-22 19:20:15,053 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:20:15,072 - INFO - >>> Starting streaming response
+2025-07-22 19:20:19,688 - INFO - Streaming text piece: Hello
+2025-07-22 19:20:19,701 - INFO - Streaming text piece: !
+2025-07-22 19:20:19,745 - INFO - Streaming text piece:  How
+2025-07-22 19:20:19,762 - INFO - Streaming text piece:  can
+2025-07-22 19:20:19,790 - INFO - Streaming text piece:  I
+2025-07-22 19:20:19,843 - INFO - Streaming text piece:  assist
+2025-07-22 19:20:19,872 - INFO - Streaming text piece:  you
+2025-07-22 19:20:19,884 - INFO - Streaming text piece:  with
+2025-07-22 19:20:19,924 - INFO - Streaming text piece:  your
+2025-07-22 19:20:19,958 - INFO - Streaming text piece:  travel
+2025-07-22 19:20:19,960 - INFO - Streaming text piece:  plans
+2025-07-22 19:20:19,962 - INFO - Streaming text piece:  today
+2025-07-22 19:20:20,134 - INFO - Streaming text piece: ?
+2025-07-22 19:20:35,861 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:20:35,864 - INFO - >>> Starting streaming response
+2025-07-22 19:20:38,071 - INFO - Streaming text piece: Great
+2025-07-22 19:20:38,073 - INFO - Streaming text piece: !
+2025-07-22 19:20:38,074 - INFO - Streaming text piece:  Where
+2025-07-22 19:20:38,076 - INFO - Streaming text piece:  would
+2025-07-22 19:20:38,079 - INFO - Streaming text piece:  you
+2025-07-22 19:20:38,080 - INFO - Streaming text piece:  like
+2025-07-22 19:20:38,082 - INFO - Streaming text piece:  to
+2025-07-22 19:20:38,086 - INFO - Streaming text piece:  fly
+2025-07-22 19:20:38,087 - INFO - Streaming text piece:  to
+2025-07-22 19:20:38,089 - INFO - Streaming text piece: ?
+2025-07-22 19:20:38,094 - INFO - Streaming text piece:  And
+2025-07-22 19:20:38,096 - INFO - Streaming text piece:  when
+2025-07-22 19:20:38,101 - INFO - Streaming text piece:  do
+2025-07-22 19:20:38,102 - INFO - Streaming text piece:  you
+2025-07-22 19:20:38,103 - INFO - Streaming text piece:  plan
+2025-07-22 19:20:38,114 - INFO - Streaming text piece:  to
+2025-07-22 19:20:38,115 - INFO - Streaming text piece:  travel
+2025-07-22 19:20:38,117 - INFO - Streaming text piece: ?
+2025-07-22 19:20:55,722 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:20:55,726 - INFO - >>> Starting streaming response
+2025-07-22 19:27:45,867 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:30:08,662 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:30:08,687 - INFO - >>> Starting streaming response
+2025-07-22 19:31:25,282 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:31:25,296 - INFO - >>> Starting streaming response
+2025-07-22 19:31:28,755 - INFO - Streaming text piece: Hello
+2025-07-22 19:31:28,756 - INFO - Streaming text piece: !
+2025-07-22 19:31:28,758 - INFO - Streaming text piece:  How
+2025-07-22 19:31:28,759 - INFO - Streaming text piece:  can
+2025-07-22 19:31:28,760 - INFO - Streaming text piece:  I
+2025-07-22 19:31:28,762 - INFO - Streaming text piece:  assist
+2025-07-22 19:31:28,763 - INFO - Streaming text piece:  you
+2025-07-22 19:31:28,767 - INFO - Streaming text piece:  with
+2025-07-22 19:31:28,768 - INFO - Streaming text piece:  your
+2025-07-22 19:31:28,952 - INFO - Streaming text piece:  travel
+2025-07-22 19:31:28,953 - INFO - Streaming text piece:  plans
+2025-07-22 19:31:28,957 - INFO - Streaming text piece:  today
+2025-07-22 19:31:29,258 - INFO - Streaming text piece: ?
+2025-07-22 19:36:28,003 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:36:28,005 - INFO - Current context before message: []
+2025-07-22 19:39:38,890 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:39:38,903 - INFO - Current context before message: []
+2025-07-22 19:40:25,352 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:40:25,367 - INFO - Current context before message: []
+2025-07-22 19:41:33,664 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:41:33,665 - INFO - Current context before message: []
+2025-07-22 19:41:54,999 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
+2025-07-22 19:41:55,000 - INFO - Current context before message: []
