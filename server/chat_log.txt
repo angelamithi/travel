@@ -827,3 +827,9 @@ TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 2025-07-24 16:15:25,556 - INFO - Searching flight for CDG → AUS on 2025-07-29
 2025-07-24 16:15:25,558 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-29', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
 2025-07-24 16:15:45,794 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 16:30:07,475 - INFO - Searching flight for CDG → LHR on 2025-08-04
+2025-07-24 16:30:07,477 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'LHR', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 16:30:09,311 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 16:30:21,931 - INFO - Searching flight for CDG → LHR on 2025-08-04
+2025-07-24 16:30:21,932 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'LHR', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 16:30:22,598 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])

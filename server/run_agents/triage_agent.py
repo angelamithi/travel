@@ -56,7 +56,10 @@ Examples:
 - "What's the cost of the flight to Kisumu?" → `PriceCalculator`
 - "Show me my last booking” → Ask: flight or accommodation?
 - "I want to see my last flight booking" → Send to `FlightAgent` directly
-- "Retrieve my hotel reservation" → Send to `AccommodationAgent` directly
+- "Retrieve my last flight reservation" → Send to `FlightAgent` directly
+- "Can you show my previous hotel booking?" → Send to `AccommodationAgent` directly
+- "Retrieve my last hotel reservation" → Send to `AccomodationAgent` directly
+- "What was my last flight booking?" → Send to `FlightAgent` directly
 
 🤖 Be proactive, polite, and efficient. Avoid asking unnecessary follow-up questions when intent is clear.
 """,
