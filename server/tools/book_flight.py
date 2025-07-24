@@ -3,7 +3,9 @@ from pydantic import BaseModel
 import uuid
 from context import set_context  # ✅ Updated context supports user_id + thread_id
 from models.flight_models import BookFlightInput, BookFlightOutput
+from agents import Agent, Runner,function_tool
 
+@function_tool
 def book_flight(input: BookFlightInput, user_id: Optional[str], thread_id: Optional[str] = None) -> BookFlightOutput:
     booking_reference = str(uuid.uuid4())[:8].upper()
 

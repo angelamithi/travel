@@ -5,6 +5,28 @@ import "./App.css";
 
 const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 
+function formatMessage(content) {
+  if (!content) return "";
+
+  // Escape HTML first
+  const escapeHtml = (str) =>
+    str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  const escaped = escapeHtml(content);
+
+  // Basic replacements: bold, newlines, bullets
+  return escaped
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // bold
+    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$&</strong></p>") // numbered list
+    .replace(/^- (.*)$/gm, "<li>$1</li>")                    // unordered list
+    .replace(/\n{2,}/g, "<br/><br/>")                        // double line breaks
+    .replace(/\n/g, "<br/>");                                // single line breaks
+}
+
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -103,7 +125,10 @@ const sendMessage = async () => {
               className={`message ${msg.role === "user" ? "user" : "assistant"}`}
             >
               <span className="avatar">{getAvatar(msg.role)}</span>
-              <span>{msg.content}</span>
+              <span
+  dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
+/>
+
             </div>
           ))}
           <div ref={chatEndRef} />

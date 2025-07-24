@@ -65,6 +65,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
     raise ValueError("Missing OpenAI API key in environment variables")
 
+SERP_API_KEY=os.getenv("SERP_API_KEY")
+ 
+
+
 # Chat message model
 class ChatMessage(BaseModel):
     user_id: str
@@ -79,27 +83,41 @@ async def chat(message: ChatMessage):
     user_id = message.user_id
     thread_id = message.thread_id
     user_input = message.message
-    input_items = []
+
+    # Load previous context
     context = get_context(user_id, thread_id, "convo") or []
-
     context.append({"role": "user", "content": user_input})
-    input_items.append({"content": user_input, "role": "user"})
 
+    # Create initial input_items from context
+    input_items = [{"role": item["role"], "content": item["content"]} for item in context]
+
+    # Start with triage agent
     current_agent = triage_agent
     final_response = ""
 
     with trace("travel service", group_id=thread_id):
+        # Initial run
         result = await Runner.run(current_agent, input_items, context=context)
 
-        # Update current agent if there's a handoff
+        # Handle agent handoff if it occurred
         for new_item in result.new_items:
             if isinstance(new_item, HandoffOutputItem):
                 print(f"Handed off from {new_item.source_agent.name} to {new_item.target_agent.name}")
-                current_agent = new_item.target_agent  # ← update the agent
-                # Optional: re-run the message under new agent
+                current_agent = new_item.target_agent
+
+                # Append assistant reply from first run to context
+                for item in result.new_items:
+                    if isinstance(item, MessageOutputItem):
+                        assistant_reply = ItemHelpers.text_message_output(item)
+                        context.append({"role": "assistant", "content": assistant_reply})
+
+                # Rebuild input_items from context again before rerunning
+                input_items = [{"role": item["role"], "content": item["content"]} for item in context]
+
+                # Rerun using updated agent and full message history
                 result = await Runner.run(current_agent, input_items, context=context)
 
-        # Collect assistant response
+        # Collect assistant response from final result
         for new_item in result.new_items:
             agent_name = new_item.agent.name
             if isinstance(new_item, MessageOutputItem):
@@ -113,7 +131,16 @@ async def chat(message: ChatMessage):
             else:
                 print(f"{agent_name}: Skipping item: {new_item.__class__.__name__}")
 
+        # Persist updated context
+        set_context(user_id, thread_id, "convo", context)
+
+        # ✅ Update current agent and input_items after all processing
+        input_items = result.to_input_list()
+        current_agent = result.last_agent
+
     return {"role": "assistant", "content": final_response.strip()}
+
+
 
     
 

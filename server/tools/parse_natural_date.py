@@ -1,6 +1,8 @@
 from datetime import datetime
 import dateparser
+from agents import Agent, Runner,function_tool
 
+@function_tool
 def parse_natural_date(text: str) -> str:
     """
     Parses natural language date expressions and returns YYYY-MM-DD format.

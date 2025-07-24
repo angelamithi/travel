@@ -1,28 +1,32 @@
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 
 # --- For search_flight ---
 class SearchFlightInput(BaseModel):
-    origin: str  # IATA
-    destination: str  # IATA
-    departure_date: str  # Format: YYYY-MM-DD
+    origin: str
+    destination: str
+    departure_date: str
     return_date: Optional[str] = None
-    adults: int
-    children: Optional[int] = 0
-    infants: Optional[int] = 0
-    cabin_class: str  # economy, business, etc.
+    cabin_class: str = "economy"
+    adults: int = Field(default=1, ge=0)
+    children: int = Field(default=0, ge=0)
+    infants: int = Field(default=0, ge=0)
 
 class FlightOption(BaseModel):
-    id: str  # unique identifier of flight
     airline: str
+    price: Optional[float]
+    currency: str
     departure_time: str
     arrival_time: str
     duration: str
     stops: int
-    price: float
-    link: Optional[str] = None  # booking link
+    booking_link: Optional[str]
+    id: Optional[str] = None  # Optional or remove if unused
+
 
 class SearchFlightOutput(BaseModel):
+    origin: str
+    destination: str
     flights: List[FlightOption]
 
 

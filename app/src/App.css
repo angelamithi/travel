@@ -83,6 +83,21 @@ body {
   align-self: flex-start;
   background-color: #e0e0e0;
 }
+.message span {
+  display: block;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+.message strong {
+  font-weight: 600;
+}
+
+.message li {
+  margin-left: 1.5rem;
+  list-style: disc;
+}
+
 
 .avatar {
   font-size: 1.4rem;

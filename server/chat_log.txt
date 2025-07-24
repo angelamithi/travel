@@ -470,3 +470,318 @@ TypeError: object RunResultStreaming can't be used in 'await' expression
 2025-07-22 19:41:33,665 - INFO - Current context before message: []
 2025-07-22 19:41:54,999 - INFO - Received message from user_id=user_u0okkhuhp, thread_id=default
 2025-07-22 19:41:55,000 - INFO - Current context before message: []
+2025-07-23 11:22:38,435 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:38,437 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:22:41,794 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:41,794 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:22:44,957 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:44,957 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:22:47,928 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:47,928 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:22:54,133 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:54,134 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:22:57,028 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:22:59,488 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 11:23:05,038 - INFO - Searching flight for NBO → JFK on 2025-07-25
+2025-07-23 11:23:05,038 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 12:59:04,095 - INFO - Searching flight for NBO → DXB on 2025-08-10
+2025-07-23 12:59:04,096 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 12:59:08,887 - INFO - Searching flight for NBO → DXB on 2025-08-10
+2025-07-23 12:59:08,887 - ERROR - search_flight error: 'str' object has no attribute 'strftime'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 23, in search_flight
+    query = f"{data.origin} to {data.destination} flights {data.departure_date.strftime('%Y-%m-%d')}"
+AttributeError: 'str' object has no attribute 'strftime'
+2025-07-23 14:03:16,928 - INFO - Searching flight for NBO → DXB on 2025-08-11
+2025-07-23 14:03:17,717 - ERROR - search_flight error: SERP API error: 401 - {
+  "error": "Invalid API key. Your API key should be here: https://serpapi.com/manage-api-key"
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 44, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 401 - {
+  "error": "Invalid API key. Your API key should be here: https://serpapi.com/manage-api-key"
+}
+2025-07-23 14:03:23,578 - INFO - Searching flight for NBO → DXB on 2025-08-11
+2025-07-23 14:03:24,219 - ERROR - search_flight error: SERP API error: 401 - {
+  "error": "Invalid API key. Your API key should be here: https://serpapi.com/manage-api-key"
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 44, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 401 - {
+  "error": "Invalid API key. Your API key should be here: https://serpapi.com/manage-api-key"
+}
+2025-07-23 14:17:42,525 - INFO - Searching flight for NBO → DXB on 2025-09-06
+2025-07-23 14:17:43,443 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "Missing `departure_id` parameter."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 47, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "Missing `departure_id` parameter."
+}
+2025-07-23 14:17:48,748 - INFO - Searching flight for NBO → DXB on 2025-09-06
+2025-07-23 14:17:49,506 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "Missing `departure_id` parameter."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 47, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "Missing `departure_id` parameter."
+}
+2025-07-23 14:27:22,843 - INFO - Searching flight for NBO → DXB on 2025-09-24
+2025-07-23 14:27:23,716 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 56, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+2025-07-23 14:34:55,716 - INFO - Searching flight for NBO → DXB on 2025-08-07
+2025-07-23 14:34:56,510 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 60, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+2025-07-23 14:35:01,940 - INFO - Searching flight for NBO → DXB on 2025-08-07
+2025-07-23 14:35:02,568 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 60, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+2025-07-23 14:35:08,904 - INFO - Searching flight for NBO → DXB on 2025-08-07
+2025-07-23 14:35:10,231 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 60, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "Unsupported `0` for travel class."
+}
+2025-07-23 14:46:18,591 - INFO - Searching flight for NBO → DXB on 2025-09-05
+2025-07-23 14:46:18,594 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'DXB', 'outbound_date': '2025-09-05', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-23 14:46:21,130 - ERROR - search_flight error: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 90, in search_flight
+    output = SearchFlightOutput(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+2025-07-23 14:47:16,253 - INFO - Searching flight for NBO → DXB on 2025-09-05
+2025-07-23 14:47:16,255 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'DXB', 'outbound_date': '2025-09-05', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-23 14:47:16,615 - ERROR - search_flight error: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 90, in search_flight
+    output = SearchFlightOutput(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+2025-07-23 14:47:23,997 - INFO - Searching flight for NBO → DXB on 2025-09-05
+2025-07-23 14:47:23,998 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'DXB', 'outbound_date': '2025-09-05', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-23 14:47:24,393 - ERROR - search_flight error: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 90, in search_flight
+    output = SearchFlightOutput(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SearchFlightOutput
+flights
+  Field required [type=missing, input_value={'origin': 'NBO', 'destin...': 'DXB', 'results': []}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+2025-07-23 15:02:42,864 - INFO - Searching flight for NBO → DXB on 2025-08-05
+2025-07-23 15:02:42,865 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'DXB', 'outbound_date': '2025-08-05', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-23 15:02:53,630 - INFO - Searching flight for NBO → DXB on 2025-08-05
+2025-07-23 15:02:53,631 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'DXB', 'outbound_date': '2025-08-05', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-23 15:07:01,857 - INFO - Searching flight for LHR → DXB on 2025-08-30
+2025-07-23 15:07:01,859 - ERROR - search_flight error: unsupported operand type(s) for +: 'int' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 27, in search_flight
+    total_passengers = data.adults + data.children + data.infants
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-07-23 15:07:06,990 - INFO - Searching flight for LHR → DXB on 2025-08-30
+2025-07-23 15:07:06,990 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'LHR', 'arrival_id': 'DXB', 'outbound_date': '2025-08-30', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:36:39,561 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:36:39,563 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:36:41,146 - INFO - Searching flight for ORY → AUS on 2025-07-25
+2025-07-24 10:36:41,147 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'ORY', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:36:49,386 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:36:49,387 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'adults': 1, 'children': 0, 'infants': 0, 'travel_class': 1, 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:52:42,887 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:52:42,888 - ERROR - search_flight error: unsupported operand type(s) for +: 'int' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 28, in search_flight
+    total_passengers = data.adults + data.children + data.infants
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-07-24 10:52:46,530 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:52:46,532 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:52:47,289 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 60, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+2025-07-24 10:52:53,640 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:52:53,640 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 10:52:54,538 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 60, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "`return_date` is required if `type` is `1` (Round trip)."
+}
+2025-07-24 10:57:27,376 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 10:57:27,378 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:06:56,903 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:06:56,905 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:09:23,881 - INFO - Searching flight for CDG → AUS on 2025-07-26
+2025-07-24 11:09:23,883 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-26', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:09:33,932 - INFO - Searching flight for CDG → AUS on 2025-07-26
+2025-07-24 11:09:33,933 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-26', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:09:34,504 - INFO - Searching flight for CDG → IAH on 2025-07-26
+2025-07-24 11:09:34,504 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'IAH', 'outbound_date': '2025-07-26', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:29:25,399 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:29:25,401 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:29:25,969 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 11:29:25,970 - ERROR - search_flight error: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 77, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-07-24 11:29:29,577 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:29:29,577 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:29:30,104 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 11:29:30,106 - ERROR - search_flight error: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 77, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-07-24 11:29:35,345 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:29:35,345 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:29:35,854 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 11:29:35,855 - ERROR - search_flight error: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 77, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for FlightOption
+id
+  Field required [type=missing, input_value={'airline': 'American', '...1, 'booking_link': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+duration
+  Input should be a valid string [type=string_type, input_value=902, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-07-24 11:34:44,652 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:34:44,655 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:34:45,198 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 11:34:53,022 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:34:53,023 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:34:53,558 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 11:34:53,561 - ERROR - search_flight error: unsupported operand type(s) for +: 'int' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 99, in search_flight
+    total_passengers = data.adults + data.children + data.infants
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-07-24 11:39:54,513 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 11:39:54,514 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 11:39:55,126 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])

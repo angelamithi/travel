@@ -8,7 +8,9 @@ from tools.parse_natural_date import parse_natural_date
 
 from datetime import datetime
 
-now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+now_dt = datetime.now()  # datetime object
+current_time = now_dt.strftime('%Y-%m-%d %H:%M:%S')  # string for template
+this_year = now_dt.year  # int for year substitution
 
 raw_instructions="""
 You are a helpful and friendly Flight Booking Assistant.
@@ -17,7 +19,7 @@ Your role is to help users find and book flights in a professional, step-by-step
 
 ---
 
-💡 Routing Smartness:
+ Routing Smartness:
 
 - If the user explicitly asks for a flight **price or total cost**, route to the Price Calculator Agent.
   - Examples: “How much is the flight?”, “What’s the trip cost?”, “What’s the price?”
@@ -58,7 +60,7 @@ You understand and resolve natural language date expressions like:
 
 Assume the current date and time is: **{{current_time}}**
 
-If a date does not include a year, assume it refers to **this year**, unless the date has already passed, in which case assume it’s next year.
+If a date does not include a year, assume it refers to **{{this_year}}**, unless the date has already passed, in which case assume it’s next year.
 
 You may use the `parse_natural_date` tool if needed to resolve expressions into `YYYY-MM-DD`.
 
@@ -96,7 +98,7 @@ Example:
 + 
 + ✅ Only after confirming all fields, say:
 + “One moment please as I fetch the best flight options for you... ✈️”
-+ And then call the `search_flight` tool.
++ And then call the `search_flight` tool using `SearchFlightInput`, then present the results conversationally.
 
 📦 Then construct a `SearchFlightInput` object and call the `search_flight` tool.
 
@@ -166,7 +168,7 @@ These values are extracted automatically from `BookFlightInput.selected_flight_d
 
 ✅ Always maintain a clear, polite, and professional tone. Help the user feel guided and supported throughout their journey.
 """
-customized_instructions = raw_instructions.replace("{{current_time}}", now)
+customized_instructions = raw_instructions.replace("{{current_time}}", current_time).replace("{{this_year}}", str(this_year))
 
 flight_agent =Agent (
    name="Flight Agent",
@@ -174,7 +176,7 @@ flight_agent =Agent (
    model="gpt-4o-mini",
    tools=[search_flight,book_flight,parse_natural_date],
    handoffs=[],
-   output_type=SearchFlightOutput,)
+   output_type=None,)
 try:
     from run_agents.price_calculator_agent import price_calculator_agent
     flight_agent.handoffs = [price_calculator_agent]
