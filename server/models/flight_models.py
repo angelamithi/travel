@@ -1,5 +1,7 @@
-from typing import Optional, List
+from typing import Optional, List,Dict
 from pydantic import BaseModel,Field
+
+
 
 # --- For search_flight ---
 class SearchFlightInput(BaseModel):
@@ -22,6 +24,8 @@ class FlightOption(BaseModel):
     stops: int
     booking_link: Optional[str]
     id: Optional[str] = None  # Optional or remove if unused
+    origin: Optional[str] = None
+    destination: Optional[str] = None
 
 
 class SearchFlightOutput(BaseModel):
@@ -56,3 +60,10 @@ class PriceCalculationInput(BaseModel):
 class PriceCalculationOutput(BaseModel):
     total_cost: float
     breakdown: dict
+
+class LastBookingOutput(BaseModel):
+    message: str
+
+class RetrieveLastFlightBookingInput(BaseModel):
+    user_id: str
+    thread_id: str

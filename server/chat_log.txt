@@ -785,3 +785,45 @@ TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 2025-07-24 11:39:54,513 - INFO - Searching flight for CDG → AUS on 2025-07-25
 2025-07-24 11:39:54,514 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
 2025-07-24 11:39:55,126 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:13:33,818 - INFO - Searching flight for CDG → AUS on 2025-07-28
+2025-07-24 13:13:33,820 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-28', 'return_date': '2025-07-30', 'type': 1, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:13:35,612 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:14:03,158 - INFO - Searching flight for CDG → AUS on 2025-07-28
+2025-07-24 13:14:03,159 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-28', 'return_date': '2025-07-30', 'type': 1, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:14:03,681 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:14:03,683 - INFO - Searching flight for AUS → CDG on 2025-07-30
+2025-07-24 13:14:03,684 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'AUS', 'arrival_id': 'CDG', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:14:05,064 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:17:40,621 - INFO - Searching flight for CDG → AUS on 2025-07-28
+2025-07-24 13:17:40,622 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-28', 'return_date': '2025-07-30', 'type': 1, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:17:41,184 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:17:46,848 - INFO - Searching flight for CDG → AUS on 2025-07-28
+2025-07-24 13:17:46,849 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-28', 'return_date': '2025-07-30', 'type': 1, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:17:47,406 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:22:32,365 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 13:22:32,366 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:22:33,961 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:24:00,660 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 13:24:00,661 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:24:01,264 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:24:09,215 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 13:24:09,216 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:24:09,760 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 13:25:14,748 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 13:25:14,749 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 13:25:15,264 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 15:09:51,792 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 15:09:51,794 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 15:09:58,641 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 15:29:19,069 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 15:29:19,071 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 15:29:19,865 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 15:29:30,403 - INFO - Searching flight for CDG → AUS on 2025-07-30
+2025-07-24 15:29:30,404 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-30', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 15:29:31,096 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 15:44:20,948 - INFO - Searching flight for CDG → AUS on 2025-07-25
+2025-07-24 15:44:20,952 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-25', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 15:44:22,651 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-24 16:15:25,556 - INFO - Searching flight for CDG → AUS on 2025-07-29
+2025-07-24 16:15:25,558 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-07-29', 'type': 2, 'hl': 'en', 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-24 16:15:45,794 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])

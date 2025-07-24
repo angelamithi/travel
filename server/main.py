@@ -22,13 +22,15 @@ from agents import( Agent,
     function_tool,
     handoff,
     trace,)
-from context import get_context, set_context, clear_context,get_all_context
+from in_memory_context import get_context, set_context, clear_context,get_all_context
 import json
-from typing import Optional
+from typing import Optional,List
 from run_agents.triage_agent import triage_agent
 import asyncio
 from openai.types.responses import ResponseTextDeltaEvent
 from typing import Optional, AsyncGenerator
+from dataclasses import dataclass
+from models.context_models import UserInfo
 
 
 
@@ -68,8 +70,10 @@ if not openai.api_key:
 SERP_API_KEY=os.getenv("SERP_API_KEY")
  
 
+# In-memory conversation store
+conversation_store: dict[str, List[TResponseInputItem]] = {}
 
-# Chat message model
+# Incoming chat message model
 class ChatMessage(BaseModel):
     user_id: str
     thread_id: str
@@ -80,22 +84,28 @@ async def chat(message: ChatMessage):
     print(">>> /chat endpoint hit")
     print(">>> Message:", message)
 
-    user_id = message.user_id
-    thread_id = message.thread_id
+    # Retrieve conversation history or start new
+    input_items: List[TResponseInputItem] = conversation_store.get(message.thread_id, [])
+
+    # Context object
+    user_info = UserInfo(
+        user_id=message.user_id,
+        thread_id=message.thread_id,
+        email="",  # fill from DB if needed
+        name="",
+        phone=""
+    )
+    context = user_info
+
+    # Append the latest user input to the history
     user_input = message.message
-
-    # Load previous context
-    context = get_context(user_id, thread_id, "convo") or []
-    context.append({"role": "user", "content": user_input})
-
-    # Create initial input_items from context
-    input_items = [{"role": item["role"], "content": item["content"]} for item in context]
+    input_items.append({"content": user_input, "role": "user"})
 
     # Start with triage agent
     current_agent = triage_agent
     final_response = ""
 
-    with trace("travel service", group_id=thread_id):
+    with trace("travel service", group_id=message.thread_id):
         # Initial run
         result = await Runner.run(current_agent, input_items, context=context)
 
@@ -105,25 +115,26 @@ async def chat(message: ChatMessage):
                 print(f"Handed off from {new_item.source_agent.name} to {new_item.target_agent.name}")
                 current_agent = new_item.target_agent
 
-                # Append assistant reply from first run to context
+                # Append assistant reply from first agent
                 for item in result.new_items:
                     if isinstance(item, MessageOutputItem):
                         assistant_reply = ItemHelpers.text_message_output(item)
-                        context.append({"role": "assistant", "content": assistant_reply})
+                        input_items.append({"role": "assistant", "content": assistant_reply})
 
-                # Rebuild input_items from context again before rerunning
-                input_items = [{"role": item["role"], "content": item["content"]} for item in context]
+                # Append the user message again for re-evaluation under new agent
+                input_items.append({"role": "user", "content": user_input})
 
-                # Rerun using updated agent and full message history
+                # Rerun with updated agent and preserved message history
                 result = await Runner.run(current_agent, input_items, context=context)
 
-        # Collect assistant response from final result
+        # Process final result
         for new_item in result.new_items:
             agent_name = new_item.agent.name
             if isinstance(new_item, MessageOutputItem):
                 output_text = ItemHelpers.text_message_output(new_item)
                 print(f"{agent_name}: {output_text}")
                 final_response += output_text + " "
+                input_items.append({"role": "assistant", "content": output_text})
             elif isinstance(new_item, ToolCallItem):
                 print(f"{agent_name}: Calling a tool")
             elif isinstance(new_item, ToolCallOutputItem):
@@ -131,15 +142,10 @@ async def chat(message: ChatMessage):
             else:
                 print(f"{agent_name}: Skipping item: {new_item.__class__.__name__}")
 
-        # Persist updated context
-        set_context(user_id, thread_id, "convo", context)
-
-        # ✅ Update current agent and input_items after all processing
-        input_items = result.to_input_list()
-        current_agent = result.last_agent
+        # ✅ Save updated conversation history back to store
+        conversation_store[message.thread_id] = input_items
 
     return {"role": "assistant", "content": final_response.strip()}
-
 
 
     

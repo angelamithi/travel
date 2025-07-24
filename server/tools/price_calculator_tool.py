@@ -1,8 +1,8 @@
-from context import get_context
+from in_memory_context import get_context
 from models.flight_models import PriceCalculationInput, PriceCalculationOutput
 from agents import Agent, Runner,function_tool
 
-@function_tool
+@function_tool()
 def price_calculator_tool(input: PriceCalculationInput, user_id: str, thread_id: str) -> PriceCalculationOutput:
     # Try pulling from context if not provided in input
     flight_cost = input.flight_cost or get_context(user_id, thread_id, "last_flight_cost")

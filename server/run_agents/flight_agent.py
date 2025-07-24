@@ -5,6 +5,7 @@ from tools.book_flight import book_flight  # simulated booking tool
 from run_agents.price_calculator_agent import price_calculator_agent
 # from agents.accommodation_agent import accommodation_agent
 from tools.parse_natural_date import parse_natural_date
+from tools.retrieve_last_booking_flight_details import retrieve_last_booking_flight_details
 
 from datetime import datetime
 
@@ -166,6 +167,19 @@ These values are extracted automatically from `BookFlightInput.selected_flight_d
 
 ---
 
+📁 Retrieving Previous Bookings:
+
+If the user asks something like:
+- “What’s my last booking?”
+- “Show me my last flight”
+- “Can I see my flight confirmation again?”
+- “What flight did I book?”
+
+➡️ Call the `retrieve_last_booking_details` tool with the user_id and thread_id.
+
+✅ Respond with the formatted message returned from the tool.
+
+
 ✅ Always maintain a clear, polite, and professional tone. Help the user feel guided and supported throughout their journey.
 """
 customized_instructions = raw_instructions.replace("{{current_time}}", current_time).replace("{{this_year}}", str(this_year))
@@ -174,7 +188,7 @@ flight_agent =Agent (
    name="Flight Agent",
    instructions=customized_instructions,
    model="gpt-4o-mini",
-   tools=[search_flight,book_flight,parse_natural_date],
+   tools=[search_flight,book_flight,parse_natural_date,retrieve_last_booking_flight_details],
    handoffs=[],
    output_type=None,)
 try:

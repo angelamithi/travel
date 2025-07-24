@@ -1,12 +1,17 @@
 from typing import Optional
 from pydantic import BaseModel
 import uuid
-from context import set_context  # ✅ Updated context supports user_id + thread_id
+from in_memory_context import set_context
 from models.flight_models import BookFlightInput, BookFlightOutput
-from agents import Agent, Runner,function_tool
+from agents import Agent, Runner,function_tool,RunContextWrapper
+from models.context_models import UserInfo
 
 @function_tool
-def book_flight(input: BookFlightInput, user_id: Optional[str], thread_id: Optional[str] = None) -> BookFlightOutput:
+async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInput) -> BookFlightOutput:
+    user_id = wrapper.context.user_id
+    thread_id = wrapper.context.thread_id
+
+    print(f"[BOOK FLIGHT] user_id={user_id}, thread_id={thread_id}")
     booking_reference = str(uuid.uuid4())[:8].upper()
 
     message = (
