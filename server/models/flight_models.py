@@ -1,4 +1,4 @@
-from typing import Optional, List,Dict
+from typing import Optional, List, Dict 
 from pydantic import BaseModel,Field
 
 
@@ -13,19 +13,30 @@ class SearchFlightInput(BaseModel):
     adults: int = Field(default=1, ge=0)
     children: int = Field(default=0, ge=0)
     infants: int = Field(default=0, ge=0)
+    max_price: Optional[float] = None
+    nonstop_only: Optional[bool] = False
+    allowed_airlines: Optional[List[str]] = None  # e.g., ["Kenya Airways", "Emirates"]
+    excluded_airlines: Optional[List[str]] = None
+
+class FlightLeg(BaseModel):
+    departure_time: str
+    arrival_time: str
+    origin: Optional[str] = None
+    destination: Optional[str] = None
+    duration: Optional[str] = None
+    stops: Optional[int] = None
+    extensions: Optional[List[str]] = None
+
 
 class FlightOption(BaseModel):
     airline: str
     price: Optional[float]
     currency: str
-    departure_time: str
-    arrival_time: str
-    duration: str
-    stops: int
+    outbound: FlightLeg
+    return_leg: Optional[FlightLeg] = None
     booking_link: Optional[str]
-    id: Optional[str] = None  # Optional or remove if unused
-    origin: Optional[str] = None
-    destination: Optional[str] = None
+    id: Optional[str] = None
+    departure_token: Optional[str] = None  # <-- Add this line
 
 
 class SearchFlightOutput(BaseModel):
