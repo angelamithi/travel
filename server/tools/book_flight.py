@@ -1,17 +1,12 @@
-from typing import Optional
-from pydantic import BaseModel
-import uuid
-from in_memory_context import set_context, get_context  # ✅ added get_context
-from models.flight_models import BookFlightInput, BookFlightOutput, FlightOption,FlightLeg
-from agents import Agent, Runner, function_tool, RunContextWrapper
-from models.context_models import UserInfo
+from db.session import SessionLocal
+from models.db_models import FLightBooking, FlightLegDB
 
 @function_tool
 async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInput) -> BookFlightOutput:
     user_id = wrapper.context.user_id
     thread_id = wrapper.context.thread_id
+    session = SessionLocal()
 
-    print(f"[BOOK FLIGHT] user_id={user_id}, thread_id={thread_id}")
     booking_reference = str(uuid.uuid4())[:8].upper()
 
     message = (
@@ -28,7 +23,6 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         set_context(user_id, thread_id, "last_phone", input.phone)
         set_context(user_id, thread_id, "last_flight_id", input.selected_flight_id)
 
-        # 🔁 Retrieve full flight data
         flight_data = get_context(user_id, thread_id, f"flight_option_{input.selected_flight_id}")
         if flight_data:
             flight = FlightOption(**flight_data)
@@ -37,32 +31,73 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         else:
             raise ValueError("No flight data available to book.")
 
-        # ✅ Set outbound leg info
-        outbound = flight.outbound
-        set_context(user_id, thread_id, "last_flight_outbound_departure_time", outbound.departure_time)
-        set_context(user_id, thread_id, "last_flight_outbound_arrival_time", outbound.arrival_time)
-        set_context(user_id, thread_id, "last_flight_outbound_origin", outbound.origin)
-        set_context(user_id, thread_id, "last_flight_outbound_destination", outbound.destination)
-        set_context(user_id, thread_id, "last_flight_outbound_duration", outbound.duration)
-        set_context(user_id, thread_id, "last_flight_outbound_stops", outbound.stops)
-        set_context(user_id, thread_id, "last_flight_outbound_extensions", outbound.extensions)
+        is_multi_city = flight.legs is not None and len(flight.legs) > 0
 
-        # ✅ Set return leg info (if any)
-        if flight.return_leg:
-            return_leg = flight.return_leg
-            set_context(user_id, thread_id, "last_flight_return_departure_time", return_leg.departure_time)
-            set_context(user_id, thread_id, "last_flight_return_arrival_time", return_leg.arrival_time)
-            set_context(user_id, thread_id, "last_flight_return_origin", return_leg.origin)
-            set_context(user_id, thread_id, "last_flight_return_destination", return_leg.destination)
-            set_context(user_id, thread_id, "last_flight_return_duration", return_leg.duration)
-            set_context(user_id, thread_id, "last_flight_return_stops", return_leg.stops)
-            set_context(user_id, thread_id, "last_flight_return_extensions", return_leg.extensions)
+        booking = FlightBooking(
+            id=str(uuid.uuid4()),
+            user_id=user_id,
+            thread_id=thread_id,
+            booking_reference=booking_reference,
+            full_name=input.full_name,
+            email=input.email,
+            phone=input.phone,
+            airline=flight.airline,
+            price=flight.price,
+            currency=flight.currency,
+            booking_link=flight.booking_link,
+            is_multi_city=is_multi_city
+        )
 
-        # ✅ General flight info
-        set_context(user_id, thread_id, "last_flight_airline", flight.airline)
-        set_context(user_id, thread_id, "last_flight_price", flight.price)
-        set_context(user_id, thread_id, "last_flight_currency", flight.currency)
-        set_context(user_id, thread_id, "last_flight_booking_link", flight.booking_link)
+        # Save legs
+        if is_multi_city:
+            for leg in flight.legs:
+                flight_leg = FlightLegDB(
+                    id=str(uuid.uuid4()),
+                    departure_time=leg.departure_time,
+                    arrival_time=leg.arrival_time,
+                    origin=leg.origin,
+                    destination=leg.destination,
+                    duration=leg.duration,
+                    stops=leg.stops or 0,
+                    extensions=leg.extensions or [],
+                    booking=booking
+                )
+                session.add(flight_leg)
+        else:
+            # Save outbound leg
+            outbound = flight.outbound
+            outbound_leg = FlightLegDB(
+                id=str(uuid.uuid4()),
+                departure_time=outbound.departure_time,
+                arrival_time=outbound.arrival_time,
+                origin=outbound.origin,
+                destination=outbound.destination,
+                duration=outbound.duration,
+                stops=outbound.stops or 0,
+                extensions=outbound.extensions or [],
+                booking=booking
+            )
+            session.add(outbound_leg)
+
+            # Save return leg (if any)
+            if flight.return_leg:
+                return_leg = flight.return_leg
+                return_flight_leg = FlightLegDB(
+                    id=str(uuid.uuid4()),
+                    departure_time=return_leg.departure_time,
+                    arrival_time=return_leg.arrival_time,
+                    origin=return_leg.origin,
+                    destination=return_leg.destination,
+                    duration=return_leg.duration,
+                    stops=return_leg.stops or 0,
+                    extensions=return_leg.extensions or [],
+                    booking=booking
+                )
+                session.add(return_flight_leg)
+
+        session.add(booking)
+        session.commit()
+        session.close()
 
     return BookFlightOutput(
         booking_reference=booking_reference,

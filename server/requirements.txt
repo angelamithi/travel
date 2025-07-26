@@ -4,4 +4,7 @@ fastapi
 uvicorn 
 pydantic
 starlette
+sqlalchemy 
+psycopg2-binary
+alembic
 

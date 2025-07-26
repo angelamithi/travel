@@ -2,6 +2,11 @@ from typing import Optional, List, Dict
 from pydantic import BaseModel,Field
 
 
+class MultiCityLeg(BaseModel):
+    origin: str
+    destination: str
+    departure_date: str  # Should be in YYYY-MM-DD format
+    times: Optional[str] = None  # Optional times string for the API
 
 # --- For search_flight ---
 class SearchFlightInput(BaseModel):
@@ -17,6 +22,7 @@ class SearchFlightInput(BaseModel):
     nonstop_only: Optional[bool] = False
     allowed_airlines: Optional[List[str]] = None  # e.g., ["Kenya Airways", "Emirates"]
     excluded_airlines: Optional[List[str]] = None
+    multi_city_legs: Optional[List[MultiCityLeg]] = None
 
 class FlightLeg(BaseModel):
     departure_time: str
@@ -32,11 +38,14 @@ class FlightOption(BaseModel):
     airline: str
     price: Optional[float]
     currency: str
-    outbound: FlightLeg
-    return_leg: Optional[FlightLeg] = None
+    outbound: FlightLeg  # ✅ Existing field (keep)
+    return_leg: Optional[FlightLeg] = None  # ✅ Existing field (keep)
     booking_link: Optional[str]
     id: Optional[str] = None
-    departure_token: Optional[str] = None  # <-- Add this line
+    departure_token: Optional[str] = None
+    outbound_legs: Optional[List[FlightLeg]] = None
+    return_legs: Optional[List[FlightLeg]] = None
+    legs: Optional[List[FlightLeg]] = None  # ✅ Unified access for all legs
 
 
 class SearchFlightOutput(BaseModel):
