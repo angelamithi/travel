@@ -81,6 +81,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                     duration=leg.duration,
                     stops=leg.stops or 0,
                     extensions=leg.extensions or [],
+                    flight_number=leg.flight_number,  # ✅ Save flight_number
                 )
                 session.add(flight_leg)
         else:
@@ -96,6 +97,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                 duration=outbound.duration,
                 stops=outbound.stops or 0,
                 extensions=outbound.extensions or [],
+                flight_number=outbound.flight_number,  # ✅ Save flight_number
             )
             session.add(outbound_leg)
 
@@ -112,6 +114,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                     duration=return_leg.duration,
                     stops=return_leg.stops or 0,
                     extensions=return_leg.extensions or [],
+                    flight_number=return_leg.flight_number  # ✅ Save flight_number
                 )
                 session.add(return_flight_leg)
 

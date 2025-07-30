@@ -1480,3 +1480,12 @@ ValueError: "FlightOption" object has no field "option_id"
 2025-07-30 14:38:14,800 - INFO - Searching flight for AUS → NBO on 2025-08-15
 2025-07-30 14:38:14,801 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'AUS', 'arrival_id': 'NBO', 'outbound_date': '2025-08-15', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
 2025-07-30 14:38:17,008 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 15:43:13,753 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 15:43:13,754 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 15:43:15,604 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 15:44:08,946 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 15:44:08,946 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 15:44:09,594 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 15:44:23,795 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 15:44:23,796 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 15:44:24,455 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])

@@ -100,7 +100,8 @@ def search_flight(
                         destination=leg.get("arrival_airport", {}).get("id"),
                         duration=leg.get("duration"),
                         stops=0,
-                        extensions=leg.get("extensions", [])
+                        extensions=leg.get("extensions", []),
+                        flight_number=first_flight.get("flight_number", "Unknown")  # New line
                     ) for leg in flights
                 ]
 
@@ -119,13 +120,15 @@ def search_flight(
                 departure_token = group.get("departure_token")
 
                 outbound_leg = FlightLeg(
+                    
                     departure_time=first_flight.get("departure_airport", {}).get("time", "Unknown"),
                     arrival_time=first_flight.get("arrival_airport", {}).get("time", "Unknown"),
                     origin=data.origin,
                     destination=data.destination,
                     duration=str(group.get("total_duration", "Unknown")),
                     stops=len(flights) - 1,
-                    extensions=group.get("extensions")
+                    extensions=group.get("extensions"),
+                    flight_number=first_flight.get("flight_number", "Unknown")  # New line
                 )
 
                 return_leg = None
@@ -166,7 +169,8 @@ def search_flight(
                                         destination=data.origin,
                                         duration=str(return_flight_group.get("total_duration", "Unknown")),
                                         stops=len(return_legs) - 1,
-                                        extensions=return_flight_group.get("extensions", [])
+                                        extensions=return_flight_group.get("extensions", []),
+                                        flight_number=first_flight.get("flight_number", "Unknown")  # New line
                                     )
                     except Exception as err:
                         logger.error(f"Failed to fetch return flight: {str(err)}", exc_info=True)

@@ -32,6 +32,7 @@ class FlightLeg(BaseModel):
     duration: Optional[str] = None
     stops: Optional[int] = None
     extensions: Optional[List[str]] = None
+    flight_number: Optional[str] = None  # Add this field
 
 
 class FlightOption(BaseModel):
