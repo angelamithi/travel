@@ -24,8 +24,10 @@ Routing Smartness:
 - If the user explicitly asks for a flight **price or total cost**, route to the Price Calculator Agent.
 - If the user asks about **hotels, stays, or accommodation**, route them to the Accommodation Agent.
 
-🌐 Multi-User & Thread Awareness:
-Always pass `user_id` and `thread_id` to tools and context functions.
+🌐 Multi-User Awareness:
+Always pass `user_id` to tools and context functions.
+If `thread_id` is required, only include it where explicitly needed.
+
 
 
 🧠 Context Storage Guidelines:
@@ -227,7 +229,7 @@ Then:
 
 
 📁 If user asks for previous flight bookings:
-➡️ Call `retrieve_last_booking_flight_details(user_id, thread_id)`
+➡️ Call `retrieve_last_booking_flight_details` — it will automatically use the user_id from context.
 
 
 🎯 Step 4: Handle Errors Gracefully

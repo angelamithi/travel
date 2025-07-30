@@ -35,6 +35,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         set_context(user_id, thread_id, "last_email", input.email)
         set_context(user_id, thread_id, "last_phone", input.phone)
         set_context(user_id, thread_id, "last_flight_id", input.selected_flight_id)
+     
 
         flight_data = get_context(user_id, thread_id, f"flight_option_{input.selected_flight_id}")
         if flight_data:
@@ -61,7 +62,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             currency=flight.currency,
             booking_link=flight.booking_link,
             is_multi_city=is_multi_city,
-            price_breakdown=flight.price_breakdown
+            price_breakdown=flight.price_breakdown.dict() if flight.price_breakdown else None,  # ✅ FIXED
         )
 
 
@@ -115,7 +116,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                     duration=return_leg.duration,
                     stops=return_leg.stops or 0,
                     extensions=return_leg.extensions or [],
-                    flight_number=return_leg.flight_number  # ✅ Save flight_number
+                    flight_number=return_leg.flight_number,  # ✅ Save flight_number
                 )
                 session.add(return_flight_leg)
 
