@@ -61,6 +61,8 @@ class BookFlightInput(BaseModel):
     email: str
     phone: str
     selected_flight_details: Optional[FlightOption]  # ✅ new field to hold full flight info
+    passenger_names: Optional[List[str]] = None
+    payment_method: Optional[str] = None
 
 class BookFlightOutput(BaseModel):
     booking_reference: str

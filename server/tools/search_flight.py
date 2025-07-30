@@ -47,6 +47,7 @@ def search_flight(
                 "multi_city_json": json.dumps(multi_city_payload),  # Proper JSON format
                 "hl": "en",
                 "currency": "USD",
+                "adults":1,
                 "api_key": SERP_API_KEY
             }
 
@@ -65,6 +66,7 @@ def search_flight(
                 "type": trip_type,
                 "hl": "en",
                 "currency": "USD",
+                "adults":1,
                 "api_key": SERP_API_KEY
             }
 
@@ -138,6 +140,7 @@ def search_flight(
                             "departure_token": departure_token,
                             "hl": "en",
                             "currency": "USD",
+                            "adults":1,
                             "api_key": SERP_API_KEY
                         }
 

@@ -1,5 +1,18 @@
 from db.session import SessionLocal
-from models.db_models import FLightBooking, FlightLegDB
+from models.db_models import FlightBooking, FlightLegDB
+from agents import function_tool,RunContextWrapper
+from models.context_models import UserInfo
+import uuid
+import os
+import requests
+import logging
+import uuid
+from typing import Optional
+from models.flight_models import SearchFlightInput, SearchFlightOutput, FlightOption, FlightLeg,BookFlightInput,BookFlightOutput
+from in_memory_context import set_context,get_context
+from datetime import datetime
+from dotenv import load_dotenv
+import json
 
 @function_tool
 async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInput) -> BookFlightOutput:
@@ -40,19 +53,27 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             booking_reference=booking_reference,
             full_name=input.full_name,
             email=input.email,
+            passenger_names=input.passenger_names or [input.full_name],
             phone=input.phone,
+            payment_method=input.payment_method or "Not provided",
             airline=flight.airline,
-            price=flight.price,
+            total_price=flight.price,
             currency=flight.currency,
             booking_link=flight.booking_link,
             is_multi_city=is_multi_city
         )
+
+
+                # Add booking and flush to get the ID
+        session.add(booking)
+        session.flush()
 
         # Save legs
         if is_multi_city:
             for leg in flight.legs:
                 flight_leg = FlightLegDB(
                     id=str(uuid.uuid4()),
+                    booking_id=booking.id,
                     departure_time=leg.departure_time,
                     arrival_time=leg.arrival_time,
                     origin=leg.origin,
@@ -60,7 +81,6 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                     duration=leg.duration,
                     stops=leg.stops or 0,
                     extensions=leg.extensions or [],
-                    booking=booking
                 )
                 session.add(flight_leg)
         else:
@@ -68,6 +88,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             outbound = flight.outbound
             outbound_leg = FlightLegDB(
                 id=str(uuid.uuid4()),
+                booking_id=booking.id,
                 departure_time=outbound.departure_time,
                 arrival_time=outbound.arrival_time,
                 origin=outbound.origin,
@@ -75,7 +96,6 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                 duration=outbound.duration,
                 stops=outbound.stops or 0,
                 extensions=outbound.extensions or [],
-                booking=booking
             )
             session.add(outbound_leg)
 
@@ -84,6 +104,7 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                 return_leg = flight.return_leg
                 return_flight_leg = FlightLegDB(
                     id=str(uuid.uuid4()),
+                    booking_id=booking.id,
                     departure_time=return_leg.departure_time,
                     arrival_time=return_leg.arrival_time,
                     origin=return_leg.origin,
@@ -91,9 +112,9 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
                     duration=return_leg.duration,
                     stops=return_leg.stops or 0,
                     extensions=return_leg.extensions or [],
-                    booking=booking
                 )
                 session.add(return_flight_leg)
+
 
         session.add(booking)
         session.commit()
