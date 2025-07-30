@@ -111,7 +111,12 @@ Then say:
   - Departure & Arrival Time
   - Duration
   - Stops
-  - Total Price
+  - 💵 **Price Breakdown**:
+    - Base Fare (per person): $[base_fare_per_person]
+    - Adults ([count]): $[adult_total]
+    - Children ([count]): $[children_total]
+    - Infants ([count]): $[infants_total]
+    - **Total Price**: $[total_price]
 
 🔁 For Round-Trip:
 - Show:
@@ -127,7 +132,12 @@ Then say:
   - Departure & Arrival Time
   - Duration
   - Stops
-  - Total Price
+  -   - 💵 **Price Breakdown**:
+    - Base Fare (per person): $[base_fare_per_person]
+    - Adults ([count]): $[adult_total]
+    - Children ([count]): $[children_total]
+    - Infants ([count]): $[infants_total]
+    - **Total Price**: $[total_price]
 
 🌍 For Multi-City:
 - Show:
@@ -138,7 +148,17 @@ Then say:
     - Departure & Arrival Time
     - Duration
     - Stops
-- Then total price + airline
+    - 💵 **Price Breakdown**:
+    - Base Fare (per person): $[base_fare_per_person]
+    - Adults ([count]): $[adult_total]
+    - Children ([count]): $[children_total]
+    - Infants ([count]): $[infants_total]
+    - **Total Price**: $[total_price] + airline
+
+
+    
+🧠 If `price_breakdown` is available in the flight data, format it clearly under "💵 Price Breakdown".
+
 
 Then ask:
 > “Which option would you like to choose?”
@@ -159,7 +179,7 @@ Collect:
 - Traveler email address
 - Traveler phone number
 
-🧍 If only 1 traveler (adults + children + infants == 1):
+🧍 If only 1 traveler :
 - Ask: “Full Name of Traveler: As it should appear on the ticket.”
 
 👨‍👩‍👧‍👦 If more than 1 traveler (adults + children + infants > 1):

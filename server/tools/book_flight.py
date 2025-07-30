@@ -60,7 +60,8 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             total_price=flight.price,
             currency=flight.currency,
             booking_link=flight.booking_link,
-            is_multi_city=is_multi_city
+            is_multi_city=is_multi_city,
+            price_breakdown=flight.price_breakdown
         )
 
 

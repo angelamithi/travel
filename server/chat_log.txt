@@ -1489,3 +1489,216 @@ ValueError: "FlightOption" object has no field "option_id"
 2025-07-30 15:44:23,795 - INFO - Searching flight for CDG → AUS on 2025-08-14
 2025-07-30 15:44:23,796 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
 2025-07-30 15:44:24,455 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:30:51,237 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:30:51,238 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:30:51,960 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:30:51,961 - ERROR - search_flight error: can't multiply sequence by non-int of type 'tuple'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 200, in search_flight
+    total_price = (base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants),
+TypeError: can't multiply sequence by non-int of type 'tuple'
+2025-07-30 16:31:04,329 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:31:04,330 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:31:04,981 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:31:04,982 - ERROR - search_flight error: can't multiply sequence by non-int of type 'tuple'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 200, in search_flight
+    total_price = (base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants),
+TypeError: can't multiply sequence by non-int of type 'tuple'
+2025-07-30 16:31:11,159 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:31:11,160 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:31:11,849 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:31:11,850 - ERROR - search_flight error: can't multiply sequence by non-int of type 'tuple'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 200, in search_flight
+    total_price = (base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants),
+TypeError: can't multiply sequence by non-int of type 'tuple'
+2025-07-30 16:31:21,104 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:31:21,105 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:31:21,736 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:31:21,737 - ERROR - search_flight error: can't multiply sequence by non-int of type 'tuple'
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 200, in search_flight
+    total_price = (base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants),
+TypeError: can't multiply sequence by non-int of type 'tuple'
+2025-07-30 16:34:13,331 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:34:13,331 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:34:14,013 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:34:14,017 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:34:17,847 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:34:17,848 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:34:18,453 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:34:18,453 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:34:30,188 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:34:34,651 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:34:35,664 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:34:35,665 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:34:41,771 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:34:41,772 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:34:42,425 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:34:42,427 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(902.0,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:38:06,392 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:38:06,393 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:38:07,151 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:38:07,153 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:38:12,069 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:38:12,069 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:38:12,726 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:38:12,727 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:38:21,726 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:38:21,727 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:38:22,335 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:38:22,335 - ERROR - search_flight error: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 211, in search_flight
+    flight_option = FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+price
+  Input should be a valid number [type=float_type, input_value=(1578.5,), input_type=tuple]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+2025-07-30 16:40:50,755 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:40:50,756 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:40:51,422 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:40:51,423 - ERROR - search_flight error: "FlightOption" object has no field "price_breakdown"
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 223, in search_flight
+    flight_option.price_breakdown = price_breakdown
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 997, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 1044, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "FlightOption" object has no field "price_breakdown"
+2025-07-30 16:40:56,702 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:40:56,703 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:40:57,332 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:40:57,332 - ERROR - search_flight error: "FlightOption" object has no field "price_breakdown"
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 223, in search_flight
+    flight_option.price_breakdown = price_breakdown
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 997, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 1044, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "FlightOption" object has no field "price_breakdown"
+2025-07-30 16:41:03,771 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:41:03,772 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:41:04,440 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:41:04,440 - ERROR - search_flight error: "FlightOption" object has no field "price_breakdown"
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 223, in search_flight
+    flight_option.price_breakdown = price_breakdown
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 997, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 1044, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "FlightOption" object has no field "price_breakdown"
+2025-07-30 16:41:13,513 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:41:13,513 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:41:14,165 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:41:14,166 - ERROR - search_flight error: "FlightOption" object has no field "price_breakdown"
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 223, in search_flight
+    flight_option.price_breakdown = price_breakdown
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 997, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 1044, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "FlightOption" object has no field "price_breakdown"
+2025-07-30 16:46:15,491 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:46:15,492 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:46:17,268 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:47:01,252 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:47:01,253 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:47:01,882 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:47:19,451 - INFO - Searching flight for CDG → AUS on 2025-08-14
+2025-07-30 16:47:19,451 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:47:20,248 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:55:43,483 - INFO - Searching flight for CDG → AUS on 2025-08-04
+2025-07-30 16:55:43,483 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:55:46,521 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 16:56:02,260 - INFO - Searching flight for CDG → AUS on 2025-08-04
+2025-07-30 16:56:02,261 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 16:56:02,902 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 17:08:53,516 - INFO - Searching flight for CDG → AUS on 2025-08-04
+2025-07-30 17:08:53,516 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'return_date': '2025-08-10', 'type': 1, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 17:08:55,239 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-07-30 17:08:55,239 - INFO - Calling SERP API for return with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'return_date': '2025-08-10', 'departure_token': 'WyJDalJJZG5KalFtRnpZVXBuU3pSQlExbE9jbWRDUnkwdExTMHRMUzB0TFhCcVkyTXhNa0ZCUVVGQlIybExTak5aUVdSbE5YVkJFZ3hCUXpnM01YeEJRekV3TlRFYUN3ajZ4Z2tRQWhvRFZWTkVPQnh3K3NZSiIsW1siQ0RHIiwiMjAyNS0wOC0wNCIsIllVTCIsbnVsbCwiQUMiLCI4NzEiXSxbIllVTCIsIjIwMjUtMDgtMDQiLCJBVVMiLG51bGwsIkFDIiwiMTA1MSJdXV0=', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 17:08:59,904 - INFO - Calling SERP API for return with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'return_date': '2025-08-10', 'departure_token': 'WyJDalJJZG5KalFtRnpZVXBuU3pSQlExbE9jbWRDUnkwdExTMHRMUzB0TFhCcVkyTXhNa0ZCUVVGQlIybExTak5aUVdSbE5YVkJFZ3RWUVRVMmZGVkJNakk0T1JvTENQM0tDUkFDR2dOVlUwUTRISEQ5eWdrPSIsW1siQ0RHIiwiMjAyNS0wOC0wNCIsIkVXUiIsbnVsbCwiVUEiLCI1NiJdLFsiRVdSIiwiMjAyNS0wOC0wNCIsIkFVUyIsbnVsbCwiVUEiLCIyMjg5Il1dXQ==', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-07-30 17:09:16,812 - INFO - Calling SERP API for return with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-04', 'return_date': '2025-08-10', 'departure_token': 'WyJDalJJZG5KalFtRnpZVXBuU3pSQlExbE9jbWRDUnkwdExTMHRMUzB0TFhCcVkyTXhNa0ZCUVVGQlIybExTak5aUVdSbE5YVkJFZ3RCUmpNMGZFUk1NekE1T0JvTENNdVZDaEFDR2dOVlUwUTRISERMbFFvPSIsW1siQ0RHIiwiMjAyNS0wOC0wNCIsIkFUTCIsbnVsbCwiQUYiLCIzNCJdLFsiQVRMIiwiMjAyNS0wOC0wNCIsIkFVUyIsbnVsbCwiREwiLCIzMDk4Il1dXQ==', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}

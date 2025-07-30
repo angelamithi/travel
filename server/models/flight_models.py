@@ -8,6 +8,17 @@ class MultiCityLeg(BaseModel):
     departure_date: str  # Should be in YYYY-MM-DD format
     times: Optional[str] = None  # Optional times string for the API
 
+class PriceBreakdownEntry(BaseModel):
+    count: int
+    total: float
+
+class PriceBreakdown(BaseModel):
+    base_fare_per_person: float
+    adults: PriceBreakdownEntry
+    children: Optional[PriceBreakdownEntry] = None
+    infants: Optional[PriceBreakdownEntry] = None
+    total_price: float
+
 # --- For search_flight ---
 class SearchFlightInput(BaseModel):
     origin: str
@@ -47,6 +58,9 @@ class FlightOption(BaseModel):
     outbound_legs: Optional[List[FlightLeg]] = None
     return_legs: Optional[List[FlightLeg]] = None
     legs: Optional[List[FlightLeg]] = None  # ✅ Unified access for all legs
+    price_breakdown: Optional[PriceBreakdown] = None
+ 
+    
 
 
 class SearchFlightOutput(BaseModel):

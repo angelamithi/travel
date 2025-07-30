@@ -47,6 +47,8 @@ def retrieve_last_booking_flight_details(
         "price": get_context(user_id, thread_id, "last_flight_price"),
         "currency": get_context(user_id, thread_id, "last_flight_currency"),
         "booking_link": get_context(user_id, thread_id, "last_flight_booking_link"),
+        "price_breakdown": get_context(user_id, thread_id, "last_flight_price_breakdown"),
+
     }
 
     # If context is empty, fallback to database
@@ -91,8 +93,10 @@ def retrieve_last_booking_flight_details(
             "return_extensions": return_leg.extensions if return_leg else None,
             "return_flight_number": return_leg.flight_number if return_leg else None,
             "price": booking.total_price,
+            "price_breakdown": booking.price_breakdown,
             "currency": booking.currency,
             "booking_link": booking.booking_link,
+          
         }
 
         source = "database"
@@ -146,5 +150,25 @@ def retrieve_last_booking_flight_details(
 
     if ctx.get("booking_link"):
         message += f"\n🔗 [View Booking Link]({ctx['booking_link']})\n"
+
+    price_breakdown = ctx.get("price_breakdown")
+    if price_breakdown:
+        message += "\n📊 **Price Breakdown:**\n"
+        base = price_breakdown.get("base_fare_per_person")
+        if base:
+            message += f"- Base Fare per Person: {ctx['currency']} {base}\n"
+
+        for group in ["adults", "children", "infants"]:
+            group_data = price_breakdown.get(group)
+            if group_data and group_data.get("count", 0) > 0:
+                message += (
+                    f"- {group.capitalize()}: {group_data['count']} × base → "
+                    f"{ctx['currency']} {group_data['total']}\n"
+                )
+
+        total = price_breakdown.get("total_price")
+        if total:
+            message += f"- **Total:** {ctx['currency']} {total}\n"
+
 
     return LastBookingOutput(message=message)

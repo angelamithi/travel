@@ -105,14 +105,32 @@ def search_flight(
                     ) for leg in flights
                 ]
 
+                base_price = float(group.get("price", 0)) if group.get("price") else 0
+                adults = data.adults
+                children = data.children
+                infants = data.infants
+
+
+                total_price =base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants
+
+                price_breakdown = {
+                        "base_fare_per_person": base_price,
+                        "adults": {"count": adults, "total": base_price * adults},
+                        "children": {"count": children, "total": base_price * 0.75 * children},
+                        "infants": {"count": infants, "total": base_price * 0.10 * infants},
+                        "total_price": total_price
+                    }
+
                 flight_option = FlightOption(
-                    airline=flights[0].get("airline", "Unknown"),
-                    price=float(group.get("price", 0)) if group.get("price") else None,
+                    airline=flights[0].get("airline", "Unknown"),                    
                     currency="USD",
                     legs=legs,
                     booking_link=group.get("booking_link"),
-                    id=str(uuid.uuid4())
-                )
+                    id=str(uuid.uuid4()),
+                    price=total_price,    
+
+                                    )
+                flight_option.price_breakdown = price_breakdown                   
 
             else:
                 # One-way or return trip
@@ -175,16 +193,34 @@ def search_flight(
                     except Exception as err:
                         logger.error(f"Failed to fetch return flight: {str(err)}", exc_info=True)
 
+                base_price = float(group.get("price", 0)) if group.get("price") else 0
+                adults = data.adults
+                children = data.children
+                infants = data.infants
+
+                total_price = base_price * adults + base_price * 0.75 * children + base_price * 0.10 * infants
+
+                price_breakdown = {
+                        "base_fare_per_person": base_price,
+                        "adults": {"count": adults, "total": base_price * adults},
+                        "children": {"count": children, "total": base_price * 0.75 * children},
+                        "infants": {"count": infants, "total": base_price * 0.10 * infants},
+                        "total_price": total_price
+                    }
+
                 flight_option = FlightOption(
-                    airline=first_flight.get("airline", "Unknown"),
-                    price=float(group.get("price", 0)) if group.get("price") else None,
+                    airline=first_flight.get("airline", "Unknown"),                    
                     currency="USD",
                     outbound=outbound_leg,
                     return_leg=return_leg,
                     booking_link=group.get("booking_link"),
                     id=str(uuid.uuid4()),
-                    departure_token=departure_token
+                    departure_token=departure_token,
+                    price=total_price,
+                    
+
                 )
+                flight_option.price_breakdown = price_breakdown
 
             flight_results.append(flight_option)
 
