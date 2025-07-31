@@ -30,10 +30,14 @@ class FlightBooking(Base):
     is_multi_city = Column(Boolean, default=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+    price_breakdown = Column(JSON, nullable=True)  # Add this line
 
     # One booking can have multiple legs
     legs = relationship("FlightLegDB", back_populates="booking", cascade="all, delete-orphan")
-    price_breakdown = Column(JSON, nullable=True)  # Add this line
+    segments = relationship("FlightSegmentDB", back_populates="booking", cascade="all, delete-orphan")
+    layovers = relationship("LayoverDB", back_populates="booking", cascade="all, delete-orphan")
+
+
 
   
     
@@ -45,8 +49,9 @@ class FlightLegDB(Base):
     id = Column(String, primary_key=True)  # UUID
     booking_id = Column(String, ForeignKey("flight_bookings.id"))
 
-    departure_time = Column(String)
-    arrival_time = Column(String)
+    departure_time = Column(DateTime)
+    arrival_time = Column(DateTime)
+
     origin = Column(String)
     destination = Column(String)
     duration = Column(String)
@@ -57,3 +62,30 @@ class FlightLegDB(Base):
 
     booking = relationship("FlightBooking", back_populates="legs")
   
+class FlightSegmentDB(Base):
+    __tablename__ = "flight_segments"
+
+    id = Column(String, primary_key=True)
+    booking_id = Column(String, ForeignKey("flight_bookings.id"))
+
+    segment_number = Column(Integer)
+    departure_airport = Column(String)
+    departure_datetime = Column(String)
+    arrival_airport = Column(String)
+    arrival_datetime = Column(String)
+    duration = Column(String)
+    cabin_class = Column(String)
+    extension_info = Column(JSON)
+
+    booking = relationship("FlightBooking", back_populates="segments")
+
+class LayoverDB(Base):
+    __tablename__ = "layovers"
+
+    id = Column(String, primary_key=True)
+    booking_id = Column(String, ForeignKey("flight_bookings.id"))
+
+    layover_airport = Column(String)
+    layover_duration = Column(String)
+
+    booking = relationship("FlightBooking", back_populates="layovers")
