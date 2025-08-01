@@ -6410,3 +6410,617 @@ NameError: name 'flight' is not defined. Did you mean: 'flights'?
 
 💵 **Total Price:** $1551.00
  **Adults:** $1551.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:01:14,172 - INFO - Searching flight for NBO → LON on 2025-08-09
+2025-08-01 10:01:14,174 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'LON', 'outbound_date': '2025-08-09', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:01:15,128 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'search_information', 'error'])
+2025-08-01 10:01:25,031 - INFO - Searching flight for NBO → LON on 2025-08-09
+2025-08-01 10:01:25,032 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'LON', 'outbound_date': '2025-08-09', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:01:25,237 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'search_information', 'error'])
+2025-08-01 10:02:16,538 - INFO - Searching flight for NBO → CDG on 2025-08-09
+2025-08-01 10:02:16,539 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-09', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:02:17,859 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-08-01 10:02:17,863 - INFO - Formatted Flight Option 1:
+✈️ **Option 1: EgyptAir** — Flight MS 1850
+
+  • **Route:** NBO → CAI → CDG
+  • **Departs:** NBO at Aug 09, 2025 02:55 AM
+  • **Arrives:** CDG at Aug 09, 2025 02:25 PM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+  • **Layover:** 2h 45m at CAI
+
+💵 **Total Price:** $810.00
+ **Adults:** $810.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:02:17,871 - INFO - Formatted Flight Option 2:
+✈️ **Option 2: Kenya Airways** — Flight KQ 112
+
+  • **Route:** NBO → CDG
+  • **Departs:** NBO at Aug 09, 2025 11:50 PM
+  • **Arrives:** CDG at Aug 10, 2025 07:30 AM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+
+💵 **Total Price:** $1141.00
+ **Adults:** $1141.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:02:17,879 - INFO - Formatted Flight Option 3:
+✈️ **Option 3: Air France** — Flight AF 829
+
+  • **Route:** NBO → CDG
+  • **Departs:** NBO at Aug 09, 2025 10:25 PM
+  • **Arrives:** CDG at Aug 10, 2025 06:10 AM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+
+💵 **Total Price:** $1174.00
+ **Adults:** $1174.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:21:34,097 - INFO - Searching flight for NBO → LON on 2025-08-10
+2025-08-01 10:21:34,098 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'LON', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:21:44,379 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'search_information', 'error'])
+2025-08-01 10:22:09,121 - INFO - Searching flight for NBO → LON on 2025-08-10
+2025-08-01 10:22:09,122 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'LON', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:22:09,328 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'search_information', 'error'])
+2025-08-01 10:22:38,054 - INFO - Searching flight for NBO → LON on 2025-08-09
+2025-08-01 10:22:38,055 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'LON', 'outbound_date': '2025-08-09', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:22:38,256 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'search_information', 'error'])
+2025-08-01 10:24:23,831 - INFO - Searching flight for CDG → AUS on 2025-08-09
+2025-08-01 10:24:23,832 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-09', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 10:24:25,512 - INFO - SERP response keys: dict_keys(['search_metadata', 'search_parameters', 'best_flights', 'other_flights', 'price_insights', 'airports'])
+2025-08-01 10:24:25,514 - INFO - Formatted Flight Option 1:
+✈️ **Option 1: American** — Flight AA 49
+
+  • **Route:** CDG → DFW → AUS
+  • **Departs:** CDG at Aug 09, 2025 11:00 AM
+  • **Arrives:** AUS at Aug 09, 2025 05:50 PM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+  • **Layover:** 2h 25m at DFW
+
+💵 **Total Price:** $1672.00
+ **Adults:** $1672.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:24:25,521 - INFO - Formatted Flight Option 2:
+✈️ **Option 2: KLM** — Flight KL 1406
+
+  • **Route:** CDG → AMS → AUS
+  • **Departs:** CDG at Aug 09, 2025 10:15 AM
+  • **Arrives:** AUS at Aug 09, 2025 04:00 PM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+  • **Layover:** 1h 5m at AMS
+
+💵 **Total Price:** $1702.00
+ **Adults:** $1702.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 10:24:25,522 - INFO - Formatted Flight Option 3:
+✈️ **Option 3: Delta** — Flight DL 89
+
+  • **Route:** CDG → ATL → AUS
+  • **Departs:** CDG at Aug 09, 2025 12:00 PM
+  • **Arrives:** AUS at Aug 09, 2025 06:42 PM
+  • **Duration:** None
+  • **Cabin Class:** Economy
+  • **Layover:** 1h 31m at ATL
+
+💵 **Total Price:** $1713.00
+ **Adults:** $1713.00, **Children:** $0.00, **Infants:** $0.00
+2025-08-01 13:57:58,260 - INFO - Trip type: one-way
+2025-08-01 13:57:58,261 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 13:57:59,787 - ERROR - search_flight error: 1 validation error for FlightLeg
+total_duration
+  Input should be a valid string [type=string_type, input_value=1023, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 407, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 172, in build_one_way_flight_option
+    flight_leg = FlightLeg(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightLeg
+total_duration
+  Input should be a valid string [type=string_type, input_value=1023, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-01 13:58:04,329 - INFO - Trip type: one-way
+2025-08-01 13:58:04,329 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 13:58:04,606 - ERROR - search_flight error: 1 validation error for FlightLeg
+total_duration
+  Input should be a valid string [type=string_type, input_value=1023, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 407, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 172, in build_one_way_flight_option
+    flight_leg = FlightLeg(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightLeg
+total_duration
+  Input should be a valid string [type=string_type, input_value=1023, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-01 14:00:42,227 - INFO - Trip type: one-way
+2025-08-01 14:00:42,228 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 14:00:42,497 - ERROR - search_flight error: name 'format_flight_option' is not defined
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 418, in search_flight
+    formatted_summary = format_flight_option(flight_option, index, trip_type_str)
+NameError: name 'format_flight_option' is not defined
+2025-08-01 14:00:48,523 - INFO - Trip type: one-way
+2025-08-01 14:00:48,523 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 14:00:48,785 - ERROR - search_flight error: name 'format_flight_option' is not defined
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 418, in search_flight
+    formatted_summary = format_flight_option(flight_option, index, trip_type_str)
+NameError: name 'format_flight_option' is not defined
+2025-08-01 14:04:41,423 - INFO - Trip type: one-way
+2025-08-01 14:04:41,424 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 14:04:41,758 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Unknown (CDG) to Unknown (AUS)
+Airline: American
+Departure: 2025-08-10 13:55
+Arrival: 2025-08-10 16:00
+Total Price: 1676.00 USD
+2025-08-01 14:04:41,767 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Unknown (CDG) to Unknown (AUS)
+Airline: Delta
+Departure: 2025-08-10 10:50
+Arrival: 2025-08-10 13:10
+Total Price: 1711.00 USD
+2025-08-01 14:04:41,773 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Unknown (CDG) to Unknown (AUS)
+Airline: Air France
+Departure: 2025-08-10 10:30
+Arrival: 2025-08-10 13:55
+Total Price: 1717.00 USD
+2025-08-01 16:02:08,317 - INFO - Trip type: one-way
+2025-08-01 16:02:08,319 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:02:09,831 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Charlotte Douglas International Airport (AUS)
+Airline: American
+Departure: 2025-08-10 10:00
+Arrival: 2025-08-10 13:20
+Total Price: 1675.00 USD
+2025-08-01 16:02:09,842 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departure: 2025-08-10 07:55
+Arrival: 2025-08-10 08:15
+Total Price: 1690.00 USD
+2025-08-01 16:02:09,861 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departure: 2025-08-10 10:50
+Arrival: 2025-08-10 13:10
+Total Price: 1710.00 USD
+2025-08-01 16:13:29,599 - INFO - Trip type: one-way
+2025-08-01 16:13:29,600 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-11', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:13:31,506 - ERROR - search_flight error: name 'format_datetime' is not defined
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 465, in search_flight
+    formatted_summary = format_flight_option(flight_option, index, trip_type_str)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 56, in format_flight_option
+    f"Departs: {option.legs[0].origin} at {format_datetime(option.legs[0].departure_date_time)}",
+NameError: name 'format_datetime' is not defined. Did you mean: 'format_duration'?
+2025-08-01 16:13:39,189 - INFO - Trip type: one-way
+2025-08-01 16:13:39,190 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-11', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:13:39,503 - ERROR - search_flight error: name 'format_datetime' is not defined
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 465, in search_flight
+    formatted_summary = format_flight_option(flight_option, index, trip_type_str)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 56, in format_flight_option
+    f"Departs: {option.legs[0].origin} at {format_datetime(option.legs[0].departure_date_time)}",
+NameError: name 'format_datetime' is not defined. Did you mean: 'format_duration'?
+2025-08-01 16:14:58,547 - INFO - Trip type: one-way
+2025-08-01 16:14:58,548 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-11', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:14:58,837 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: American
+Departs: CDG at August 11, 2025 at 11:00
+Arrives: AUS at August 11, 2025 at 14:25
+Total Price: 1669.00 USD
+2025-08-01 16:14:58,843 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Amsterdam Airport Schiphol (AUS)
+Airline: KLM
+Departs: CDG at August 11, 2025 at 10:15
+Arrives: AUS at August 11, 2025 at 11:30
+Total Price: 1693.00 USD
+2025-08-01 16:14:58,847 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 11, 2025 at 10:50
+Arrives: AUS at August 11, 2025 at 13:10
+Total Price: 1710.00 USD
+2025-08-01 16:25:25,956 - INFO - Trip type: one-way
+2025-08-01 16:25:25,958 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2023-08-03', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:25:26,514 - ERROR - search_flight error: SERP API error: 400 - {
+  "error": "`outbound_date` cannot be in the past."
+}
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 447, in search_flight
+    raise Exception(f"SERP API error: {response.status_code} - {response.text}")
+Exception: SERP API error: 400 - {
+  "error": "`outbound_date` cannot be in the past."
+}
+2025-08-01 16:25:34,657 - INFO - Trip type: one-way
+2025-08-01 16:25:34,658 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-03', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:25:36,291 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to John F. Kennedy International Airport (AUS)
+Airline: American
+Departs: CDG at August 03, 2025 at 12:15
+Arrives: AUS at August 03, 2025 at 14:30
+Total Price: 1697.00 USD
+2025-08-01 16:25:36,297 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Hartsfield-Jackson Atlanta International Airport (AUS)
+Airline: Air France
+Departs: CDG at August 03, 2025 at 10:30
+Arrives: AUS at August 03, 2025 at 13:55
+Total Price: 1739.00 USD
+2025-08-01 16:25:36,302 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 03, 2025 at 10:50
+Arrives: AUS at August 03, 2025 at 13:10
+Total Price: 2184.00 USD
+2025-08-01 16:28:28,472 - INFO - Trip type: one-way
+2025-08-01 16:28:28,473 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-03', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:28:28,845 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to John F. Kennedy International Airport (AUS)
+Airline: American
+Departs: CDG at August 03, 2025 at 12:15
+Arrives: AUS at August 03, 2025 at 14:30
+Total Price: 1697.00 USD
+2025-08-01 16:28:28,850 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Hartsfield-Jackson Atlanta International Airport (AUS)
+Airline: Air France
+Departs: CDG at August 03, 2025 at 10:30
+Arrives: AUS at August 03, 2025 at 13:55
+Total Price: 1739.00 USD
+2025-08-01 16:28:28,855 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 03, 2025 at 10:50
+Arrives: AUS at August 03, 2025 at 13:10
+Total Price: 2184.00 USD
+2025-08-01 16:50:10,289 - INFO - Trip type: round-trip
+2025-08-01 16:50:10,290 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-05', 'return_date': '2025-08-10', 'type': 1, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 16:50:14,730 - INFO - Formatted Flight Option 1:
+[Option 1] Round-Trip flight:
+From Paris Charles de Gaulle Airport (CDG) to Austin-Bergstrom International Airport (AUS)
+Airline: United
+Departs: CDG at August 05, 2025 at 09:45
+Arrives: AUS at August 05, 2025 at 17:55
+Total Price: 1585.00 USD
+2025-08-01 16:50:16,080 - INFO - Formatted Flight Option 2:
+[Option 2] Round-Trip flight:
+From Paris Charles de Gaulle Airport (CDG) to Austin-Bergstrom International Airport (AUS)
+Airline: Air Canada
+Departs: CDG at August 05, 2025 at 14:10
+Arrives: AUS at August 05, 2025 at 20:01
+Total Price: 1585.00 USD
+2025-08-01 16:50:17,923 - INFO - Formatted Flight Option 3:
+[Option 3] Round-Trip flight:
+From Paris Charles de Gaulle Airport (CDG) to Austin-Bergstrom International Airport (AUS)
+Airline: American
+Departs: CDG at August 05, 2025 at 10:00
+Arrives: AUS at August 05, 2025 at 16:56
+Total Price: 1744.00 USD
+2025-08-01 17:01:29,502 - INFO - Trip type: one-way
+2025-08-01 17:01:29,504 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-05', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:01:30,693 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 05, 2025 at 02:55
+Arrives: CDG at August 05, 2025 at 08:00
+Total Price: 1204.00 USD
+2025-08-01 17:01:30,698 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 05, 2025 at 22:45
+Arrives: CDG at August 06, 2025 at 04:50
+Total Price: 1492.75 USD
+2025-08-01 17:01:30,703 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline: Air France
+Departs: NBO at August 05, 2025 at 22:25
+Arrives: CDG at August 06, 2025 at 06:10
+Total Price: 2227.75 USD
+2025-08-01 17:01:30,716 - INFO - Trip type: one-way
+2025-08-01 17:01:30,717 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:01:30,941 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Charlotte Douglas International Airport (AUS)
+Airline: American
+Departs: CDG at August 10, 2025 at 10:00
+Arrives: AUS at August 10, 2025 at 13:20
+Total Price: 2931.25 USD
+2025-08-01 17:01:30,947 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 10, 2025 at 07:55
+Arrives: AUS at August 10, 2025 at 08:15
+Total Price: 2957.50 USD
+2025-08-01 17:01:30,951 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 10, 2025 at 10:50
+Arrives: AUS at August 10, 2025 at 13:10
+Total Price: 2992.50 USD
+2025-08-01 17:04:54,380 - INFO - Trip type: one-way
+2025-08-01 17:04:54,382 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-05', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:04:54,684 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 05, 2025 at 02:55
+Arrives: CDG at August 05, 2025 at 08:00
+Total Price: 1204.00 USD
+2025-08-01 17:04:54,688 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 05, 2025 at 22:45
+Arrives: CDG at August 06, 2025 at 04:50
+Total Price: 1492.75 USD
+2025-08-01 17:04:54,690 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline: Air France
+Departs: NBO at August 05, 2025 at 22:25
+Arrives: CDG at August 06, 2025 at 06:10
+Total Price: 2227.75 USD
+2025-08-01 17:04:54,695 - INFO - Trip type: one-way
+2025-08-01 17:04:54,697 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:04:56,556 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Charlotte Douglas International Airport (AUS)
+Airline: American
+Departs: CDG at August 10, 2025 at 10:00
+Arrives: AUS at August 10, 2025 at 13:20
+Total Price: 2969.75 USD
+2025-08-01 17:04:56,560 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 10, 2025 at 07:55
+Arrives: AUS at August 10, 2025 at 08:15
+Total Price: 2996.00 USD
+2025-08-01 17:04:56,564 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 10, 2025 at 10:50
+Arrives: AUS at August 10, 2025 at 13:10
+Total Price: 3032.75 USD
+2025-08-01 17:34:45,356 - INFO - Trip type: one-way
+2025-08-01 17:34:45,357 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:34:46,990 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 04, 2025 at 05:55
+Arrives: CDG at August 04, 2025 at 11:00
+Total Price: 745.00 USD
+2025-08-01 17:34:46,994 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Heathrow Airport (CDG)
+Airline: British Airways
+Departs: NBO at August 04, 2025 at 08:15
+Arrives: CDG at August 04, 2025 at 15:25
+Total Price: 749.00 USD
+2025-08-01 17:34:46,997 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 04, 2025 at 16:35
+Arrives: CDG at August 04, 2025 at 22:40
+Total Price: 865.00 USD
+2025-08-01 17:34:47,001 - INFO - Trip type: one-way
+2025-08-01 17:34:47,002 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:34:47,233 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Charlotte Douglas International Airport (AUS)
+Airline: American
+Departs: CDG at August 10, 2025 at 10:00
+Arrives: AUS at August 10, 2025 at 13:20
+Total Price: 1697.00 USD
+2025-08-01 17:34:47,237 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 10, 2025 at 07:55
+Arrives: AUS at August 10, 2025 at 08:15
+Total Price: 1712.00 USD
+2025-08-01 17:34:47,241 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 10, 2025 at 10:50
+Arrives: AUS at August 10, 2025 at 13:10
+Total Price: 1733.00 USD
+2025-08-01 17:35:47,819 - INFO - Trip type: one-way
+2025-08-01 17:35:47,821 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:35:48,068 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 04, 2025 at 05:55
+Arrives: CDG at August 04, 2025 at 11:00
+Total Price: 745.00 USD
+2025-08-01 17:35:48,072 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Heathrow Airport (CDG)
+Airline: British Airways
+Departs: NBO at August 04, 2025 at 08:15
+Arrives: CDG at August 04, 2025 at 15:25
+Total Price: 749.00 USD
+2025-08-01 17:35:48,075 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 04, 2025 at 16:35
+Arrives: CDG at August 04, 2025 at 22:40
+Total Price: 865.00 USD
+2025-08-01 17:35:48,079 - INFO - Trip type: one-way
+2025-08-01 17:35:48,090 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-10', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:35:48,312 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Charlotte Douglas International Airport (AUS)
+Airline: American
+Departs: CDG at August 10, 2025 at 10:00
+Arrives: AUS at August 10, 2025 at 13:20
+Total Price: 1697.00 USD
+2025-08-01 17:35:48,316 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 10, 2025 at 07:55
+Arrives: AUS at August 10, 2025 at 08:15
+Total Price: 1712.00 USD
+2025-08-01 17:35:48,320 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: Delta
+Departs: CDG at August 10, 2025 at 10:50
+Arrives: AUS at August 10, 2025 at 13:10
+Total Price: 1733.00 USD
+2025-08-01 17:38:05,761 - INFO - Trip type: one-way
+2025-08-01 17:38:05,762 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:38:05,974 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 04, 2025 at 05:55
+Arrives: CDG at August 04, 2025 at 11:00
+Total Price: 745.00 USD
+2025-08-01 17:38:05,979 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Heathrow Airport (CDG)
+Airline: British Airways
+Departs: NBO at August 04, 2025 at 08:15
+Arrives: CDG at August 04, 2025 at 15:25
+Total Price: 749.00 USD
+2025-08-01 17:38:05,983 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 04, 2025 at 16:35
+Arrives: CDG at August 04, 2025 at 22:40
+Total Price: 865.00 USD
+2025-08-01 17:44:31,707 - INFO - Trip type: multi-city
+2025-08-01 17:44:31,709 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'type': 3, 'multi_city_json': '[{"departure_id": "NBO", "arrival_id": "CDG", "date": "2025-08-04"}, {"departure_id": "CDG", "arrival_id": "AUS", "date": "2025-08-14"}]', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:44:42,241 - ERROR - search_flight error: local variable 'i' referenced before assignment
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 463, in search_flight
+    flight_option = build_multi_city_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 117, in build_multi_city_flight_option
+    segment_number=i + 1,
+UnboundLocalError: local variable 'i' referenced before assignment
+2025-08-01 17:44:42,247 - INFO - Trip type: one-way
+2025-08-01 17:44:42,248 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:44:49,524 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: American
+Departs: CDG at August 14, 2025 at 11:00
+Arrives: AUS at August 14, 2025 at 14:15
+Total Price: 1692.00 USD
+2025-08-01 17:44:49,528 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 14, 2025 at 14:10
+Arrives: AUS at August 14, 2025 at 14:30
+Total Price: 1713.00 USD
+2025-08-01 17:44:49,532 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Amsterdam Airport Schiphol (AUS)
+Airline: KLM
+Departs: CDG at August 14, 2025 at 10:15
+Arrives: AUS at August 14, 2025 at 11:30
+Total Price: 1716.00 USD
+2025-08-01 17:45:59,663 - INFO - Trip type: one-way
+2025-08-01 17:45:59,666 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:45:59,900 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 04, 2025 at 05:55
+Arrives: CDG at August 04, 2025 at 11:00
+Total Price: 745.00 USD
+2025-08-01 17:45:59,906 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Heathrow Airport (CDG)
+Airline: British Airways
+Departs: NBO at August 04, 2025 at 08:15
+Arrives: CDG at August 04, 2025 at 15:25
+Total Price: 749.00 USD
+2025-08-01 17:45:59,910 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 04, 2025 at 16:35
+Arrives: CDG at August 04, 2025 at 22:40
+Total Price: 865.00 USD
+2025-08-01 17:45:59,916 - INFO - Trip type: one-way
+2025-08-01 17:45:59,926 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:46:00,171 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: American
+Departs: CDG at August 14, 2025 at 11:00
+Arrives: AUS at August 14, 2025 at 14:15
+Total Price: 1692.00 USD
+2025-08-01 17:46:00,176 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: British Airways
+Departs: CDG at August 14, 2025 at 14:10
+Arrives: AUS at August 14, 2025 at 14:30
+Total Price: 1713.00 USD
+2025-08-01 17:46:00,179 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Amsterdam Airport Schiphol (AUS)
+Airline: KLM
+Departs: CDG at August 14, 2025 at 10:15
+Arrives: AUS at August 14, 2025 at 11:30
+Total Price: 1716.00 USD
+2025-08-01 17:48:52,162 - INFO - Trip type: one-way
+2025-08-01 17:48:52,163 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-01 17:48:52,371 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: EgyptAir
+Departs: NBO at August 04, 2025 at 05:55
+Arrives: CDG at August 04, 2025 at 11:00
+Total Price: 745.00 USD
+2025-08-01 17:48:52,380 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Heathrow Airport (CDG)
+Airline: British Airways
+Departs: NBO at August 04, 2025 at 08:15
+Arrives: CDG at August 04, 2025 at 15:25
+Total Price: 749.00 USD
+2025-08-01 17:48:52,400 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline: Emirates
+Departs: NBO at August 04, 2025 at 16:35
+Arrives: CDG at August 04, 2025 at 22:40
+Total Price: 865.00 USD

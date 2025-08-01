@@ -36,7 +36,13 @@ class SearchFlightInput(BaseModel):
     excluded_airlines: Optional[List[str]] = None
     multi_city_legs: Optional[List[MultiCityLeg]] = None
 
-# --- Segment Details (for complex itineraries) ---
+
+
+class LayoverInfo(BaseModel):
+    layover_airport: str
+    layover_duration: str
+
+ 
 class FlightSegment(BaseModel):
     segment_number: int
     departure_airport: str
@@ -46,61 +52,19 @@ class FlightSegment(BaseModel):
     duration: str
     cabin_class: str
     extension_info: List[str]
+    # --- Leg of a Flight ---
 
-class LayoverInfo(BaseModel):
-    layover_airport: str
-    layover_duration: str
-
-# --- Leg of a Flight ---
 class FlightLeg(BaseModel):
-    departure_time: str
-    arrival_time: str
-    origin: Optional[str] = None
-    destination: Optional[str] = None
-    duration: Optional[str] = None
-    stops: Optional[int] = None
-    extensions: Optional[List[str]] = None
-    flight_number: Optional[str] = None
-
-# --- Full Flight Option ---
-class FlightOption(BaseModel):
-    id: str
-    airline: str
-    flight_number: Optional[str] = None
-    origin_city: Optional[str] = None
-    destination_city: Optional[str] = None
-    outbound: Optional[FlightLeg] = None
-    return_leg: Optional[FlightLeg] = None
-    outbound_legs: Optional[List[FlightLeg]] = None
-    return_legs: Optional[List[FlightLeg]] = None
-    legs: Optional[List[FlightLeg]] = None
-    segments: List[FlightSegment] = None
-    layovers: Optional[List[LayoverInfo]] = None
-    total_duration: Optional[str] = None
-    price: Optional[float] = None
-    currency: str
-    price_breakdown: Optional[PriceBreakdown] = None
-    booking_link: Optional[str] = None
-    departure_token: Optional[str] = None
-    formatted_summary: Optional[str] = None
-
-# --- Output for Searching Flights ---
-class SearchFlightOutput(BaseModel):
+    departure_date_time: str
+    arrival_date_time: str
     origin: str
     destination: str
-    flights: List[FlightOption]
+    total_duration: str = None
+    stops: Optional[int] = None
+    segments: List[FlightSegment]
+    layovers: Optional[List[LayoverInfo]] = None
 
-  
 
-# --- Input/Output for Booking a Flight ---
-class BookFlightInput(BaseModel):
-    selected_flight_id: str
-    full_name: str
-    email: str
-    phone: str
-    selected_flight_details: List[FlightOption]
-    passenger_names: Optional[List[str]] = None
-    payment_method: Optional[str] = None
 
 class BookFlightOutput(BaseModel):
     booking_reference: str
@@ -127,3 +91,34 @@ class LastBookingOutput(BaseModel):
 class RetrieveLastFlightBookingInput(BaseModel):
     user_id: str
     thread_id: str
+
+# --- Full Flight Option ---
+class FlightOption(BaseModel):
+    id: str
+    origin:str
+    destination:str
+    origin_city:str
+    desination_city:str
+    airline: str
+    legs: List[FlightLeg]
+    total_price: float
+    currency: str
+    price_breakdown: List[PriceBreakdown] = None
+    booking_token: Optional[str] = None
+    formatted_summary: Optional[str] = None
+
+
+# --- Output for Searching Flights ---
+class SearchFlightOutput(BaseModel):
+    flights: List[FlightOption]
+
+# --- Input/Output for Booking a Flight ---
+class BookFlightInput(BaseModel):
+    selected_flight_id: str
+    full_name: str
+    email: str
+    phone: str
+    selected_flight_details: List[FlightOption]
+    passenger_names: Optional[List[str]] = None
+    payment_method: Optional[str] = None
+  

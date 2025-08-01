@@ -1,18 +1,18 @@
 """Initial migration
 
-Revision ID: 82a02a482edd
+Revision ID: ae88d58ee266
 Revises: 
-Create Date: 2025-07-31 16:14:18.801123
+Create Date: 2025-08-01 16:23:38.245889
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects import postgresql
+
 
 # revision identifiers, used by Alembic.
-revision: str = '82a02a482edd'
+revision: str = 'ae88d58ee266'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -27,53 +27,55 @@ def upgrade() -> None:
     sa.Column('thread_id', sa.String(), nullable=False),
     sa.Column('booking_reference', sa.String(), nullable=False),
     sa.Column('full_name', sa.String(), nullable=False),
-    sa.Column('passenger_names', postgresql.JSON(astext_type=sa.Text()), nullable=False),
+    sa.Column('passenger_names', sa.JSON(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('phone', sa.String(), nullable=False),
     sa.Column('payment_method', sa.String(), nullable=False),
     sa.Column('airline', sa.String(), nullable=False),
     sa.Column('total_price', sa.Float(), nullable=True),
     sa.Column('currency', sa.String(), nullable=True),
-    sa.Column('booking_link', sa.String(), nullable=True),
+    sa.Column('booking_token', sa.String(), nullable=True),
     sa.Column('is_multi_city', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('price_breakdown', postgresql.JSON(astext_type=sa.Text()), nullable=True),
+    sa.Column('price_breakdown', sa.JSON(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('flight_legs',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('booking_id', sa.String(), nullable=True),
-    sa.Column('departure_time', sa.DateTime(), nullable=True),
-    sa.Column('arrival_time', sa.DateTime(), nullable=True),
-    sa.Column('origin', sa.String(), nullable=True),
-    sa.Column('destination', sa.String(), nullable=True),
-    sa.Column('duration', sa.String(), nullable=True),
+    sa.Column('booking_id', sa.String(), nullable=False),
+    sa.Column('departure_date_time', sa.String(), nullable=False),
+    sa.Column('arrival_date_time', sa.String(), nullable=False),
+    sa.Column('origin', sa.String(), nullable=False),
+    sa.Column('destination', sa.String(), nullable=False),
+    sa.Column('total_duration', sa.String(), nullable=True),
     sa.Column('stops', sa.Integer(), nullable=True),
-    sa.Column('extensions', postgresql.JSON(astext_type=sa.Text()), nullable=True),
-    sa.Column('flight_number', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['booking_id'], ['flight_bookings.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('flight_segments',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('booking_id', sa.String(), nullable=True),
-    sa.Column('segment_number', sa.Integer(), nullable=True),
-    sa.Column('departure_airport', sa.String(), nullable=True),
-    sa.Column('departure_datetime', sa.String(), nullable=True),
-    sa.Column('arrival_airport', sa.String(), nullable=True),
-    sa.Column('arrival_datetime', sa.String(), nullable=True),
-    sa.Column('duration', sa.String(), nullable=True),
-    sa.Column('cabin_class', sa.String(), nullable=True),
-    sa.Column('extension_info', postgresql.JSON(astext_type=sa.Text()), nullable=True),
+    sa.Column('booking_id', sa.String(), nullable=False),
+    sa.Column('leg_id', sa.String(), nullable=False),
+    sa.Column('segment_number', sa.Integer(), nullable=False),
+    sa.Column('departure_airport', sa.String(), nullable=False),
+    sa.Column('departure_datetime', sa.String(), nullable=False),
+    sa.Column('arrival_airport', sa.String(), nullable=False),
+    sa.Column('arrival_datetime', sa.String(), nullable=False),
+    sa.Column('duration', sa.String(), nullable=False),
+    sa.Column('cabin_class', sa.String(), nullable=False),
+    sa.Column('extension_info', sa.JSON(), nullable=True),
     sa.ForeignKeyConstraint(['booking_id'], ['flight_bookings.id'], ),
+    sa.ForeignKeyConstraint(['leg_id'], ['flight_legs.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('layovers',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('booking_id', sa.String(), nullable=True),
-    sa.Column('layover_airport', sa.String(), nullable=True),
-    sa.Column('layover_duration', sa.String(), nullable=True),
+    sa.Column('booking_id', sa.String(), nullable=False),
+    sa.Column('leg_id', sa.String(), nullable=False),
+    sa.Column('layover_airport', sa.String(), nullable=False),
+    sa.Column('layover_duration', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['booking_id'], ['flight_bookings.id'], ),
+    sa.ForeignKeyConstraint(['leg_id'], ['flight_legs.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
