@@ -142,25 +142,19 @@ def build_multi_city_flight_option(group, flights, data, segments_data, layovers
 
     # 4. --- Build Flight Legs ---
     legs: List[FlightLeg] = []
-    for i in range(len(data.multi_city_legs)):
-        leg_info = data.multi_city_legs[i]
-        matching_flight = next((f for f in flights if f.get("leg_index") == i), None)
-        if not matching_flight:
-            continue
-
-        formatted_duration = format_duration(matching_flight.get("duration", "Unknown"))
+    for i, leg in enumerate(flights):
+        formatted_duration = format_duration(leg.get("duration", "Unknown"))
         flight_leg = FlightLeg(
-            departure_date_time=matching_flight.get("departure_airport", {}).get("time", "Unknown"),
-            arrival_date_time=matching_flight.get("arrival_airport", {}).get("time", "Unknown"),
-            origin=matching_flight.get("departure_airport", {}).get("id", leg_info.origin),
-            destination=matching_flight.get("arrival_airport", {}).get("id", leg_info.destination),
+            departure_date_time=leg.get("departure_airport", {}).get("time", "Unknown"),
+            arrival_date_time=leg.get("arrival_airport", {}).get("time", "Unknown"),
+            origin=leg.get("departure_airport", {}).get("id", "Unknown"),
+            destination=leg.get("arrival_airport", {}).get("id", "Unknown"),
             total_duration=formatted_duration,
-            stops=matching_flight.get("stops", 0),
+            stops=leg.get("stops", 0),
             segments=segments_by_leg.get(i, []),
             layovers=layovers_by_leg.get(i, [])
         )
         legs.append(flight_leg)
-
 
     # 5. --- Final Flight Option ---
     first_leg = flights[0]
