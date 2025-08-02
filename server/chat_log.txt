@@ -7070,3 +7070,852 @@ Airline: Ethiopian
 Departs: NBO at August 14, 2025 at 18:00
 Arrives: AUS at August 14, 2025 at 20:00
 Total Price: 1591.00 USD
+2025-08-02 14:56:19,449 - INFO - Trip type: one-way
+2025-08-02 14:56:19,450 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:20,683 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 14:56:20,722 - INFO - Trip type: one-way
+2025-08-02 14:56:20,722 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:22,108 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 14:56:29,361 - INFO - Trip type: one-way
+2025-08-02 14:56:33,239 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:33,461 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 14:56:33,466 - INFO - Trip type: one-way
+2025-08-02 14:56:33,467 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:33,710 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 14:56:46,062 - INFO - Trip type: one-way
+2025-08-02 14:56:46,063 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:46,283 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Etihad', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 14:56:46,288 - INFO - Trip type: one-way
+2025-08-02 14:56:46,289 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 14:56:46,530 - ERROR - search_flight error: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 496, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 253, in build_one_way_flight_option
+    return FlightOption(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightOption
+airline
+  Input should be a valid list [type=list_type, input_value='Air Tahiti Nui, American', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/list_type
+2025-08-02 15:00:26,563 - INFO - Trip type: one-way
+2025-08-02 15:00:26,564 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:00:26,794 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at August 14, 2025 at 18:20
+Arrives: CDG at August 15, 2025 at 00:25
+Total Price: 756.00 USD
+2025-08-02 15:00:26,797 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at August 14, 2025 at 05:55
+Arrives: CDG at August 14, 2025 at 11:00
+Total Price: 808.00 USD
+2025-08-02 15:00:26,798 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline: ['Air France']
+Departs: NBO at August 14, 2025 at 22:25
+Arrives: CDG at August 15, 2025 at 06:10
+Total Price: 1272.00 USD
+2025-08-02 15:00:26,799 - INFO - Trip type: one-way
+2025-08-02 15:00:26,799 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:00:27,032 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at August 24, 2025 at 12:05
+Arrives: AUS at August 24, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:00:27,035 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: ['American']
+Departs: CDG at August 24, 2025 at 11:00
+Arrives: AUS at August 24, 2025 at 14:25
+Total Price: 1534.00 USD
+2025-08-02 15:00:27,036 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: ['Delta']
+Departs: CDG at August 24, 2025 at 10:50
+Arrives: AUS at August 24, 2025 at 13:10
+Total Price: 1576.00 USD
+2025-08-02 15:01:58,585 - INFO - Trip type: one-way
+2025-08-02 15:01:58,586 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:01:58,881 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at August 14, 2025 at 18:20
+Arrives: CDG at August 15, 2025 at 00:25
+Total Price: 756.00 USD
+2025-08-02 15:01:58,887 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at August 14, 2025 at 05:55
+Arrives: CDG at August 14, 2025 at 11:00
+Total Price: 808.00 USD
+2025-08-02 15:01:58,888 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline: ['Air France']
+Departs: NBO at August 14, 2025 at 22:25
+Arrives: CDG at August 15, 2025 at 06:10
+Total Price: 1272.00 USD
+2025-08-02 15:01:58,889 - INFO - Trip type: one-way
+2025-08-02 15:01:58,889 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:01:59,113 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at August 24, 2025 at 12:05
+Arrives: AUS at August 24, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:01:59,115 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: ['American']
+Departs: CDG at August 24, 2025 at 11:00
+Arrives: AUS at August 24, 2025 at 14:25
+Total Price: 1534.00 USD
+2025-08-02 15:01:59,117 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: ['Delta']
+Departs: CDG at August 24, 2025 at 10:50
+Arrives: AUS at August 24, 2025 at 13:10
+Total Price: 1576.00 USD
+2025-08-02 15:03:39,214 - INFO - Trip type: one-way
+2025-08-02 15:03:39,215 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-14', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:03:39,435 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at August 14, 2025 at 18:20
+Arrives: CDG at August 15, 2025 at 00:25
+Total Price: 756.00 USD
+2025-08-02 15:03:39,439 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at August 14, 2025 at 05:55
+Arrives: CDG at August 14, 2025 at 11:00
+Total Price: 808.00 USD
+2025-08-02 15:03:39,440 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline: ['Air France']
+Departs: NBO at August 14, 2025 at 22:25
+Arrives: CDG at August 15, 2025 at 06:10
+Total Price: 1272.00 USD
+2025-08-02 15:03:39,441 - INFO - Trip type: one-way
+2025-08-02 15:03:39,442 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-08-24', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:03:39,677 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at August 24, 2025 at 12:05
+Arrives: AUS at August 24, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:03:39,679 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline: ['American']
+Departs: CDG at August 24, 2025 at 11:00
+Arrives: AUS at August 24, 2025 at 14:25
+Total Price: 1534.00 USD
+2025-08-02 15:03:39,680 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Minneapolis–Saint Paul International Airport (AUS)
+Airline: ['Delta']
+Departs: CDG at August 24, 2025 at 10:50
+Arrives: AUS at August 24, 2025 at 13:10
+Total Price: 1576.00 USD
+2025-08-02 15:29:21,260 - INFO - Trip type: one-way
+2025-08-02 15:29:21,261 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:29:22,837 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 15:29:22,839 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline: ['Ethiopian']
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 15:29:22,841 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 15:29:22,843 - INFO - Trip type: one-way
+2025-08-02 15:29:22,843 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:29:24,261 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:29:24,264 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: ['British Airways']
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 15:29:24,267 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline: ['American']
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 15:30:55,370 - INFO - Trip type: one-way
+2025-08-02 15:30:55,371 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:30:55,594 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 15:30:55,597 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline: ['Ethiopian']
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 15:30:55,598 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 15:30:55,599 - INFO - Trip type: one-way
+2025-08-02 15:30:55,599 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:30:55,835 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:30:55,843 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: ['British Airways']
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 15:30:55,848 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline: ['American']
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 15:37:55,499 - INFO - Trip type: one-way
+2025-08-02 15:37:55,500 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:37:55,828 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline: ['EgyptAir']
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 15:37:55,831 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline: ['Ethiopian']
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 15:37:55,832 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline: ['Etihad']
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 15:37:55,834 - INFO - Trip type: one-way
+2025-08-02 15:37:55,834 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:37:56,056 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline: ['Air Tahiti Nui', 'American']
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 15:37:56,058 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline: ['British Airways']
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 15:37:56,060 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline: ['American']
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 15:57:41,734 - INFO - Trip type: one-way
+2025-08-02 15:57:41,735 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:57:42,037 - ERROR - search_flight error: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['EgyptAir'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 512, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 228, in build_one_way_flight_option
+    flight_segments.append(FlightSegment(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['EgyptAir'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-02 15:57:42,043 - INFO - Trip type: one-way
+2025-08-02 15:57:42,043 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:57:42,294 - ERROR - search_flight error: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['Air Tahiti Nui'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 512, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 228, in build_one_way_flight_option
+    flight_segments.append(FlightSegment(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['Air Tahiti Nui'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-02 15:57:51,164 - INFO - Trip type: one-way
+2025-08-02 15:57:51,172 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:57:51,385 - ERROR - search_flight error: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['EgyptAir'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 512, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 228, in build_one_way_flight_option
+    flight_segments.append(FlightSegment(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['EgyptAir'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-02 15:57:51,389 - INFO - Trip type: one-way
+2025-08-02 15:57:51,389 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 15:57:51,606 - ERROR - search_flight error: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['Air Tahiti Nui'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 512, in search_flight
+    flight_option = build_one_way_flight_option(group, flights, data, segments, layovers)
+  File "/home/angela/Projects/travel/server/tools/search_flight.py", line 228, in build_one_way_flight_option
+    flight_segments.append(FlightSegment(
+  File "/home/angela/Projects/travel/server/venv/lib/python3.10/site-packages/pydantic/main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for FlightSegment
+airline
+  Input should be a valid string [type=string_type, input_value=['Air Tahiti Nui'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2025-08-02 16:01:25,400 - INFO - Trip type: multi-city
+2025-08-02 16:01:25,401 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'type': 3, 'multi_city_json': '[{"departure_id": "NBO", "arrival_id": "CDG", "date": "2025-09-04"}, {"departure_id": "CDG", "arrival_id": "AUS", "date": "2025-09-07"}]', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:01:53,164 - INFO - Formatted Flight Option 1:
+[Option 1] Multi-City flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 05, 2025 at 06:45
+Total Price: 1549.00 USD
+2025-08-02 16:01:53,167 - INFO - Formatted Flight Option 2:
+[Option 2] Multi-City flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Kenya Airways
+Departs: NBO at September 04, 2025 at 23:50
+Arrives: CDG at September 05, 2025 at 07:30
+Total Price: 1785.00 USD
+2025-08-02 16:01:53,169 - INFO - Formatted Flight Option 3:
+[Option 3] Multi-City flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): EgyptAir
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 21:05
+Total Price: 4496.00 USD
+2025-08-02 16:01:53,170 - INFO - Trip type: one-way
+2025-08-02 16:01:53,171 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:01:53,410 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline(s): Air Tahiti Nui, American
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 16:01:53,413 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 16:01:53,415 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 16:04:08,194 - INFO - Trip type: one-way
+2025-08-02 16:04:08,195 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:04:08,479 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline(s): EgyptAir
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 16:04:08,482 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 16:04:08,483 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline(s): Etihad
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 16:04:08,485 - INFO - Trip type: one-way
+2025-08-02 16:04:08,485 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:04:08,715 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline(s): Air Tahiti Nui, American
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 16:04:08,718 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 16:04:08,719 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 16:05:31,140 - INFO - Trip type: one-way
+2025-08-02 16:05:31,141 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:05:31,372 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline(s): EgyptAir
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 16:05:31,375 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 16:05:31,377 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline(s): Etihad
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 16:12:53,763 - INFO - Trip type: one-way
+2025-08-02 16:12:53,764 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:12:54,061 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline(s): EgyptAir
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 16:12:54,063 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 16:12:54,065 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline(s): Etihad
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 16:12:54,066 - INFO - Trip type: one-way
+2025-08-02 16:12:54,067 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:12:54,288 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline(s): Air Tahiti Nui, American
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 16:12:54,291 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 16:12:54,292 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 16:14:10,483 - INFO - Trip type: one-way
+2025-08-02 16:14:10,484 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:14:10,720 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Cairo International Airport (CDG)
+Airline(s): EgyptAir
+Departs: NBO at September 04, 2025 at 05:55
+Arrives: CDG at September 04, 2025 at 11:05
+Total Price: 584.00 USD
+2025-08-02 16:14:10,722 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 04, 2025 at 18:00
+Arrives: CDG at September 04, 2025 at 20:00
+Total Price: 697.00 USD
+2025-08-02 16:14:10,723 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Zayed International Airport (CDG)
+Airline(s): Etihad
+Departs: NBO at September 04, 2025 at 18:20
+Arrives: CDG at September 05, 2025 at 00:25
+Total Price: 705.00 USD
+2025-08-02 16:14:10,725 - INFO - Trip type: one-way
+2025-08-02 16:14:10,725 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-07', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:14:10,976 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Los Angeles International Airport (AUS)
+Airline(s): Air Tahiti Nui, American
+Departs: CDG at September 07, 2025 at 12:05
+Arrives: AUS at September 07, 2025 at 14:20
+Total Price: 751.00 USD
+2025-08-02 16:14:10,981 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 07, 2025 at 07:55
+Arrives: AUS at September 07, 2025 at 08:15
+Total Price: 859.00 USD
+2025-08-02 16:14:10,982 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Philadelphia International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 07, 2025 at 14:40
+Arrives: AUS at September 07, 2025 at 17:00
+Total Price: 984.00 USD
+2025-08-02 16:40:53,290 - INFO - Trip type: one-way
+2025-08-02 16:40:53,291 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-01', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:40:55,036 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 01, 2025 at 18:00
+Arrives: CDG at September 01, 2025 at 20:00
+Total Price: 793.00 USD
+2025-08-02 16:40:55,039 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline(s): Emirates
+Departs: NBO at September 01, 2025 at 22:45
+Arrives: CDG at September 02, 2025 at 04:50
+Total Price: 852.00 USD
+2025-08-02 16:40:55,040 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Air France
+Departs: NBO at September 01, 2025 at 22:25
+Arrives: CDG at September 02, 2025 at 06:10
+Total Price: 1087.00 USD
+2025-08-02 16:40:55,041 - INFO - Trip type: one-way
+2025-08-02 16:40:55,042 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:40:56,289 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 08:15
+Arrives: AUS at September 04, 2025 at 08:35
+Total Price: 859.00 USD
+2025-08-02 16:40:56,292 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 14:10
+Arrives: AUS at September 04, 2025 at 14:30
+Total Price: 859.00 USD
+2025-08-02 16:40:56,293 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 04, 2025 at 11:00
+Arrives: AUS at September 04, 2025 at 14:25
+Total Price: 864.00 USD
+2025-08-02 16:52:00,028 - INFO - Trip type: one-way
+2025-08-02 16:52:00,029 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-01', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:52:00,318 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 01, 2025 at 18:00
+Arrives: CDG at September 01, 2025 at 20:00
+Total Price: 793.00 USD
+2025-08-02 16:52:00,323 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline(s): Emirates
+Departs: NBO at September 01, 2025 at 22:45
+Arrives: CDG at September 02, 2025 at 04:50
+Total Price: 852.00 USD
+2025-08-02 16:52:00,324 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Air France
+Departs: NBO at September 01, 2025 at 22:25
+Arrives: CDG at September 02, 2025 at 06:10
+Total Price: 1087.00 USD
+2025-08-02 16:52:00,326 - INFO - Trip type: one-way
+2025-08-02 16:52:00,326 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:52:00,564 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 08:15
+Arrives: AUS at September 04, 2025 at 08:35
+Total Price: 859.00 USD
+2025-08-02 16:52:00,567 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 14:10
+Arrives: AUS at September 04, 2025 at 14:30
+Total Price: 859.00 USD
+2025-08-02 16:52:00,569 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 04, 2025 at 11:00
+Arrives: AUS at September 04, 2025 at 14:25
+Total Price: 864.00 USD
+2025-08-02 16:52:58,085 - INFO - Trip type: one-way
+2025-08-02 16:52:58,087 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-01', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:52:58,341 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 01, 2025 at 18:00
+Arrives: CDG at September 01, 2025 at 20:00
+Total Price: 793.00 USD
+2025-08-02 16:52:58,344 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline(s): Emirates
+Departs: NBO at September 01, 2025 at 22:45
+Arrives: CDG at September 02, 2025 at 04:50
+Total Price: 852.00 USD
+2025-08-02 16:52:58,345 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Air France
+Departs: NBO at September 01, 2025 at 22:25
+Arrives: CDG at September 02, 2025 at 06:10
+Total Price: 1087.00 USD
+2025-08-02 16:52:58,348 - INFO - Trip type: one-way
+2025-08-02 16:52:58,349 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:52:58,585 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 08:15
+Arrives: AUS at September 04, 2025 at 08:35
+Total Price: 859.00 USD
+2025-08-02 16:52:58,588 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 14:10
+Arrives: AUS at September 04, 2025 at 14:30
+Total Price: 859.00 USD
+2025-08-02 16:52:58,589 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 04, 2025 at 11:00
+Arrives: AUS at September 04, 2025 at 14:25
+Total Price: 864.00 USD
+2025-08-02 16:53:13,448 - INFO - Trip type: one-way
+2025-08-02 16:53:13,449 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-01', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:53:13,670 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Bole Addis Ababa International Airport (CDG)
+Airline(s): Ethiopian
+Departs: NBO at September 01, 2025 at 18:00
+Arrives: CDG at September 01, 2025 at 20:00
+Total Price: 793.00 USD
+2025-08-02 16:53:13,673 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Dubai International Airport (CDG)
+Airline(s): Emirates
+Departs: NBO at September 01, 2025 at 22:45
+Arrives: CDG at September 02, 2025 at 04:50
+Total Price: 852.00 USD
+2025-08-02 16:53:13,674 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Jomo Kenyatta International Airport (NBO) to Paris Charles de Gaulle Airport (CDG)
+Airline(s): Air France
+Departs: NBO at September 01, 2025 at 22:25
+Arrives: CDG at September 02, 2025 at 06:10
+Total Price: 1087.00 USD
+2025-08-02 16:53:13,676 - INFO - Trip type: one-way
+2025-08-02 16:53:13,676 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-04', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:53:13,893 - INFO - Formatted Flight Option 1:
+[Option 1] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 08:15
+Arrives: AUS at September 04, 2025 at 08:35
+Total Price: 859.00 USD
+2025-08-02 16:53:13,896 - INFO - Formatted Flight Option 2:
+[Option 2] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Heathrow Airport (AUS)
+Airline(s): British Airways
+Departs: CDG at September 04, 2025 at 14:10
+Arrives: AUS at September 04, 2025 at 14:30
+Total Price: 859.00 USD
+2025-08-02 16:53:13,898 - INFO - Formatted Flight Option 3:
+[Option 3] One-Way flight:
+From Paris Charles de Gaulle Airport (CDG) to Dallas Fort Worth International Airport (AUS)
+Airline(s): American
+Departs: CDG at September 04, 2025 at 11:00
+Arrives: AUS at September 04, 2025 at 14:25
+Total Price: 864.00 USD
+2025-08-02 16:57:59,729 - INFO - Trip type: one-way
+2025-08-02 16:57:59,730 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-09-01', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 16:58:00,011 - INFO - Trip type: one-way
+2025-08-02 16:58:00,012 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'CDG', 'arrival_id': 'AUS', 'outbound_date': '2025-09-03', 'type': 2, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 17:39:13,435 - INFO - Trip type: multi-city
+2025-08-02 17:39:13,436 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'type': 3, 'multi_city_json': '[{"departure_id": "NBO", "arrival_id": "CDG", "date": "2025-09-01"}, {"departure_id": "CDG", "arrival_id": "AUS", "date": "2025-09-10"}]', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 17:43:10,998 - INFO - Trip type: multi-city
+2025-08-02 17:43:10,999 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'type': 3, 'multi_city_json': '[{"departure_id": "NBO", "arrival_id": "CDG", "date": "2025-09-02"}, {"departure_id": "CDG", "arrival_id": "AUS", "date": "2025-09-09"}]', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 17:43:16,872 - INFO - Trip type: multi-city
+2025-08-02 17:43:16,873 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'type': 3, 'multi_city_json': '[{"departure_id": "NBO", "arrival_id": "CDG", "date": "2025-09-02"}, {"departure_id": "CDG", "arrival_id": "AUS", "date": "2025-09-09"}]', 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}
+2025-08-02 17:58:27,957 - INFO - Trip type: round-trip
+2025-08-02 17:58:27,958 - INFO - Calling SERP API with params: {'engine': 'google_flights', 'departure_id': 'NBO', 'arrival_id': 'CDG', 'outbound_date': '2025-08-07', 'return_date': '2025-08-10', 'type': 1, 'hl': 'en', 'currency': 'USD', 'adults': 1, 'api_key': '7c9c1ecb32412c258bf453fed3f94f369c204ff4ffd0216ace9cf927cefafac3'}

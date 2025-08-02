@@ -52,6 +52,8 @@ class FlightSegment(BaseModel):
     duration: str
     cabin_class: str
     extension_info: List[str]
+    airline: Optional[List[str]] = None  # <-- Change this line
+    flight_number:str
     # --- Leg of a Flight ---
 
 class FlightLeg(BaseModel):
@@ -99,7 +101,7 @@ class FlightOption(BaseModel):
     destination:str
     origin_city:str
     desination_city:str
-    airline: str
+    airline: List[str]  # Changed from single `airline` to list
     legs: List[FlightLeg]
     total_price: float
     currency: str

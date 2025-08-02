@@ -19,7 +19,8 @@ class FlightBooking(Base):
     phone = Column(String, nullable=False)
     payment_method = Column(String, nullable=False)
 
-    airline = Column(String, nullable=False)
+    airlines = Column(JSON, nullable=True)  # List of airline names
+
     total_price = Column(Float)
     currency = Column(String)
     booking_token = Column(String)
@@ -64,6 +65,8 @@ class FlightSegmentDB(Base):
     duration = Column(String, nullable=False)
     cabin_class = Column(String, nullable=False)
     extension_info = Column(JSON, nullable=True)  # List of strings
+    airline = Column(JSON, nullable=True)
+    flight_number = Column(String, nullable=True)
 
     booking = relationship("FlightBooking", back_populates="segments")
     leg = relationship("FlightLegDB", back_populates="segments")

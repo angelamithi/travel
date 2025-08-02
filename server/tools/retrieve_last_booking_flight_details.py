@@ -39,7 +39,7 @@ def retrieve_last_booking_flight_details(
         return LastBookingOutput(message="I couldn't find any recent flight bookings for you.")
 
     message = (
-        f"📄 **Your Last Flight Booking Details** *(from database)*:\n"
+        f"## 📄 Your Last Flight Booking Details *(from database)*\n"
         f"- **Booking Reference:** {booking.booking_reference}\n"
         f"- **Passenger:** {booking.full_name}\n"
         f"- **Email:** {booking.email}\n"
@@ -48,9 +48,9 @@ def retrieve_last_booking_flight_details(
     )
 
     for idx, leg in enumerate(booking.legs):
-        leg_type = "✈️ Outbound Flight" if idx == 0 else "🔁 Return Flight"
+        leg_label = f"### 🛫 Leg {idx + 1}"
         message += (
-            f"\n**{leg_type}**:\n"
+            f"\n{leg_label}\n"
             f"- **From:** {leg.origin} → **To:** {leg.destination}\n"
             f"- **Departure:** {leg.departure_date_time}\n"
             f"- **Arrival:** {leg.arrival_date_time}\n"
@@ -60,37 +60,33 @@ def retrieve_last_booking_flight_details(
         if leg.stops is not None:
             message += f"- **Stops:** {leg.stops}\n"
 
-        # Segments for the leg
         if leg.segments:
-            message += "\n🧩 **Flight Segments:**\n"
+            message += "\n#### 🧩 Flight Segments\n"
             for segment in leg.segments:
                 message += (
-                    f"  - Segment {segment.segment_number}: "
-                    f"{segment.departure_airport} ({segment.departure_datetime}) → "
-                    f"{segment.arrival_airport} ({segment.arrival_datetime})\n"
-                    f"    - Duration: {segment.duration}\n"
-                    f"    - Cabin Class: {segment.cabin_class}\n"
+                    f"- **Segment {segment.segment_number}**\n"
+                    f"  - **Airline:** {segment.airline_name}\n"
+                    f"  - **Flight Number:** {segment.flight_number}\n"
+                    f"  - **From:** {segment.departure_airport} at {segment.departure_datetime}\n"
+                    f"  - **To:** {segment.arrival_airport} at {segment.arrival_datetime}\n"
+                    f"  - **Duration:** {segment.duration}\n"
+                    f"  - **Cabin Class:** {segment.cabin_class}\n"
                 )
                 if segment.extension_info:
-                    message += f"    - Extra Info: {segment.extension_info}\n"
+                    message += f"  - **Extra Info:** {segment.extension_info}\n"
 
-        # Layovers for the leg
         if leg.layovers:
-            message += "\n⏸️ **Layovers:**\n"
+            message += "\n#### ⏸️ Layovers\n"
             for layover in leg.layovers:
-                message += (
-                    f"  - At {layover.layover_airport} for {layover.layover_duration}\n"
-                )
-
-   
+                message += f"- At **{layover.layover_airport}** for **{layover.layover_duration}**\n"
 
     if booking.booking_token:
         message += f"\n🔗 [View Booking Link]({booking.booking_token})\n"
 
     if isinstance(booking.price_breakdown, list) and len(booking.price_breakdown) > 0:
-        pb = booking.price_breakdown[0]  # ✅ get the first dict in the list
+        pb = booking.price_breakdown[0]
 
-        message += "\n📊 **Price Breakdown:**\n"
+        message += "\n## 📊 Price Breakdown\n"
         if pb.get("base_fare_per_person"):
             message += f"- Base Fare per Person: {booking.currency} {pb['base_fare_per_person']}\n"
 
@@ -103,9 +99,8 @@ def retrieve_last_booking_flight_details(
                 )
 
         if pb.get("total_price"):
-             message += f"\n💰 **Total Cost:** {booking.currency} {booking.total_price}\n"
+            message += f"\n💰 **Total Cost:** {booking.currency} {booking.total_price}\n"
     else:
         message += "\n⚠️ **Price Breakdown format is invalid or missing.**\n"
-
 
     return LastBookingOutput(message=message)
