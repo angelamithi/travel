@@ -57,7 +57,7 @@ def format_datetime(dt_str: str) -> str:
         return dt_str  # Fallback if parsing fails
 
 def format_flight_option(option: FlightOption, index: int, trip_type: str) -> str:
-    def clean_leg_info(title: str, leg) -> str:
+    def clean_leg_info(title: str, leg: FlightLeg) -> str:
         airline_names = ", ".join(set(
             seg.airline[0] if isinstance(seg.airline, list) else seg.airline
             for seg in leg.segments
@@ -65,7 +65,15 @@ def format_flight_option(option: FlightOption, index: int, trip_type: str) -> st
         flight_nums = ", ".join(seg.flight_number for seg in leg.segments)
         cabin_class = leg.segments[0].cabin_class if leg.segments else "Economy"
         stops = "Non-stop" if leg.stops == 0 else f"{leg.stops} stop(s)"
-        
+
+        layover_lines = ""
+        if leg.layovers:
+            layover_lines = "\n".join(
+                f"   ⏸️ Layover at {lay.layover_airport} for {lay.layover_duration}"
+                for lay in leg.layovers
+            )
+            layover_lines = f"\n- 🛑 Layovers:\n{layover_lines}"
+
         return (
             f"**{title}**\n"
             f"- {leg.origin} → {leg.destination}\n"
@@ -73,34 +81,26 @@ def format_flight_option(option: FlightOption, index: int, trip_type: str) -> st
             f"- ⏱️ Duration: {leg.total_duration}, ✈️ {stops}\n"
             f"- 👨‍✈️ Airline: {airline_names}\n"
             f"- 🪪 Flight(s): {flight_nums}\n"
-            f"- 🛋️ Cabin: {cabin_class}\n"
+            f"- 🛋️ Cabin: {cabin_class}"
+            f"{layover_lines}\n"
         )
+
+    formatted = f"### ✈️ Option {index + 1}: {trip_type.title()}\n\n"
 
     if trip_type == "round-trip" and len(option.legs) >= 2:
         outbound_leg = option.legs[0]
         return_leg = option.legs[1]
-        
-        formatted = f"### ✈️ Option {index + 1}: Round Trip\n\n"
         formatted += clean_leg_info("🟢 Outbound Flight", outbound_leg) + "\n"
         formatted += clean_leg_info("🔁 Return Flight", return_leg) + "\n"
-        formatted += f"💰 **Total Price:** {option.total_price:.2f} {option.currency}\n"
-        formatted += "---\n"
-        return formatted
+    else:
+        for i, leg in enumerate(option.legs):
+            label = f"🛫 Leg {i + 1}" if trip_type == "multi-city" else "🟢 Flight"
+            formatted += clean_leg_info(label, leg) + "\n"
 
-    # For one-way or fallback
-    summary_lines = [
-        f"### ✈️ Option {index + 1}: {trip_type.title()}",
-        f"From {option.origin_city} ({option.origin}) to {option.desination_city} ({option.destination})",
-        f"Airline(s): {', '.join(option.airline)}"
-    ]
+    formatted += f"💰 **Total Price:** {option.total_price:.2f} {option.currency}\n"
+    formatted += "---\n"
+    return formatted
 
-    if len(option.legs) > 0:
-        leg = option.legs[0]
-        summary_lines.append(clean_leg_info("🟢 Flight", leg))
-
-    summary_lines.append(f"💰 **Total Price:** {option.total_price:.2f} {option.currency}")
-    summary_lines.append("---")
-    return "\n".join(summary_lines)
 
 def build_round_trip_flight_option(group, outbound_flights, data, outbound_segments, outbound_layovers) -> Optional[FlightOption]:
     # First, process the outbound flight data
