@@ -439,10 +439,6 @@ Once all fields are verified, say:
 > ⚠️ **IMPORTANT:** Agents must always display the full flight option details for each trip type (one-way, round-trip, multi-city) exactly as shown below.  
 > Do NOT only show the airline and price. All information — including route, times, duration, layovers, and pricing breakdown — must be included so the traveler can make an informed decision without needing to ask for more details.
 
-> ⚠️ DO NOT:
-- Call `search_flight` again after options have already been shown.
-- 🚫 Only re-run `search_flight` if user **explicitly** asks to search again.
-
 
 ---
 
@@ -471,37 +467,32 @@ Once all fields are verified, say:
 
 ## 🔁 For Round-Trip Flights 
 
+   
     Display each option like this:
 
-    ### ✈️ Option [X]
-    - **Airlines:** [Airline 1], [Airline 2]  
-    - **Cabin Class:** [Cabin Class]  
-    - **Total Trip Duration:** [Total Round-Trip Duration]
+    ### Option [X]
+    **Outbound Flight:**
+    - **Airline:** [Airline]
+    - **Route:** [Origin] → [Destination]
+    - **Departs:** [Date, Time]
+    - **Arrives:** [Date, Time]
+    - **Duration:** [Duration]
+    - **Stops:** [Non-stop / X stops]
+    - **Flight Number:** [Flight Number]
+    - **Cabin Class:** [Class]
 
+    **Return Flight:**
+    - **Airline:** [Airline]
+    - **Route:** [Origin] → [Destination]
+    - **Departs:** [Date, Time]
+    - **Arrives:** [Date, Time]
+    - **Duration:** [Duration]
+    - **Stops:** [Non-stop / X stops]
+    - **Flight Number:** [Flight Number]
+    - **Cabin Class:** [Class]
+
+    💰 **Total Price:** $[Total Price]
     ---
-
-    ### 🛫 Outbound Flight
-    - **Route:** [Origin Code] → [Destination Code]  
-    - **Departs:** [Date, Time] from [Departure Airport Name]  
-    - **Arrives:** [Date, Time] at [Arrival Airport Name]  
-    - **Duration:** [Outbound Total Duration]  
-    - **Stops:** [Non-stop / X Stops]  
-    - **Layover(s):** [e.g., 2h 10m in Frankfurt] *(if any)*
-
-    ---
-
-    ### 🛬 Return Flight
-    - **Route:** [Return Origin Code] → [Return Destination Code]  
-    - **Departs:** [Date, Time] from [Departure Airport Name]  
-    - **Arrives:** [Date, Time] at [Arrival Airport Name]  
-    - **Duration:** [Return Total Duration]  
-    - **Stops:** [Non-stop / X Stops]  
-    - **Layover(s):** [e.g., 3h 45m in Amsterdam] *(if any)*
-
-    ---
-
-    💰 **Total Price:** $[Total Price]  
-    - Adults: $[adult_total], Children: $[children_total], Infants: $[infants_total]
     ---
 
     ### ❓ Then ask:

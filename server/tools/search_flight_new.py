@@ -27,11 +27,18 @@ load_dotenv()
 logger = logging.getLogger("chat_logger")
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 
-def format_duration(minutes_str: str) -> str:
+def format_duration(value) -> str:
     try:
-        minutes = int(minutes_str.strip().replace("min", "").strip())
+        if isinstance(value, int):
+            minutes = value
+        elif isinstance(value, str):
+            minutes = int(value.strip().replace("min", "").strip())
+        else:
+            return str(value)
+
         hours = minutes // 60
         mins = minutes % 60
+
         if hours and mins:
             return f"{hours}h {mins}m"
         elif hours:
@@ -39,10 +46,56 @@ def format_duration(minutes_str: str) -> str:
         else:
             return f"{mins}m"
     except:
-        return minutes_str  # fallback to original if parsing fails
+        return str(value)  # fallback to original if parsing fails
+
+def format_datetime(dt_str: str) -> str:
+    try:
+        dt = datetime.fromisoformat(dt_str)
+        return dt.strftime('%B %d, %Y at %H:%M')  # Example: August 10, 2025 at 10:00
+    except Exception:
+        return dt_str  # Fallback if parsing fails
+
+def format_flight_option(option: FlightOption, index: int, trip_type: str) -> str:
+    summary_lines = [
+        f"[Option {index + 1}] {trip_type.title()} flight:",
+        f"From {option.origin_city} ({option.origin}) to {option.desination_city} ({option.destination})",
+        f"Airline(s): {', '.join(option.airline)}"
+,
+        f"Departs: {option.legs[0].origin} at {format_datetime(option.legs[0].departure_date_time)}",
+        f"Arrives: {option.legs[-1].destination} at {format_datetime(option.legs[-1].arrival_date_time)}",
+    ]
+
+    # Include each segment's flight number and airline (if available in extension_info)
+    flight_numbers = []
+    for leg in option.legs:
+        for segment in leg.segments:
+            flight_num = None
+            airline = option.airline  # fallback
+            # Try to extract flight number from extension info
+            for ext in segment:
+                if isinstance(ext, dict) and "flight_number" in ext:
+                    flight_num = ext.get("flight_number")
+                if isinstance(ext, dict) and "airline" in ext:
+                    airline = ext.get("airline")
+            if flight_num:
+                if isinstance(airline, list):
+                    airline_str = "/".join(airline)
+                else:
+                    airline_str = airline
+                flight_numbers.append(f"{airline_str} {flight_num}")
+
+    
+    if flight_numbers:
+        summary_lines.append("Flight(s): " + ", ".join(flight_numbers))
+
+    summary_lines.append(f"Total Price: {option.total_price:.2f} {option.currency}")
+    return "\n".join(summary_lines)
+
 
 
 def build_multi_city_flight_option(group, flights, data, segments_data, layovers_data) -> FlightOption:
+    segments_data = flights  # SerpAPI returns each segment as a full "flight"
+
     # 1. --- Price Breakdown ---
     base_price = float(group.get("price", 0)) if group.get("price") else 0
     adults = data.adults
@@ -64,18 +117,29 @@ def build_multi_city_flight_option(group, flights, data, segments_data, layovers
 
     # 2. --- Build Segments per leg ---
     segments_by_leg = {}
-    for seg in segments_data:
+    airline_set = set()  # To collect unique airline names
+
+    for i, seg in enumerate(segments_data):
         leg_index = seg.get("leg_index", 0)
+        raw_airline = seg.get("airline", "Unknown")
+        airline = [raw_airline] if isinstance(raw_airline, str) else raw_airline or ["Unknown"]
+        airline_set.update(airline)
+
+        flight_number = seg.get("flight_number", "Unknown")
+
         segment = FlightSegment(
-            segment_number=seg.get("segment_number", 1),
-            departure_airport=seg.get("departure_airport", "Unknown"),
-            departure_datetime=seg.get("departure_datetime", "Unknown"),
-            arrival_airport=seg.get("arrival_airport", "Unknown"),
-            arrival_datetime=seg.get("arrival_datetime", "Unknown"),
+            segment_number=i + 1,
+            departure_airport=seg.get("departure_airport", {}).get("id", "Unknown"),
+            departure_datetime=seg.get("departure_airport", {}).get("time", "Unknown"),
+            arrival_airport=seg.get("arrival_airport", {}).get("id", "Unknown"),
+            arrival_datetime=seg.get("arrival_airport", {}).get("time", "Unknown"),
             duration=format_duration(seg.get("duration", "Unknown")),
-            cabin_class=seg.get("cabin_class", "Economy"),
-            extension_info=seg.get("extension_info", [])
+            cabin_class=seg.get("travel_class", "Economy"),
+            airline=airline,
+            flight_number=flight_number,
+            extension_info=[flight_number, *(seg.get("extensions", []))]
         )
+
         segments_by_leg.setdefault(leg_index, []).append(segment)
 
     # 3. --- Build Layovers per leg ---
@@ -83,8 +147,8 @@ def build_multi_city_flight_option(group, flights, data, segments_data, layovers
     for lay in layovers_data:
         leg_index = lay.get("leg_index", 0)
         layover = LayoverInfo(
-            layover_airport=lay.get("layover_airport", "Unknown"),
-            layover_duration=format_duration(lay.get("layover_duration", "Unknown"))
+            layover_airport=lay.get("name", "Unknown"),
+            layover_duration=format_duration(lay.get("duration", "Unknown"))
         )
         layovers_by_leg.setdefault(leg_index, []).append(layover)
 
@@ -112,19 +176,24 @@ def build_multi_city_flight_option(group, flights, data, segments_data, layovers
         id=str(uuid.uuid4()),
         origin=first_leg.get("departure_airport", {}).get("id", "Unknown"),
         destination=last_leg.get("arrival_airport", {}).get("id", "Unknown"),
-        origin_city=first_leg.get("departure_airport", {}).get("city", "Unknown"),
-        desination_city=last_leg.get("arrival_airport", {}).get("city", "Unknown"),
-        airline=first_leg.get("airline", "Unknown"),
+        origin_city=first_leg.get("departure_airport", {}).get("name", "Unknown"),
+        desination_city=last_leg.get("arrival_airport", {}).get("name", "Unknown"),
+        airline=sorted(airline_set) if airline_set else "Unknown",  # Joined airline list
         legs=legs,
         total_price=total_price,
         currency="USD",
         price_breakdown=[price_breakdown],
-        booking_link=group.get("booking_link")
+        booking_token=group.get("booking_token")
     )
 
 
+
 def build_one_way_flight_option(group, flights, data, segments_data, layovers_data) -> FlightOption:
+    import uuid
+    from typing import List
+
     first_flight = flights[0]
+    segments_data = flights
 
     # 1. --- Price Breakdown ---
     base_price = float(group.get("price", 0)) if group.get("price") else 0
@@ -147,24 +216,34 @@ def build_one_way_flight_option(group, flights, data, segments_data, layovers_da
 
     # 2. --- Flight Segments ---
     flight_segments: List[FlightSegment] = []
-    for seg in segments_data:
+    airline_set = set()  # <-- To store unique airlines
+    for i, seg in enumerate(segments_data):
+        raw_airline = seg.get("airline", "Unknown")
+        airline = [raw_airline] if isinstance(raw_airline, str) else raw_airline or ["Unknown"]
+        airline_set.update(airline)
+
+        flight_number = seg.get("flight_number", "Unknown")
+
+
         flight_segments.append(FlightSegment(
-            segment_number=seg.get("segment_number", 1),
-            departure_airport=seg.get("departure_airport", "Unknown"),
-            departure_datetime=seg.get("departure_datetime", "Unknown"),
-            arrival_airport=seg.get("arrival_airport", "Unknown"),
-            arrival_datetime=seg.get("arrival_datetime", "Unknown"),
+            segment_number=i + 1,
+            departure_airport=seg.get("departure_airport", {}).get("id", "Unknown"),
+            departure_datetime=seg.get("departure_airport", {}).get("time", "Unknown"),
+            arrival_airport=seg.get("arrival_airport", {}).get("id", "Unknown"),
+            arrival_datetime=seg.get("arrival_airport", {}).get("time", "Unknown"),
             duration=format_duration(seg.get("duration", "Unknown")),
-            cabin_class=seg.get("cabin_class", "Economy"),
-            extension_info=seg.get("extension_info", [])
+            cabin_class=seg.get("travel_class", "Economy"),
+            airline=airline,
+            flight_number=flight_number,
+            extension_info=[flight_number, *(seg.get("extensions", []))]
         ))
 
     # 3. --- Layovers ---
     layovers: List[LayoverInfo] = []
     for lay in layovers_data:
         layovers.append(LayoverInfo(
-            layover_airport=lay.get("layover_airport", "Unknown"),
-            layover_duration=format_duration(lay.get("layover_duration", "Unknown"))
+            layover_airport=lay.get("name", "Unknown"),
+            layover_duration=format_duration(lay.get("duration", "Unknown"))
         ))
 
     # 4. --- Flight Leg ---
@@ -185,18 +264,26 @@ def build_one_way_flight_option(group, flights, data, segments_data, layovers_da
         id=str(uuid.uuid4()),
         origin=data.origin,
         destination=data.destination,
-        origin_city=first_flight.get("departure_airport", {}).get("city", "Unknown"),
-        desination_city=first_flight.get("arrival_airport", {}).get("city", "Unknown"),
-        airline=first_flight.get("airline", "Unknown"),
+        origin_city=first_flight.get("departure_airport", {}).get("name", "Unknown"),
+        desination_city=first_flight.get("arrival_airport", {}).get("name", "Unknown"),
+        airline=sorted(airline_set),
         legs=[flight_leg],
         total_price=total_price,
         currency="USD",
         price_breakdown=[price_breakdown],
-        booking_link=group.get("booking_link")
+        booking_token=group.get("booking_token")
     )
 
 
 def build_round_trip_flight_option(group, outbound_flights, data, outbound_segments, outbound_layovers) -> FlightOption:
+    import uuid
+    import requests
+
+    outbound_segments = outbound_flights
+
+    # --- Collect unique airlines ---
+    airline_set = set()
+
     # 1. --- Price Breakdown ---
     base_price = float(group.get("price", 0)) if group.get("price") else 0
     adults = data.adults
@@ -217,28 +304,37 @@ def build_round_trip_flight_option(group, outbound_flights, data, outbound_segme
     )
 
     # 2. --- Outbound Segments ---
-    outbound_segment_objs: List[FlightSegment] = [
-        FlightSegment(
+    outbound_segment_objs: List[FlightSegment] = []
+    for seg in outbound_segments:
+        raw_airline = seg.get("airline", "Unknown")
+        airline = [raw_airline] if isinstance(raw_airline, str) else raw_airline or ["Unknown"]
+        airline_set.update(airline)
+
+        flight_number = seg.get("flight_number", "Unknown")
+
+
+        outbound_segment_objs.append(FlightSegment(
             segment_number=seg.get("segment_number", 1),
-            departure_airport=seg.get("departure_airport", "Unknown"),
-            departure_datetime=seg.get("departure_datetime", "Unknown"),
-            arrival_airport=seg.get("arrival_airport", "Unknown"),
-            arrival_datetime=seg.get("arrival_datetime", "Unknown"),
+            departure_airport=seg.get("departure_airport", {}).get("id", "Unknown"),
+            departure_datetime=seg.get("departure_airport", {}).get("time", "Unknown"),
+            arrival_airport=seg.get("arrival_airport", {}).get("id", "Unknown"),
+            arrival_datetime=seg.get("arrival_airport", {}).get("time", "Unknown"),
             duration=format_duration(seg.get("duration", "Unknown")),
             cabin_class=seg.get("cabin_class", "Economy"),
-            extension_info=seg.get("extension_info", [])
-        ) for seg in outbound_segments
-    ]
+            airline=airline,
+            flight_number=flight_number,
+            extension_info=[flight_number, *(seg.get("extensions", []))]
+        ))
 
     # 3. --- Outbound Layovers ---
     outbound_layover_objs: List[LayoverInfo] = [
         LayoverInfo(
-            layover_airport=lay.get("layover_airport", "Unknown"),
-            layover_duration=format_duration(lay.get("layover_duration", "Unknown"))
+            layover_airport=lay.get("name", "Unknown"),
+            layover_duration=format_duration(lay.get("duration", "Unknown"))
         ) for lay in outbound_layovers
     ]
 
-    # 4. --- Build Outbound Leg ---
+    # 4. --- Outbound Leg ---
     first_outbound = outbound_flights[0]
     last_outbound = outbound_flights[-1]
     outbound_leg = FlightLeg(
@@ -252,7 +348,7 @@ def build_round_trip_flight_option(group, outbound_flights, data, outbound_segme
         layovers=outbound_layover_objs
     )
 
-    # 5. --- Build Return Leg (from SerpAPI) ---
+    # 5. --- Return Leg ---
     return_leg = None
     departure_token = group.get("departure_token")
 
@@ -282,6 +378,13 @@ def build_round_trip_flight_option(group, outbound_flights, data, outbound_segme
                     # --- Parse Return Segments ---
                     return_segment_objs: List[FlightSegment] = []
                     for seg in return_legs:
+                        raw_airline = seg.get("airline", "Unknown")
+                        airline = [raw_airline] if isinstance(raw_airline, str) else raw_airline or ["Unknown"]
+                        airline_set.update(airline)
+
+                        flight_number = seg.get("flight_number", "Unknown")
+                   
+
                         return_segment_objs.append(FlightSegment(
                             segment_number=seg.get("segment_number", 1),
                             departure_airport=seg.get("departure_airport", {}).get("id", "Unknown"),
@@ -290,14 +393,16 @@ def build_round_trip_flight_option(group, outbound_flights, data, outbound_segme
                             arrival_datetime=seg.get("arrival_airport", {}).get("time", "Unknown"),
                             duration=format_duration(seg.get("duration", "Unknown")),
                             cabin_class=seg.get("cabin_class", "Economy"),
-                            extension_info=seg.get("extensions", [])
+                            airline=airline,
+                            flight_number=flight_number,
+                            extension_info=[flight_number, *(seg.get("extensions", []))]
                         ))
 
-                    # --- Parse Return Layovers ---
+                    # --- Return Layovers ---
                     return_layover_objs: List[LayoverInfo] = []
                     for i in range(len(return_legs) - 1):
                         layover_airport = return_legs[i].get("arrival_airport", {}).get("id", "Unknown")
-                        layover_duration = format_duration(return_legs[i + 1].get("layover_duration", "Unknown"))
+                        layover_duration = format_duration(return_legs[i + 1].get("duration", "Unknown"))
                         return_layover_objs.append(LayoverInfo(
                             layover_airport=layover_airport,
                             layover_duration=layover_duration
@@ -321,14 +426,14 @@ def build_round_trip_flight_option(group, outbound_flights, data, outbound_segme
         id=str(uuid.uuid4()),
         origin=data.origin,
         destination=data.destination,
-        origin_city=first_outbound.get("departure_airport", {}).get("city", "Unknown"),
-        desination_city=last_outbound.get("arrival_airport", {}).get("city", "Unknown"),
-        airline=first_outbound.get("airline", "Unknown"),
+        origin_city=first_outbound.get("departure_airport", {}).get("name", "Unknown"),
+        desination_city=last_outbound.get("arrival_airport", {}).get("name", "Unknown"),
+        airline=sorted(airline_set),  # <-- Multi-airline support
         legs=[outbound_leg] + ([return_leg] if return_leg else []),
         total_price=total_price,
         currency="USD",
         price_breakdown=[price_breakdown],
-        booking_link=group.get("booking_link")
+        booking_token=group.get("booking_token")
     )
 
 
@@ -409,8 +514,11 @@ def search_flight(data: SearchFlightInput, user_id: Optional[str] = None, thread
 
             formatted_summary = format_flight_option(flight_option, index, trip_type_str)
             flight_option.formatted_summary = formatted_summary
+            
+            logger.debug(f"Full FlightOption JSON {index+1}: {flight_option.model_dump_json(indent=2)}")
 
-            logger.info(f"Formatted Flight Option {index+1}:\n{formatted_summary}")
+
+            # logger.info(f"Formatted Flight Option {index+1}:\n{formatted_summary}")
             flight_results.append(flight_option)
 
             if user_id and thread_id:
