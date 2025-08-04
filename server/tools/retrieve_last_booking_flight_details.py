@@ -8,6 +8,7 @@ from models.db_models import FlightBooking, FlightLegDB
 from sqlalchemy.orm import joinedload
 
 
+
 @function_tool
 def retrieve_last_booking_flight_details(
     wrapper: RunContextWrapper[UserInfo],
@@ -21,86 +22,104 @@ def retrieve_last_booking_flight_details(
         return LastBookingOutput(message="User ID is required to retrieve booking details.")
 
     db = SessionLocal()
-    booking = (
-        db.query(FlightBooking)
-        .filter(FlightBooking.user_id == user_id)
-        .order_by(FlightBooking.created_at.desc())
-        .options(
-            joinedload(FlightBooking.legs)
-            .joinedload(FlightLegDB.segments),
-            joinedload(FlightBooking.legs)
-            .joinedload(FlightLegDB.layovers),
+    try:
+        # Query with all relationships loaded
+        booking = (
+            db.query(FlightBooking)
+            .filter(FlightBooking.user_id == user_id)
+            .order_by(FlightBooking.created_at.desc())
+            .options(
+                joinedload(FlightBooking.legs)
+                .joinedload(FlightLegDB.segments),
+                joinedload(FlightBooking.legs)
+                .joinedload(FlightLegDB.layovers),
+            )
+            .first()
         )
-        .first()
-    )
-    db.close()
 
-    if not booking:
-        return LastBookingOutput(message="I couldn't find any recent flight bookings for you.")
+        if not booking:
+            return LastBookingOutput(message="I couldn't find any recent flight bookings for you.")
 
-    message = (
-        f"## 📄 Your Last Flight Booking Details *(from database)*\n"
-        f"- **Booking Reference:** {booking.booking_reference}\n"
-        f"- **Passenger:** {booking.full_name}\n"
-        f"- **Email:** {booking.email}\n"
-        f"- **Phone:** {booking.phone}\n"
-        f"- **Airline:** {booking.airline}\n"
-    )
+        # Build the message
+        message_parts = [
+            f"## 📄 Your Last Flight Booking Details *(from database)*",
+            f"- **Booking Reference:** {booking.booking_reference}",
+            f"- **Passenger:** {booking.full_name}",
+            f"- **Email:** {booking.email}",
+            f"- **Phone:** {booking.phone}",
+            f"- **Airline(s):** {', '.join(booking.airlines) if booking.airlines else 'N/A'}",
+            f"- **Total Price:** {booking.currency} {booking.total_price}",
+            f"- **Booking Date:** {booking.created_at.strftime('%Y-%m-%d %H:%M')}",
+        ]
 
-    for idx, leg in enumerate(booking.legs):
-        leg_label = f"### 🛫 Leg {idx + 1}"
-        message += (
-            f"\n{leg_label}\n"
-            f"- **From:** {leg.origin} → **To:** {leg.destination}\n"
-            f"- **Departure:** {leg.departure_date_time}\n"
-            f"- **Arrival:** {leg.arrival_date_time}\n"
-        )
-        if leg.total_duration:
-            message += f"- **Duration:** {leg.total_duration}\n"
-        if leg.stops is not None:
-            message += f"- **Stops:** {leg.stops}\n"
+        # Handle multi-city flights
+        if booking.is_multi_city:
+            message_parts.append("\n### ✈️ Multi-City Itinerary")
 
-        if leg.segments:
-            message += "\n#### 🧩 Flight Segments\n"
-            for segment in leg.segments:
-                message += (
-                    f"- **Segment {segment.segment_number}**\n"
-                    f"  - **Airline:** {segment.airline_name}\n"
-                    f"  - **Flight Number:** {segment.flight_number}\n"
-                    f"  - **From:** {segment.departure_airport} at {segment.departure_datetime}\n"
-                    f"  - **To:** {segment.arrival_airport} at {segment.arrival_datetime}\n"
-                    f"  - **Duration:** {segment.duration}\n"
-                    f"  - **Cabin Class:** {segment.cabin_class}\n"
-                )
-                if segment.extension_info:
-                    message += f"  - **Extra Info:** {segment.extension_info}\n"
+        # Process each leg
+        for idx, leg in enumerate(booking.legs):
+            leg_label = f"### 🛫 {'Leg' if booking.is_multi_city else 'Flight'} {idx + 1}"
+            message_parts.extend([
+                f"\n{leg_label}",
+                f"- **From:** {leg.origin} → **To:** {leg.destination}",
+                f"- **Departure:** {leg.departure_date_time}",
+                f"- **Arrival:** {leg.arrival_date_time}",
+            ])
+            
+            if leg.total_duration:
+                message_parts.append(f"- **Duration:** {leg.total_duration}")
+            if leg.stops is not None:
+                message_parts.append(f"- **Stops:** {leg.stops}")
 
-        if leg.layovers:
-            message += "\n#### ⏸️ Layovers\n"
-            for layover in leg.layovers:
-                message += f"- At **{layover.layover_airport}** for **{layover.layover_duration}**\n"
+            # Flight segments
+            if leg.segments:
+                message_parts.append("\n#### 🧩 Flight Segments")
+                for segment in leg.segments:
+                    segment_parts = [
+                        f"- **Segment {segment.segment_number}**",
+                        f"  - **Airline:** {', '.join(segment.airline) if segment.airline else 'N/A'}",
+                        f"  - **Flight Number:** {segment.flight_number or 'N/A'}",
+                        f"  - **From:** {segment.departure_airport} at {segment.departure_datetime}",
+                        f"  - **To:** {segment.arrival_airport} at {segment.arrival_datetime}",
+                        f"  - **Duration:** {segment.duration}",
+                        f"  - **Cabin Class:** {segment.cabin_class}",
+                    ]
+                    if segment.extension_info:
+                        segment_parts.append(f"  - **Extra Info:** {segment.extension_info}")
+                    message_parts.extend(segment_parts)
 
-    if booking.booking_token:
-        message += f"\n🔗 [View Booking Link]({booking.booking_token})\n"
+            # Layovers
+            if leg.layovers:
+                message_parts.append("\n#### ⏸️ Layovers")
+                for layover in leg.layovers:
+                    message_parts.append(f"- At **{layover.layover_airport}** for **{layover.layover_duration}**")
 
-    if isinstance(booking.price_breakdown, list) and len(booking.price_breakdown) > 0:
-        pb = booking.price_breakdown[0]
+        # Booking link
+        if booking.booking_token:
+            message_parts.append(f"\n🔗 [View Booking Link]({booking.booking_token})")
 
-        message += "\n## 📊 Price Breakdown\n"
-        if pb.get("base_fare_per_person"):
-            message += f"- Base Fare per Person: {booking.currency} {pb['base_fare_per_person']}\n"
+        # Price breakdown
+        if isinstance(booking.price_breakdown, list) and len(booking.price_breakdown) > 0:
+            pb = booking.price_breakdown[0]
+            message_parts.append("\n## 📊 Price Breakdown")
+            
+            if pb.get("base_fare_per_person"):
+                message_parts.append(f"- Base Fare per Person: {booking.currency} {pb['base_fare_per_person']}")
 
-        for group in ["adults", "children", "infants"]:
-            group_data = pb.get(group)
-            if isinstance(group_data, dict) and group_data.get("count", 0) > 0:
-                message += (
-                    f"- {group.capitalize()}: {group_data['count']} × base → "
-                    f"{booking.currency} {group_data['total']}\n"
-                )
+            for group in ["adults", "children", "infants"]:
+                group_data = pb.get(group)
+                if isinstance(group_data, dict) and group_data.get("count", 0) > 0:
+                    message_parts.append(
+                        f"- {group.capitalize()}: {group_data['count']} × base → "
+                        f"{booking.currency} {group_data['total']}"
+                    )
 
-        if pb.get("total_price"):
-            message += f"\n💰 **Total Cost:** {booking.currency} {booking.total_price}\n"
-    else:
-        message += "\n⚠️ **Price Breakdown format is invalid or missing.**\n"
+            if pb.get("total_price"):
+                message_parts.append(f"\n💰 **Total Cost:** {booking.currency} {booking.total_price}")
+        else:
+            message_parts.append("\n⚠️ **Price Breakdown format is invalid or missing.**")
 
-    return LastBookingOutput(message=message)
+        return LastBookingOutput(message="\n".join(message_parts))
+
+    finally:
+        db.close()

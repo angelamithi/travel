@@ -29,53 +29,50 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             message=f"✅ Your flight has already been booked.\n✈️ Booking Reference: {existing_ref}\nPlease check your email for confirmation."
         )
 
-    flight_data = get_context(user_id, thread_id, f"flight_option_{input.selected_flight_id}")
-    if flight_data:
-        flight = FlightOption(**flight_data)
-    elif input.selected_flight_details:
-        flight = input.selected_flight_details[0]
+    # Get all flight details (not just the first one)
+    if input.selected_flight_details:
+        flights = input.selected_flight_details
+        is_multi_city = len(input.selected_flight_details) > 1
     else:
-        raise ValueError("No flight data available to book. Cannot proceed.")
+        flight_data = get_context(user_id, thread_id, f"flight_option_{input.selected_flight_id}")
+        if flight_data:
+            flights = [FlightOption(**flight_data)]
+            is_multi_city = False
+        else:
+            raise ValueError("No flight data available to book. Cannot proceed.")
+
     try:
-        logger.info(f"Booking flight for user {user_id}. Flight details: {json.dumps(flight.dict(), default=str, indent=2)}")
+        logger.info(f"Booking flight for user {user_id}. Flight details: {json.dumps([f.dict() for f in flights], default=str, indent=2)}")
     except Exception as log_err:
         logger.warning(f"Failed to serialize flight details for logging: {log_err}")
 
-
     booking_reference = str(uuid.uuid4())[:8].upper()
-    is_multi_city = flight.legs is not None and len(flight.legs) > 0
 
     try:
-        # Accumulate total price and collect all airlines
-        # Accumulate total price and collect all airlines
-        total_price = flight.total_price or 0.0
+        # Accumulate total price and collect all airlines across all flights
+        total_price = 0.0
         all_airlines = set()
         price_breakdown = []
 
-        if flight.legs:
-            for leg in flight.legs:
-                if leg.segments:
-                    for seg in leg.segments:
-                        if seg.airline:
-                            if isinstance(seg.airline, list):
-                                all_airlines.update(seg.airline)
-                            else:
-                                all_airlines.add(seg.airline)
-
-                        if seg.extension_info:
-                            if isinstance(seg.extension_info, list):
-                                seg.extension_info = [ei.dict() if hasattr(ei, "dict") else ei for ei in seg.extension_info]
-        else:
-            if flight.airline:
+        for flight in flights:
+            total_price += flight.total_price or 0.0
+            
+            # Collect airlines from all segments in all legs
+            if hasattr(flight, 'legs') and flight.legs:
+                for leg in flight.legs:
+                    if leg.segments:
+                        for seg in leg.segments:
+                            if seg.airline:
+                                if isinstance(seg.airline, list):
+                                    all_airlines.update(seg.airline)
+                                else:
+                                    all_airlines.add(seg.airline)
+            elif hasattr(flight, 'airline') and flight.airline:
                 all_airlines.add(flight.airline)
 
-        # Always extract price_breakdown from the flight level
-        if flight.price_breakdown:
-            price_breakdown = [pb.dict() for pb in flight.price_breakdown]
-        else:
-            price_breakdown = []
-
-
+            # Combine price breakdowns
+            if hasattr(flight, 'price_breakdown') and flight.price_breakdown:
+                price_breakdown.extend([pb.dict() for pb in flight.price_breakdown])
 
         # Create booking
         booking = FlightBooking(
@@ -90,61 +87,62 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             payment_method=input.payment_method or "Not provided",
             airlines=list(all_airlines),
             total_price=total_price,
-            currency=flight.currency,
-            booking_token=flight.booking_token,
+            currency=flights[0].currency,  # Assuming same currency for all flights
+            booking_token=flights[0].booking_token if hasattr(flights[0], 'booking_token') else None,
             is_multi_city=is_multi_city,
             price_breakdown=price_breakdown or None
         )
         session.add(booking)
         session.flush()
 
-        # Save all flight legs
-        if flight.legs:
-            for leg in flight.legs:
-                leg_id = str(uuid.uuid4())
-                flight_leg = FlightLegDB(
-                    id=leg_id,
-                    booking_id=booking.id,
-                    departure_date_time=leg.departure_date_time,
-                    arrival_date_time=leg.arrival_date_time,
-                    origin=leg.origin,
-                    destination=leg.destination,
-                    total_duration=leg.total_duration,
-                    stops=leg.stops or 0
-                )
-                session.add(flight_leg)
+        # Save all legs from all flights
+        for flight in flights:
+            if hasattr(flight, 'legs') and flight.legs:
+                for leg in flight.legs:
+                    leg_id = str(uuid.uuid4())
+                    flight_leg = FlightLegDB(
+                        id=leg_id,
+                        booking_id=booking.id,
+                        departure_date_time=leg.departure_date_time,
+                        arrival_date_time=leg.arrival_date_time,
+                        origin=leg.origin,
+                        destination=leg.destination,
+                        total_duration=leg.total_duration,
+                        stops=leg.stops or 0
+                    )
+                    session.add(flight_leg)
 
-                # Save all segments
-                if leg.segments:
-                    for seg in leg.segments:
-                        segment = FlightSegmentDB(
-                            id=str(uuid.uuid4()),
-                            booking_id=booking.id,
-                            leg_id=leg_id,
-                            segment_number=seg.segment_number,
-                            departure_airport=seg.departure_airport,
-                            departure_datetime=seg.departure_datetime,
-                            arrival_airport=seg.arrival_airport,
-                            arrival_datetime=seg.arrival_datetime,
-                            airline=seg.airline,
-                            flight_number=seg.flight_number,
-                            duration=seg.duration,
-                            cabin_class=seg.cabin_class,
-                            extension_info=[ei if isinstance(ei, dict) else ei.dict() for ei in seg.extension_info] if seg.extension_info else None
-                        )
-                        session.add(segment)
+                    # Save all segments
+                    if leg.segments:
+                        for seg in leg.segments:
+                            segment = FlightSegmentDB(
+                                id=str(uuid.uuid4()),
+                                booking_id=booking.id,
+                                leg_id=leg_id,
+                                segment_number=seg.segment_number,
+                                departure_airport=seg.departure_airport,
+                                departure_datetime=seg.departure_datetime,
+                                arrival_airport=seg.arrival_airport,
+                                arrival_datetime=seg.arrival_datetime,
+                                airline=seg.airline,
+                                flight_number=seg.flight_number,
+                                duration=seg.duration,
+                                cabin_class=seg.cabin_class,
+                                extension_info=seg.extension_info if seg.extension_info else None
+                            )
+                            session.add(segment)
 
-                # Save all layovers
-                if leg.layovers:
-                    for lay in leg.layovers:
-                        layover = LayoverDB(
-                            id=str(uuid.uuid4()),
-                            booking_id=booking.id,
-                            leg_id=leg_id,
-                            layover_airport=lay.layover_airport,
-                            layover_duration=lay.layover_duration
-                        )
-                        session.add(layover)
+                    # Save all layovers
+                    if leg.layovers:
+                        for lay in leg.layovers:
+                            layover = LayoverDB(
+                                id=str(uuid.uuid4()),
+                                booking_id=booking.id,
+                                leg_id=leg_id,
+                                layover_airport=lay.layover_airport,
+                                layover_duration=lay.layover_duration
+                            )
+                            session.add(layover)
 
         session.commit()
 

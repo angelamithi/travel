@@ -137,7 +137,7 @@ def build_multi_city_flight_option(group, flights, data, segments_data, layovers
             cabin_class=seg.get("travel_class", "Economy"),
             airline=airline,
             flight_number=flight_number,
-            extension_info=[flight_number, *(seg.get("extensions", []))]
+            extension_info=seg.get("extensions", []) or []
         )
 
         segments_by_leg.setdefault(leg_index, []).append(segment)
@@ -523,6 +523,8 @@ def search_flight(data: SearchFlightInput, user_id: Optional[str] = None, thread
 
             if user_id and thread_id:
                 set_context(user_id, thread_id, f"flight_option_{flight_option.id}", flight_option.model_dump())
+                set_context(user_id, thread_id, f"flight_option_{option.id}", json.loads(option.json()))
+
 
         return SearchFlightOutput(flights=flight_results)
 
