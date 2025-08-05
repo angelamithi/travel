@@ -36,8 +36,15 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
     else:
         flight_data = get_context(user_id, thread_id, f"flight_option_{input.selected_flight_id}")
         if flight_data:
-            flights = [FlightOption(**flight_data)]
-            is_multi_city = False
+            try:
+                # Ensure flight_data is properly deserialized
+                if isinstance(flight_data, str):
+                    flight_data = json.loads(flight_data)
+                flights = [FlightOption(**flight_data)]
+                is_multi_city = False
+            except Exception as e:
+                logger.error(f"Failed to parse flight data: {e}")
+                raise ValueError("Invalid flight data format")
         else:
             raise ValueError("No flight data available to book. Cannot proceed.")
 
@@ -45,6 +52,23 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         logger.info(f"Booking flight for user {user_id}. Flight details: {json.dumps([f.dict() for f in flights], default=str, indent=2)}")
     except Exception as log_err:
         logger.warning(f"Failed to serialize flight details for logging: {log_err}")
+
+    
+
+    email = get_context(user_id, thread_id, "booking_email")
+    full_name = get_context(user_id, thread_id, "full_name")
+    phone = get_context(user_id, thread_id, "booking_phone")
+    passenger_count = input.passenger_count
+
+    # 🔁 Gather passenger names
+    passenger_names = [
+        get_context(user_id, thread_id, f"passenger_name_{i}")
+        for i in range(1, passenger_count + 1)
+    ]
+
+
+
+
 
     booking_reference = str(uuid.uuid4())[:8].upper()
 
@@ -81,10 +105,10 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
             thread_id=thread_id,
             booking_reference=booking_reference,
             full_name=input.full_name,
-            passenger_names=input.passenger_names or [input.full_name],
+            passenger_names=input.passenger_names,
             email=input.email,
             phone=input.phone,
-            payment_method=input.payment_method or "Not provided",
+            payment_method="Not Provided",
             airlines=list(all_airlines),
             total_price=total_price,
             currency=flights[0].currency,  # Assuming same currency for all flights

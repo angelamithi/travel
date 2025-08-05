@@ -644,7 +644,7 @@ def search_flight(data: SearchFlightInput, user_id: Optional[str] = None, thread
             logger.info(f"Complete SERP API Response:\n{json.dumps(data_json, indent=2)}")
             
             all_flight_groups = data_json.get("best_flights") or data_json.get("other_flights") or []
-            max_results = 1
+            max_results = 3
 
             for index, group in enumerate(all_flight_groups[:max_results]):
                 flights = group.get("flights", [])

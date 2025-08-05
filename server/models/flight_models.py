@@ -116,11 +116,21 @@ class SearchFlightOutput(BaseModel):
 
 # --- Input/Output for Booking a Flight ---
 class BookFlightInput(BaseModel):
-    selected_flight_id: str
-    full_name: str
-    email: str
-    phone: str
-    selected_flight_details: List[FlightOption]
-    passenger_names: Optional[List[str]] = None
-    payment_method: Optional[str] = None
+    selected_flight_id:str
+    selected_flight_details: Optional[List[FlightOption]] = None 
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    passenger_count: Optional[int] = None
+    passenger_names: List[str] = []
+    full_name:str
+    current_step: str = "email"  # email → phone → passenger_count → names → payment → confirm
+
+    def is_complete(self):
+        return all([
+            self.email,
+            self.phone,
+            self.passenger_count is not None,
+            len(self.passenger_names) == self.passenger_count,
+            self.payment_method
+        ])
   
