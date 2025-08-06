@@ -26,11 +26,11 @@ function formatMessage(content) {
     .replace(/\n/g, "<br/>");                                // single line breaks
 }
 
-
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentAssistantMessage, setCurrentAssistantMessage] = useState("");
   const chatEndRef = useRef(null);
 
   const userId = useRef(localStorage.getItem("user_id") || uuidv4());
@@ -51,45 +51,63 @@ const App = () => {
       console.error("Failed to load history", err);
     }
   };
-const sendMessage = async () => {
-  if (!input.trim()) return;
 
-  // Add user message
-  setMessages((prev) => [...prev, { role: "user", content: input }]);
-  const userInput = input;
-  setInput("");
-  setLoading(true);
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-  try {
-    const response = await fetch(`${BACKEND_URL}/chat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: userId.current,
-        thread_id: threadId.current,
-        message: userInput,
-      }),
-    });
+    // Add user message
+    const newMessages = [...messages, { role: "user", content: input }];
+    setMessages(newMessages);
+    const userInput = input;
+    setInput("");
+    setLoading(true);
+    setCurrentAssistantMessage(""); // Reset current assistant message
 
-    const data = await response.json();
+    try {
+      const response = await fetch(`${BACKEND_URL}/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId.current,
+          thread_id: threadId.current,
+          message: userInput,
+        }),
+      });
 
-    // Add assistant reply
-    if (data && data.role === "assistant" && data.content) {
-      setMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Handle streaming response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let assistantMessage = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        assistantMessage += chunk;
+        setCurrentAssistantMessage(assistantMessage);
+      }
+
+      // Finalize the assistant message
+      setMessages(prev => [...prev, { role: "assistant", content: assistantMessage }]);
+      setCurrentAssistantMessage("");
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, there was an error processing your request." }]);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("Failed to send message:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, currentAssistantMessage]);
 
   const getAvatar = (role) => {
     return role === "user" ? "🧑" : "🤖";
@@ -126,20 +144,29 @@ const sendMessage = async () => {
             >
               <span className="avatar">{getAvatar(msg.role)}</span>
               <span
-  dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
-/>
-
+                dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
+              />
             </div>
           ))}
+          {currentAssistantMessage && (
+            <div className="message assistant">
+              <span className="avatar">🤖</span>
+              <span
+                dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }}
+              />
+            </div>
+          )}
           <div ref={chatEndRef} />
         </div>
         <div className="input-bar">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
             placeholder="Ask me about flights..."
+            disabled={loading}
           />
-          <button onClick={sendMessage} disabled={loading}>
+          <button onClick={sendMessage} disabled={loading || !input.trim()}>
             {loading ? "Loading..." : "Send"}
           </button>
         </div>

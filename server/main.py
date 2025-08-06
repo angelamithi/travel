@@ -103,50 +103,44 @@ async def chat(message: ChatMessage):
 
     # Start with triage agent
     current_agent = triage_agent
-    final_response = ""
 
-    with trace("travel service", group_id=message.thread_id):
-        # Initial run
-        result = await Runner.run(current_agent, input_items, context=context)
+    async def generate_stream():
+        nonlocal current_agent
+        
+        with trace("travel service", group_id=message.thread_id):
+            # Get the streaming result (no await needed here)
+            result = Runner.run_streamed(current_agent, input_items, context=context)
+            
+            # Process the stream events
+            async for event in result.stream_events():
+                if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
+                    yield event.data.delta
+                
+                elif event.type == "agent_updated_stream_event":
+                    print(f"Handed off to {event.new_agent.name}")
+                    current_agent = event.new_agent
+                    
+                    # Append assistant reply from first agent
+                    for item in result.new_items:
+                        if isinstance(item, MessageOutputItem):
+                            assistant_reply = ItemHelpers.text_message_output(item)
+                            input_items.append({"role": "assistant", "content": assistant_reply})
+                    
+                    # Append the user message again for re-evaluation under new agent
+                    input_items.append({"role": "user", "content": user_input})
+                    
+                    # Get new stream with updated agent
+                    result = Runner.run_streamed(current_agent, input_items, context=context)
+                
+                elif event.type == "run_item_stream_event":
+                    if isinstance(event.item, MessageOutputItem):
+                        output_text = ItemHelpers.text_message_output(event.item)
+                        input_items.append({"role": "assistant", "content": output_text})
 
-        # Handle agent handoff if it occurred
-        for new_item in result.new_items:
-            if isinstance(new_item, HandoffOutputItem):
-                print(f"Handed off from {new_item.source_agent.name} to {new_item.target_agent.name}")
-                current_agent = new_item.target_agent
+            # Save updated conversation history back to store
+            conversation_store[message.thread_id] = input_items
 
-                # Append assistant reply from first agent
-                for item in result.new_items:
-                    if isinstance(item, MessageOutputItem):
-                        assistant_reply = ItemHelpers.text_message_output(item)
-                        input_items.append({"role": "assistant", "content": assistant_reply})
-
-                # Append the user message again for re-evaluation under new agent
-                input_items.append({"role": "user", "content": user_input})
-
-                # Rerun with updated agent and preserved message history
-                result = await Runner.run(current_agent, input_items, context=context)
-
-        # Process final result
-        for new_item in result.new_items:
-            agent_name = new_item.agent.name
-            if isinstance(new_item, MessageOutputItem):
-                output_text = ItemHelpers.text_message_output(new_item)
-                print(f"{agent_name}: {output_text}")
-                final_response += output_text + " "
-                input_items.append({"role": "assistant", "content": output_text})
-            elif isinstance(new_item, ToolCallItem):
-                print(f"{agent_name}: Calling a tool")
-            elif isinstance(new_item, ToolCallOutputItem):
-                print(f"{agent_name}: Tool call output: {new_item.output}")
-            else:
-                print(f"{agent_name}: Skipping item: {new_item.__class__.__name__}")
-
-        # ✅ Save updated conversation history back to store
-        conversation_store[message.thread_id] = input_items
-
-    return {"role": "assistant", "content": final_response.strip()}
-
+    return StreamingResponse(generate_stream(), media_type="text/event-stream")
 
     
 
