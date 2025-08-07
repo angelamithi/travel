@@ -1,7 +1,8 @@
 from agents import Agent, Runner
 from run_agents.flight_agent import flight_agent
-# from run_agents.accommodation_agent import accommodation_agent
+from run_agents.accommodation_agent import accommodation_agent
 from run_agents.price_calculator_agent import price_calculator_agent
+
 
 async def triage_agent_run(user_id: str, thread_id: str, message: str):
     # Pass the message, user_id, and thread_id to the triage agent's runner
@@ -106,7 +107,7 @@ Examples:
 🤖 Be proactive, polite, and efficient. Avoid asking unnecessary follow-up questions when intent is clear.
 """,
 model="gpt-4o-mini",
-handoffs=[flight_agent, price_calculator_agent]  # Add accommodation_agent if needed
+handoffs=[flight_agent, price_calculator_agent, accommodation_agent]  # Add accommodation_agent if needed
 )
 
    

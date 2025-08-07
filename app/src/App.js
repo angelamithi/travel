@@ -8,7 +8,12 @@ const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 function formatMessage(content) {
   if (!content) return "";
 
-  // Escape HTML first
+  // If content is already HTML (contains tags), return it as-is
+  if (/<[a-z][\s\S]*>/i.test(content)) {
+    return content;
+  }
+
+  // Otherwise, proceed with basic formatting
   const escapeHtml = (str) =>
     str
       .replace(/&/g, "&amp;")
@@ -17,15 +22,13 @@ function formatMessage(content) {
 
   const escaped = escapeHtml(content);
 
-  // Basic replacements: bold, newlines, bullets
   return escaped
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // bold
-    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$&</strong></p>") // numbered list
-    .replace(/^- (.*)$/gm, "<li>$1</li>")                    // unordered list
-    .replace(/\n{2,}/g, "<br/><br/>")                        // double line breaks
-    .replace(/\n/g, "<br/>");                                // single line breaks
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$&</strong></p>")
+    .replace(/^- (.*)$/gm, "<li>$1</li>")
+    .replace(/\n{2,}/g, "<br/><br/>")
+    .replace(/\n/g, "<br/>");
 }
-
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -55,13 +58,12 @@ const App = () => {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // Add user message
     const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages);
     const userInput = input;
     setInput("");
     setLoading(true);
-    setCurrentAssistantMessage(""); // Reset current assistant message
+    setCurrentAssistantMessage("");
 
     try {
       const response = await fetch(`${BACKEND_URL}/chat`, {
@@ -76,11 +78,8 @@ const App = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-      // Handle streaming response
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let assistantMessage = "";
@@ -94,7 +93,6 @@ const App = () => {
         setCurrentAssistantMessage(assistantMessage);
       }
 
-      // Finalize the assistant message
       setMessages(prev => [...prev, { role: "assistant", content: assistantMessage }]);
       setCurrentAssistantMessage("");
     } catch (error) {
@@ -109,18 +107,13 @@ const App = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, currentAssistantMessage]);
 
-  const getAvatar = (role) => {
-    return role === "user" ? "🧑" : "🤖";
-  };
+  const getAvatar = (role) => (role === "user" ? "🧑" : "🤖");
 
   return (
     <div className="app">
       <aside className="sidebar">
-        <h2>🧠 FlightBot</h2>
-        <button
-          onClick={fetchHistory}
-          className="sidebar-button"
-        >
+        <h2>🌍 TravelBot</h2>
+        <button onClick={fetchHistory} className="sidebar-button">
           🔄 Refresh History
         </button>
         <button
@@ -135,6 +128,7 @@ const App = () => {
           🧹 Clear Chat
         </button>
       </aside>
+
       <main className="chat-container">
         <div className="chat-box">
           {messages.map((msg, idx) => (
@@ -143,27 +137,26 @@ const App = () => {
               className={`message ${msg.role === "user" ? "user" : "assistant"}`}
             >
               <span className="avatar">{getAvatar(msg.role)}</span>
-              <span
-                dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
-              />
+              <span dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
             </div>
           ))}
+
           {currentAssistantMessage && (
             <div className="message assistant">
               <span className="avatar">🤖</span>
-              <span
-                dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }}
-              />
+              <span dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }} />
             </div>
           )}
+
           <div ref={chatEndRef} />
         </div>
+
         <div className="input-bar">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask me about flights..."
+            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+            placeholder="Ask me about travel plans: flights, hotels, itineraries..."
             disabled={loading}
           />
           <button onClick={sendMessage} disabled={loading || !input.trim()}>

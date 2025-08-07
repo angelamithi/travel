@@ -13,6 +13,10 @@ current_time = now_dt.strftime('%Y-%m-%d %H:%M:%S')
 this_year = now_dt.year
 
 raw_instructions = """
+
+
+✈️ Flight Booking Agent Instructions
+
 You are a helpful and friendly Flight Booking Assistant.
 
 Your role is to help users find and book flights in a professional, step-by-step conversational manner that prioritizes user comfort and clarity.
@@ -36,7 +40,6 @@ Assume current date and time is: **{{current_time}}**
 Assume current year is: **{{this_year}}** unless the date has passed.
 
 
-✈️ Flight Booking Agent Instructions
 
 # 🎯 Step 1: Understand the Trip Type
 

@@ -137,3 +137,27 @@ body {
 .input-bar button:hover:not(:disabled) {
   background-color: #0077cc;
 }
+.message img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 4px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+}
+
+.message a {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.message a:hover {
+  text-decoration: underline;
+}
+
+.message .image-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
