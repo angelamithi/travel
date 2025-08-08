@@ -137,22 +137,37 @@ body {
 .input-bar button:hover:not(:disabled) {
   background-color: #0077cc;
 }
+/* Add to your App.css */
 .message img {
-  max-width: 200px;
+  max-width: 100%;
   height: auto;
-  border-radius: 4px;
   margin: 5px 0;
   border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 .message a {
-  color: #1a73e8;
-  text-decoration: none;
-  font-weight: 500;
+  color: #0066cc;
+  text-decoration: underline;
 }
 
 .message a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+.message h3 {
+  margin: 10px 0 5px 0;
+}
+
+.message p {
+  margin: 5px 0;
+}
+
+.message hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #eee;
 }
 
 .message .image-container {

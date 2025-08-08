@@ -991,6 +991,10 @@ The external tool failed to respond (timeout, server issue, etc.).
 - Always maintain a friendly, calm, and clear tone.
 
 
+📝 Important Formatting Rule:
+- Format all flight responses using **raw HTML**, not Markdown.
+- Use `<h3>` for titles, `<ul>`/`<li>` for lists, `<img src="">` for images, and `<a href="">` for links.
+
 """
 
 

@@ -8,12 +8,12 @@ const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 function formatMessage(content) {
   if (!content) return "";
 
-  // If content is already HTML (contains tags), return it as-is
+  // If content includes HTML tags, assume it's already formatted correctly
   if (/<[a-z][\s\S]*>/i.test(content)) {
     return content;
   }
 
-  // Otherwise, proceed with basic formatting
+  // Otherwise, escape HTML and apply Markdown-like formatting
   const escapeHtml = (str) =>
     str
       .replace(/&/g, "&amp;")
@@ -24,11 +24,12 @@ function formatMessage(content) {
 
   return escaped
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$&</strong></p>")
+    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$1</strong></p>")
     .replace(/^- (.*)$/gm, "<li>$1</li>")
     .replace(/\n{2,}/g, "<br/><br/>")
     .replace(/\n/g, "<br/>");
 }
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -131,17 +132,32 @@ const App = () => {
 
       <main className="chat-container">
         <div className="chat-box">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`message ${msg.role === "user" ? "user" : "assistant"}`}
-            >
-              <span className="avatar">{getAvatar(msg.role)}</span>
-              <span dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
-            </div>
-          ))}
-
-          {currentAssistantMessage && (
+         
+          {messages.map((msg, idx) => {
+            // Correct placement of console.log - before the return statement
+            console.log("Message content:", msg.content);
+            console.log("Formatted content:", formatMessage(msg.content));
+            
+            return (
+              <div
+                key={idx}
+                className={`message ${msg.role === "user" ? "user" : "assistant"}`}
+              >
+                <span className="avatar">{getAvatar(msg.role)}</span>
+                <div 
+                  dangerouslySetInnerHTML={{ 
+                    __html: formatMessage(msg.content) 
+                  }} 
+                  style={{ 
+                    display: 'inline-block',
+                    maxWidth: '100%',
+                    overflowX: 'auto'
+                  }}
+                />
+              </div>
+            );
+          })}
+            {currentAssistantMessage && (
             <div className="message assistant">
               <span className="avatar">🤖</span>
               <span dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }} />

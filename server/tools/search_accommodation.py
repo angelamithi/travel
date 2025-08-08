@@ -20,27 +20,28 @@ SERP_API_KEY = os.getenv("SERP_API_KEY")
 def format_accommodation_message(accommodations):
     message_lines = []
     for idx, acc in enumerate(accommodations, 1):
-        message_lines.append(f"### {idx}. {acc['name']}")
-        message_lines.append(f"- **Type:** {acc['type'].title()}")
-        message_lines.append(f"- **Rate Per Night:** ${acc['price_info']['price']}")
-        message_lines.append(f"- **Total Rate:** ${acc['price_info']['extracted_price'] * 6:.0f} (for 6 nights)")
-        message_lines.append(f"- **Overall Rating:** {acc['rating']} ({acc['reviews']} reviews)")
-        message_lines.append(f"- **Amenities:** {', '.join(acc['amenities'])}")
-        message_lines.append("")  # Empty line
+        message_lines.append(f"<h3>{idx}. {acc['name']}</h3>")
+        message_lines.append(f"<p><strong>Type:</strong> {acc['type'].title()}</p>")
+        message_lines.append(f"<p><strong>Rate Per Night:</strong> ${acc['price_info']['price']}</p>")
+        message_lines.append(f"<p><strong>Total Rate:</strong> ${acc['price_info']['extracted_price'] * 6:.0f} (for 6 nights)</p>")
+        message_lines.append(f"<p><strong>Overall Rating:</strong> {acc['rating']} ({acc['reviews']} reviews)</p>")
+        message_lines.append(f"<p><strong>Amenities:</strong> {', '.join(acc['amenities'])}</p>")
         
-        # Combine image and link into a single clickable image
+        # Add images and link
         if acc['link'] and acc['images']:
             for img_url in acc['images']:
                 message_lines.append(
-                    f'<a href="{acc["link"]}" target="_blank">'
-                    f'<img src="{img_url}" alt="{acc["name"]}" style="max-width: 200px; margin: 5px;"/>'
-                    f'<br/>Click to view more details</a>'
+                    f'<div style="margin: 10px 0;">'
+                    f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer">'
+                    f'<img src="{img_url}" alt="{acc["name"]}" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px; padding: 5px;"/>'
+                    f'</a><br/>'
+                    f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer" style="color: #0066cc; text-decoration: underline;">View More Details</a>'
+                    f'</div>'
                 )
-        message_lines.append("\n---\n")
+        message_lines.append("<hr style='margin: 20px 0;'/>")
     
-    return "\n".join(message_lines)
-
-
+    return "".join(message_lines)
+    
 @function_tool
 def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] = None, thread_id: Optional[str] = None) -> Optional[SearchAccommodationOutput]:
     params = {

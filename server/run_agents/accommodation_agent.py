@@ -157,6 +157,11 @@ After successful booking:
 - Always confirm user inputs to avoid errors.
 - If unsure, ask the user for clarification.
 
+
+📝 Important Formatting Rule:
+- Format all accommodation responses using **raw HTML**, not Markdown.
+- Use `<h3>` for titles, `<ul>`/`<li>` for lists, `<img src="">` for images, and `<a href="">` for links.
+
 """
 
 customized_instructions = raw_instructions.replace("{{current_time}}", current_time).replace("{{this_year}}", str(this_year))
