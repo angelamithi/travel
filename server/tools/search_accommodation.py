@@ -16,28 +16,57 @@ load_dotenv()
 logger = logging.getLogger("chat_logger")
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 
-# After creating the accommodation_results, format the output message
-def format_accommodation_message(accommodations):
+def format_accommodation_message(accommodations, adults=1, children=0):
     message_lines = []
     for idx, acc in enumerate(accommodations, 1):
         message_lines.append(f"<h3>{idx}. {acc['name']}</h3>")
         message_lines.append(f"<p><strong>Type:</strong> {acc['type'].title()}</p>")
-        message_lines.append(f"<p><strong>Rate Per Night:</strong> ${acc['price_info']['price']}</p>")
-        message_lines.append(f"<p><strong>Total Rate:</strong> ${acc['price_info']['extracted_price'] * 6:.0f} (for 6 nights)</p>")
+        
+        # Calculate prices based on adults and children
+        base_price = acc['price_info'].get('extracted_price', 0)
+        nights = 6  # Assuming 6 nights as in original code
+        
+        if 'price_breakdown' in acc:
+            # Use price breakdown if available
+            price_breakdown = acc['price_breakdown']
+            total_adults = price_breakdown['adults']['total'] * nights
+            total_children = price_breakdown['children']['total'] * nights if price_breakdown['children'] else 0
+            total_price = total_adults + total_children
+        else:
+            # Calculate manually if no breakdown
+            total_adults = base_price * adults * nights
+            total_children = base_price * 0.75 * children * nights if children else 0
+            total_price = total_adults + total_children
+        
+        message_lines.append(f"<p><strong>Base Rate Per Night:</strong> ${base_price:.2f}</p>")
+        message_lines.append(f"<p><strong>Total Rate:</strong> ${total_price:.2f} (for {nights} nights, {adults} adults, {children} children)</p>")
+        
+        if 'price_breakdown' in acc:
+            message_lines.append("<p><strong>Price Breakdown:</strong></p>")
+            message_lines.append("<ul>")
+            message_lines.append(f"<li>Adults: {price_breakdown['adults']['count']} x ${price_breakdown['base_rate_per_person']:.2f} = ${price_breakdown['adults']['total']:.2f} per night</li>")
+            if price_breakdown['children']:
+                message_lines.append(f"<li>Children: {price_breakdown['children']['count']} x ${price_breakdown['base_rate_per_person'] * 0.75:.2f} = ${price_breakdown['children']['total']:.2f} per night</li>")
+            message_lines.append("</ul>")
+        
         message_lines.append(f"<p><strong>Overall Rating:</strong> {acc['rating']} ({acc['reviews']} reviews)</p>")
         message_lines.append(f"<p><strong>Amenities:</strong> {', '.join(acc['amenities'])}</p>")
         
-        # Add images and link
-        if acc['link'] and acc['images']:
+        # Add images section
+        if acc['images']:
+            message_lines.append('<div style="margin: 10px 0;">')
             for img_url in acc['images']:
                 message_lines.append(
-                    f'<div style="margin: 10px 0;">'
-                    f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer">'
-                    f'<img src="{img_url}" alt="{acc["name"]}" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px; padding: 5px;"/>'
-                    f'</a><br/>'
-                    f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer" style="color: #0066cc; text-decoration: underline;">View More Details</a>'
-                    f'</div>'
+                    f'<img src="{img_url}" alt="{acc["name"]}" style="max-width: 200px; height: auto; border: 1px solid #ddd; border-radius: 4px; padding: 5px; margin-right: 10px;"/>'
                 )
+            message_lines.append('</div>')
+        
+        # Add separate "View More Details" link
+        if acc['link']:
+            message_lines.append(
+                f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 10px 0; color: #0066cc; text-decoration: underline;">View More Details</a>'
+            )
+        
         message_lines.append("<hr style='margin: 20px 0;'/>")
     
     return "".join(message_lines)
@@ -58,7 +87,8 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
     # Add optional parameters if they exist
     if hasattr(data, 'max_price') and data.max_price:
         params['price_max'] = data.max_price
-   
+    if hasattr(data, 'children') and data.children:
+        params['children'] = data.children
     
     logger.info(f"Fetching accommodation in {data.location} with params: {params}")
     
@@ -74,23 +104,36 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
         logger.error(f"Failed to parse API response: {e}")
         raise Exception("Invalid response from accommodation service")
     
-    # Extract accommodation options from the API response
     accommodation_results = []
+    adults = data.adults
+    children = getattr(data, 'children', 0)
     
-    # Check if 'properties' exists in the response and take first 3
-   # In your search_accommodation function, modify how you create accommodation results:
-
     if 'properties' in api_data:
         for prop in api_data['properties'][:3]:
             link = prop.get('link', '')
             image_urls = [img['thumbnail'] for img in prop.get('images', [])[:3] if 'thumbnail' in img]
             
-            # Create formatted HTML
-            formatted_link = f'<a href="{link}" target="_blank">View More Details</a>' if link else ''
-            formatted_images = [
-                f'<img src="{url}" alt="{prop.get("name", "Hotel image")}" style="max-width: 200px; margin: 5px;"/>'
-                for url in image_urls
-            ]
+            base_price = prop.get('rate_per_night', {}).get('extracted_lowest', 0)
+            
+            # Create price breakdown if possible
+            price_breakdown = None
+            if base_price > 0:
+                total_adults = base_price * adults
+                total_children = base_price * 0.75 * children if children else 0
+                total_price = total_adults + total_children
+                
+                price_breakdown = {
+                    'base_rate_per_person': base_price,
+                    'adults': {
+                        'count': adults,
+                        'total': total_adults
+                    },
+                    'children': {
+                        'count': children,
+                        'total': total_children
+                    } if children else None,
+                    'total_price': total_price
+                }
             
             accommodation_results.append({
                 'id': str(uuid.uuid4()),
@@ -98,32 +141,46 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
                 'type': prop.get('type', 'hotel'),
                 'price_info': {
                     'price': prop.get('rate_per_night', {}).get('lowest', 'Price not available'),
-                    'extracted_price': prop.get('rate_per_night', {}).get('extracted_lowest', 0),
+                    'extracted_price': base_price,
                     'currency': 'USD'
                 },
                 'rating': prop.get('overall_rating', 0),
                 'reviews': prop.get('reviews', 0),
                 'location': prop.get('gps_coordinates', {}),
                 'amenities': prop.get('amenities', []),
-                'images': image_urls,  # Original URLs
-                'link': link,  # Original URL
+                'images': image_urls,
+                'link': link,
                 'property_token': prop.get('property_token', ''),
-                'formatted_images': formatted_images,
-                'formatted_link': formatted_link
+                'price_breakdown': price_breakdown
             })
 
-    # Similarly modify the ads section
     if len(accommodation_results) < 3 and 'ads' in api_data:
         remaining_slots = 3 - len(accommodation_results)
         for ad in api_data['ads'][:remaining_slots]:
             link = ad.get('link', '')
             image_urls = [ad['thumbnail']] if ad.get('thumbnail') else []
             
-            formatted_link = f'<a href="{link}" target="_blank">View More Details</a>' if link else ''
-            formatted_images = [
-                f'<img src="{url}" alt="{ad.get("name", "Hotel image")}" style="max-width: 200px; margin: 5px;"/>'
-                for url in image_urls
-            ]
+            base_price = ad.get('extracted_price', 0)
+            
+            # Create price breakdown if possible
+            price_breakdown = None
+            if base_price > 0:
+                total_adults = base_price * adults
+                total_children = base_price * 0.75 * children if children else 0
+                total_price = total_adults + total_children
+                
+                price_breakdown = {
+                    'base_rate_per_person': base_price,
+                    'adults': {
+                        'count': adults,
+                        'total': total_adults
+                    },
+                    'children': {
+                        'count': children,
+                        'total': total_children
+                    } if children else None,
+                    'total_price': total_price
+                }
             
             accommodation_results.append({
                 'id': str(uuid.uuid4()),
@@ -131,7 +188,7 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
                 'type': 'hotel',
                 'price_info': {
                     'price': ad.get('price', 'Price not available'),
-                    'extracted_price': ad.get('extracted_price', 0),
+                    'extracted_price': base_price,
                     'currency': 'USD'
                 },
                 'rating': ad.get('overall_rating', 0),
@@ -141,17 +198,15 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
                 'images': image_urls,
                 'link': link,
                 'property_token': ad.get('property_token', ''),
-                'formatted_images': formatted_images,
-                'formatted_link': formatted_link
+                'price_breakdown': price_breakdown
             })
             
-    # Store context if needed
     if user_id and thread_id:
         for accommodation_option in accommodation_results:
             set_context(user_id, thread_id, f"accommodation_option_{accommodation_option['id']}", accommodation_option)
 
-    output_message = format_accommodation_message(accommodation_results)
+    output_message = format_accommodation_message(accommodation_results, adults, children)
     return SearchAccommodationOutput(
         accommodation=accommodation_results,
-        formatted_message=output_message  # Add this to your model
+        formatted_message=output_message
     )

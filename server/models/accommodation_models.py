@@ -16,6 +16,16 @@ class Rate(BaseModel):
     before_taxes_fees: Optional[str] = None
     extracted_before_taxes_fees: Optional[float] = None
 
+class PriceBreakdownEntry(BaseModel):
+    count: int
+    total: float
+
+class PriceBreakdown(BaseModel):
+    base_rate_per_person: float
+    adults: PriceBreakdownEntry
+    children: Optional[PriceBreakdownEntry] = None
+    total_price: float
+
 class GpsCoordinates(BaseModel):
     latitude: float
     longitude: float
@@ -30,7 +40,7 @@ class PriceInfo(BaseModel):
     currency: str = "USD"  # Default currency
 
 class AccommodationOption(BaseModel):
-    id: UUID4 = Field(default_factory=uuid4)  
+    id: str
     name: str
     type: Optional[str] = "hotel"  
     price_info: PriceInfo
@@ -46,9 +56,34 @@ class AccommodationOption(BaseModel):
     hotel_class: Optional[int] = Field(None, ge=1, le=5)  
     formatted_images: Optional[List[str]] = Field(default_factory=list)
     formatted_link: Optional[str] = None
+    price_breakdown:PriceBreakdown
 
 
 class SearchAccommodationOutput(BaseModel):
     accommodation: List[AccommodationOption]
     search_metadata: Optional[Dict] = None
     formatted_message: Optional[str] = None  # Add this line
+
+
+class BookAccommodationInput(BaseModel):
+    selected_accommodation_id:str
+    selected_accommodation_details: Optional[List[AccommodationOption]] = None 
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    guest_count: Optional[int] = None
+    guest_names: List[str] = []
+    full_name:str
+    current_step: str = "email"  # email → phone → passenger_count → names → payment → confirm
+
+    def is_complete(self):
+        return all([
+            self.email,
+            self.phone,
+            self.guest_count is not None,
+            len(self.guest_names) == self.guest_count,
+            self.payment_method
+        ])
+
+class BookAccommodationOutput(BaseModel):
+    booking_reference: str
+    message: str

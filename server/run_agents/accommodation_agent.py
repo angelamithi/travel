@@ -1,12 +1,14 @@
 from agents import Agent, Runner
 from tools.search_flight import search_flight
 from models.flight_models import SearchFlightInput, SearchFlightOutput
+from models.accommodation_models import BookAccommodationInput,BookAccommodationInput
 
 from tools.book_flight import book_flight
 from run_agents.price_calculator_agent import price_calculator_agent
 from tools.parse_natural_date import parse_natural_date
 from tools.retrieve_last_booking_flight_details import retrieve_last_booking_flight_details
 from tools.search_accommodation import search_accommodation
+from tools.book_accommodation import book_accommodation
 
 from datetime import datetime
 
@@ -103,6 +105,37 @@ Use the `search_accommodation` tool with the confirmed user input to fetch avail
 
 ---
 
+
+### 🎯 Step 3.5: Handle User Selection of an Accomodation Option
+
+---
+
+#### 🧠 When the user replies in natural language:
+
+##### ✅ Accommodation selection
+- “Option 1”
+- “The second one”
+- “The Hotel Indigo one”
+- “Holiday Inn Express”
+
+---
+
+#### ✅ What You Must Do
+
+- **Resolve the user's input to the correct accomodation UUID** from previously shown options.
+- **Maintain an ordinal-to-ID mapping**, such as:
+  ```
+  accommodation_option_1 → a0437f48-c949-4439-87c3-0b7d23eb9567
+  ```
+
+- ❌ **Never** use `"accomodation_option_1"` as the actual ID.
+
+- Retrieve full accomodation details using:
+  ```python
+  get_context(user_id, thread_id, f"accomodation_option_{selected_accommodation_id}")
+  ```
+
+
 ## ✅ Step 4: Confirm Selection
 
 Once the user selects a place:
@@ -119,15 +152,130 @@ Once the user selects a place:
 
 ## 📋 Step 4: Collect Booking Information
 
-If they’re ready to book, ask for:
+## ✅ 1: Retrieve Selected Accommodation
 
-- 🧍 Full name(s) of guest(s)
-- 📞 Contact number
-- 📧 Email address
-- 🪪 ID/passport (only if required)
-- 🧒 Age of children (some accommodations have different rates)
+Retrieve the selected accommodation’s details from context:
+
+```python
+selected_accommodation_details = get_context(user_id, thread_id, selected_accommodation_id)
+```
 
 ---
+
+
+#✈️ 2: Begin Booking Session – Collect Details Step-by-Step
+
+Collect booking information one field at a time, saving each value to context. Do **not** proceed to booking until all required fields are present in context.
+
+---
+
+### 📍 Email Address
+Ask:
+> "What’s your email address for the booking confirmation?"
+
+Save to context:
+```python
+set_context(user_id, thread_id, "booking_email", email)
+```
+
+---
+
+### 📍 Phone Number
+Ask:
+> "And what’s your phone number in case we need to contact you?"
+
+Save to context:
+```python
+set_context(user_id, thread_id, "booking_phone", phone)
+```
+
+---
+### 📍 Primary Guest
+
+> "Can I have the full name of the primary guest?"
+
+Save to context:
+```python
+set_context(user_id, thread_id, "full_name", full_name)
+```
+
+
+### 📍 Number of Guests (if not already known)
+If not already in context:
+> "How many people want accommodation?"
+
+Save:
+```python
+set_context(user_id, thread_id, "guest_count",guest_count)
+```
+
+
+---
+
+### 📍 Guest Name(s)
+
+Use previously stored `guest_count` to loop through each guest.
+
+For each guest:
+> “Please provide the full name of guest {i}, exactly as it appears on the ID or passport.”
+
+Save:
+```python
+set_context(user_id, thread_id, f"guest_name_{i}", name)
+```
+
+---
+
+
+##  3: Validate Completion of Booking Details
+
+Before booking, check that all required context values are present:
+
+```python
+required_keys = [
+    "booking_email",
+    "booking_phone",
+    "guest_count",
+    "full_name",
+]
+
+### Add guest names
+guest_count=get_context(user_id, thread_id, "guest_count")
+
+for i in range(1, guest_count+1)
+    required_keys.append(f"guest_name_{i}")
+
+if not all(get_context(user_id, thread_id, key) for key in required_keys):
+    # Prompt user to fill in missing fields
+    return
+```
+
+---
+
+## 4: Call `book_accommodation` Once All Info Is Present
+
+Once all fields are collected and stored in context, proceed with booking:
+
+
+```python
+booking_response = book_accommodation(
+    selected_accommodation_id,
+    selected_accommodation_details,
+    {
+        "email": get_context(user_id, thread_id, "booking_email"),
+        "full_name":get_context(user_id,thread_id,"full_name"),
+        "phone": get_context(user_id, thread_id, "booking_phone"),
+        "guest_names": [
+            get_context(user_id, thread_id, f"guest_name_{i}")
+            for i in range(1, guest_count+1)
+        ]
+    }
+)
+
+Confirm the booking and present the response to the user.
+
+
+ ---
 
 ## 📨 Step 5: Provide Booking Confirmation
 
@@ -170,7 +318,7 @@ accommodation_agent = Agent(
     name="Accommodation Agent",
     instructions=customized_instructions,
     model="gpt-4o-mini",
-    tools=[parse_natural_date,search_accommodation],
+    tools=[parse_natural_date,search_accommodation,book_accommodation],
     handoffs=[]
 )
 

@@ -83,3 +83,36 @@ class LayoverDB(Base):
 
     booking = relationship("FlightBooking", back_populates="layovers")
     leg = relationship("FlightLegDB", back_populates="layovers")
+
+class AccommodationBooking(Base):
+    __tablename__ = 'accommodation_bookings'
+    
+    id = Column(String, primary_key=True)
+    user_id = Column(String, index=True)
+    thread_id = Column(String, index=True)
+    booking_reference = Column(String, unique=True, index=True)
+    full_name = Column(String)
+    guest_names = Column(JSON)  # Store as JSON array
+    email = Column(String)
+    phone = Column(String)
+    payment_method = Column(String)
+    total_price = Column(Float)
+    currency = Column(String)
+    property_token = Column(String)
+    price_breakdown = Column(JSON)
+    hotel_class = Column(Integer)
+    
+    # New fields for accommodation details
+    accommodation_name = Column(String)
+    accommodation_type = Column(String)
+    accommodation_rating = Column(Float)
+    accommodation_reviews = Column(Integer)
+    accommodation_amenities = Column(JSON)
+    accommodation_images = Column(JSON)  # Store original images
+    accommodation_formatted_images = Column(JSON)  # Store formatted images
+    accommodation_link = Column(String)
+    accommodation_formatted_link = Column(String)
+    accommodation_location = Column(JSON)  # Store GPS coordinates
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
