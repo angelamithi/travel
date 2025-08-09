@@ -136,6 +136,9 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
         set_context(user_id, thread_id, "last_email", input.email)
         set_context(user_id, thread_id, "last_phone", input.phone)
         set_context(user_id, thread_id, "last_accommodation_id", input.selected_accommodation_id)
+        # In book_accommodation, after successful booking:
+        set_context(user_id, thread_id, "has_booked_accommodation", True)
+        set_context(user_id, thread_id, "accommodation_booking_time", datetime.now().isoformat())
 
         message = (
             f"✅ Your Accommodation has been booked successfully!\n"

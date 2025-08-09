@@ -175,6 +175,9 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         set_context(user_id, thread_id, "last_email", input.email)
         set_context(user_id, thread_id, "last_phone", input.phone)
         set_context(user_id, thread_id, "last_flight_id", input.selected_flight_id)
+        # In book_flight, after successful booking:
+        set_context(user_id, thread_id, "has_booked_flight", True)
+        set_context(user_id, thread_id, "flight_booking_time", datetime.now().isoformat())
 
         message = (
             f"✅ Your flight has been booked successfully!\n"

@@ -68,7 +68,7 @@ def format_accommodation_message(accommodations, check_in_date, check_out_date, 
         message_lines.append(f"<p><strong>Overall Rating:</strong> {acc['rating']} ({acc['reviews']} reviews)</p>")
         message_lines.append(f"<p><strong>Amenities:</strong> {', '.join(acc['amenities'])}</p>")
         
-        # Add images section
+        # Ensure images are properly formatted
         if acc['images']:
             message_lines.append('<div style="margin: 10px 0;">')
             for img_url in acc['images']:
@@ -77,12 +77,17 @@ def format_accommodation_message(accommodations, check_in_date, check_out_date, 
                 )
             message_lines.append('</div>')
         
-        # Add separate "View More Details" link
+        # Ensure links are properly formatted
         if acc['link']:
             message_lines.append(
-                f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin: 10px 0; color: #0066cc; text-decoration: underline;">View More Details</a>'
+                '<div style="margin: 10px 0;">'
+                f'<a href="{acc["link"]}" target="_blank" rel="noopener noreferrer" '
+                'style="color: #0066cc; text-decoration: none; '
+                'background-color: transparent; border: 1px solid #0066cc; '
+                'border-radius: 4px; padding: 6px 12px; display: inline-block;">'
+                'View More Details</a>'
+                '</div>'
             )
-        
         message_lines.append("<hr style='margin: 20px 0;'/>")
     
     return "".join(message_lines)
