@@ -7,6 +7,8 @@ class SearchAccommodationInput(BaseModel):
     check_in_date: str
     check_out_date: str
     adults: int
+    children: int
+    children_ages: Optional[List[int]] = None  # List of ages in integers
     amenities: Optional[List[str]] = None  # Changed from str to List[str]
     max_price: Optional[float] = None  # Made optional
 

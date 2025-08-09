@@ -16,15 +16,31 @@ load_dotenv()
 logger = logging.getLogger("chat_logger")
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 
-def format_accommodation_message(accommodations, adults=1, children=0):
+
+def calculate_nights(check_in_date, check_out_date):
+    """Calculate the number of nights between check-in and check-out dates."""
+    if isinstance(check_in_date, str):
+        check_in_date = datetime.strptime(check_in_date, "%Y-%m-%d").date()
+    elif isinstance(check_in_date, datetime):
+        check_in_date = check_in_date.date()
+    
+    if isinstance(check_out_date, str):
+        check_out_date = datetime.strptime(check_out_date, "%Y-%m-%d").date()
+    elif isinstance(check_out_date, datetime):
+        check_out_date = check_out_date.date()
+    
+    return (check_out_date - check_in_date).days
+
+def format_accommodation_message(accommodations, check_in_date, check_out_date, adults=1, children=0):
     message_lines = []
+    nights = calculate_nights(check_in_date, check_out_date)
+    
     for idx, acc in enumerate(accommodations, 1):
         message_lines.append(f"<h3>{idx}. {acc['name']}</h3>")
         message_lines.append(f"<p><strong>Type:</strong> {acc['type'].title()}</p>")
         
         # Calculate prices based on adults and children
         base_price = acc['price_info'].get('extracted_price', 0)
-        nights = 6  # Assuming 6 nights as in original code
         
         if 'price_breakdown' in acc:
             # Use price breakdown if available
@@ -79,6 +95,8 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
         "check_in_date": data.check_in_date.strftime("%Y-%m-%d") if isinstance(data.check_in_date, datetime) else data.check_in_date,
         "check_out_date": data.check_out_date.strftime("%Y-%m-%d") if isinstance(data.check_out_date, datetime) else data.check_out_date,
         "adults": data.adults,
+        "children":data.children,
+        "children_ages":data.children_ages,
         "hl": "en",
         "currency": "USD",
         "api_key": SERP_API_KEY
@@ -202,10 +220,19 @@ def search_accommodation(data: SearchAccommodationInput, user_id: Optional[str] 
             })
             
     if user_id and thread_id:
+        # Store all options together
+        set_context(user_id, thread_id, "accommodation_options", accommodation_results)
+        # Also store individual options
         for accommodation_option in accommodation_results:
             set_context(user_id, thread_id, f"accommodation_option_{accommodation_option['id']}", accommodation_option)
 
-    output_message = format_accommodation_message(accommodation_results, adults, children)
+    output_message = format_accommodation_message(
+        accommodation_results, 
+        data.check_in_date,
+        data.check_out_date,
+        adults, 
+        children
+    )
     return SearchAccommodationOutput(
         accommodation=accommodation_results,
         formatted_message=output_message

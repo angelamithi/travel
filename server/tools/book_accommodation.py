@@ -19,6 +19,7 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
 
     session = SessionLocal()
 
+    # Check for duplicate booking first
     existing_ref = get_context(user_id, thread_id, "last_booking_reference")
     if existing_ref:
         logger.warning(f"Duplicate booking attempt. Returning existing reference: {existing_ref}")
@@ -27,30 +28,47 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
             message=f"✅ Your accommodation has already been booked.\n✈️ Booking Reference: {existing_ref}\nPlease check your email for confirmation."
         )
 
-    # Get accommodation details
+    # Get accommodation details - improved lookup
     accommodation = None
     if input.selected_accommodation_details:
         accommodation = input.selected_accommodation_details
     else:
-        accommodation_data = get_context(user_id, thread_id, f"accommodation_option_{input.selected_accommodation_id}")
-        if accommodation_data:
-            try:
-                if isinstance(accommodation_data, str):
-                    accommodation_data = json.loads(accommodation_data)
-                # Ensure it's a list
-                if isinstance(accommodation_data, dict):
-                    accommodation = [accommodation_data]
-                else:
-                    accommodation = accommodation_data
-            except Exception as e:
-                logger.error(f"Failed to parse accommodation data: {e}")
-                raise ValueError("Invalid accommodation data format")
-        else:
+        # Try to get all accommodation options from context
+        all_accommodations = get_context(user_id, thread_id, "accommodation_options") or []
+        
+        # Find the specific accommodation by ID
+        for acc in all_accommodations:
+            if isinstance(acc, str):
+                try:
+                    acc = json.loads(acc)
+                except json.JSONDecodeError:
+                    continue
+            
+            if isinstance(acc, dict) and acc.get('id') == input.selected_accommodation_id:
+                accommodation = [acc]
+                break
+        
+        if not accommodation:
             raise ValueError("No accommodation data available to book. Cannot proceed.")
 
     if not accommodation or len(accommodation) == 0:
         raise ValueError("No valid accommodation data found")
 
+    # Process guest names - validate and format
+    processed_guest_names = []
+    for name in input.guest_names:
+        if name.startswith("Child Age:"):
+            # Extract age and format as "Child (age)"
+            age = name.split(":")[1].strip()
+            processed_guest_names.append(f"Child ({age})")
+        else:
+            processed_guest_names.append(name)
+
+    # Ensure we have the correct number of guest names
+    if input.guest_count and len(processed_guest_names) != input.guest_count:
+        raise ValueError(f"Number of guest names ({len(processed_guest_names)}) doesn't match guest count ({input.guest_count})")
+
+    # Rest of the booking logic remains the same, but use processed_guest_names
     try:
         logger.info(f"Booking accommodation for user {user_id}. Accommodation details: {json.dumps(accommodation, default=str, indent=2)}")
     except Exception as log_err:
@@ -85,7 +103,7 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
             'thread_id': thread_id,
             'booking_reference': booking_reference,
             'full_name': input.full_name,
-            'guest_names': input.guest_names,
+            'guest_names': processed_guest_names,  # Use processed names
             'email': input.email,
             'phone': input.phone,
             'payment_method': "Not Provided",
@@ -112,6 +130,7 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
         session.add(booking)
         session.commit()
 
+        # Store booking reference in context
         set_context(user_id, thread_id, "last_booking_reference", booking_reference)
         set_context(user_id, thread_id, "last_passenger_name", input.full_name)
         set_context(user_id, thread_id, "last_email", input.email)
@@ -122,6 +141,7 @@ async def book_accommodation(wrapper: RunContextWrapper[UserInfo], input: BookAc
             f"✅ Your Accommodation has been booked successfully!\n"
             f"✈️ Booking Reference: {booking_reference}\n"
             f"🏨 Accommodation: {booking_data['accommodation_name']}\n"
+            f"👥 Guests: {', '.join(processed_guest_names)}\n"
             f"💰 Total Price: {total_price} {booking_data['currency']}\n"
             f"A confirmation has been sent to {input.email}. "
             "Thank you for choosing our service!"
