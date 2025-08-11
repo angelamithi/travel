@@ -81,18 +81,25 @@ async def book_flight(wrapper: RunContextWrapper[UserInfo], input: BookFlightInp
         for flight in flights:
             total_price += flight.total_price or 0.0
             
-            # Collect airlines from all segments in all legs
+            # Handle flight-level airlines (from FlightOption)
+            if hasattr(flight, 'airline') and flight.airline:
+                if isinstance(flight.airline, list):
+                    all_airlines.update(airline for airline in flight.airline if airline)
+                else:
+                    # Convert single airline to list if needed
+                    all_airlines.add(flight.airline)
+            
+            # Handle segment-level airlines (from FlightSegment)
             if hasattr(flight, 'legs') and flight.legs:
                 for leg in flight.legs:
                     if leg.segments:
                         for seg in leg.segments:
-                            if seg.airline:
+                            if hasattr(seg, 'airline') and seg.airline:
                                 if isinstance(seg.airline, list):
-                                    all_airlines.update(seg.airline)
+                                    all_airlines.update(airline for airline in seg.airline if airline)
                                 else:
+                                    # Convert single airline to list if needed
                                     all_airlines.add(seg.airline)
-            elif hasattr(flight, 'airline') and flight.airline:
-                all_airlines.add(flight.airline)
 
             # Combine price breakdowns
             if hasattr(flight, 'price_breakdown') and flight.price_breakdown:

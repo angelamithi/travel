@@ -30,7 +30,7 @@ You are a smart and context-aware Price Calculator Agent specialized in presenti
      • `price_info`
    
 📊 PRESENTATION FORMATTING RULES:
-When presenting costs, ALWAYS use this structure:
+When presenting costs,  use the formatted_output structure. if the formatted_output is not present use the below structure:
 
 ✨ TOTAL TRIP COST BREAKDOWN ✨
 --------------------------------------------------
@@ -46,6 +46,9 @@ When presenting costs, ALWAYS use this structure:
 --------------------------------------------------
 💰 TOTAL: $[sum of both amounts]
 --------------------------------------------------
+
+
+
 
 🧠 INTELLIGENT HANDLING RULES:
 1. When ONLY FLIGHT is booked:
@@ -116,6 +119,7 @@ When presenting costs, ALWAYS use this structure:
    Let me know if you need any other assistance!"
 """,
     model="gpt-4o-mini",
-    # handoffs=[get_flight_agent(), get_accommodation_agent()],
-    output_type=PriceCalculationOutput,
+    tools=[price_calculator_tool],
+    
 )
+

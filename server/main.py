@@ -32,7 +32,7 @@ from typing import Optional, AsyncGenerator
 from dataclasses import dataclass
 from models.context_models import UserInfo
 
-
+import re
 
 # Load environment variables
 load_dotenv()
@@ -70,6 +70,10 @@ if not openai.api_key:
 SERP_API_KEY=os.getenv("SERP_API_KEY")
  
 
+
+def strip_html_tags(text):
+    return re.sub(r'<[^>]*>', '', text)
+
 # In-memory conversation store
 conversation_store: dict[str, List[TResponseInputItem]] = {}
 
@@ -78,6 +82,8 @@ class ChatMessage(BaseModel):
     user_id: str
     thread_id: str
     message: str
+
+
 
 @app.post("/chat")
 async def chat(message: ChatMessage):
@@ -97,7 +103,7 @@ async def chat(message: ChatMessage):
     )
     context = user_info
 
-    # Append the latest user input to the history
+    # Append latest user input
     user_input = message.message
     input_items.append({"content": user_input, "role": "user"})
 
@@ -106,43 +112,47 @@ async def chat(message: ChatMessage):
 
     async def generate_stream():
         nonlocal current_agent
-        
+        current_assistant_message = ""  # buffer for complete message
+
         with trace("travel service", group_id=message.thread_id):
-            # Get the streaming result (no await needed here)
             result = Runner.run_streamed(current_agent, input_items, context=context)
-            
-            # Process the stream events
+
             async for event in result.stream_events():
+
+                # ---- Streaming text chunks ----
                 if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
-                    yield event.data.delta
-                
+                    chunk = strip_html_tags(event.data.delta)
+                    current_assistant_message += chunk
+                    yield f"data: {chunk}\n\n"  # SSE format
+                    await asyncio.sleep(0)      # flush
+
+                # ---- Agent handoff ----
                 elif event.type == "agent_updated_stream_event":
                     print(f"Handed off to {event.new_agent.name}")
                     current_agent = event.new_agent
-                    
-                    # Append assistant reply from first agent
+
                     for item in result.new_items:
                         if isinstance(item, MessageOutputItem):
                             assistant_reply = ItemHelpers.text_message_output(item)
                             input_items.append({"role": "assistant", "content": assistant_reply})
-                    
-                    # Append the user message again for re-evaluation under new agent
+
                     input_items.append({"role": "user", "content": user_input})
-                    
-                    # Get new stream with updated agent
                     result = Runner.run_streamed(current_agent, input_items, context=context)
-                
+
+                # ---- Final assistant message output items ----
                 elif event.type == "run_item_stream_event":
                     if isinstance(event.item, MessageOutputItem):
                         output_text = ItemHelpers.text_message_output(event.item)
                         input_items.append({"role": "assistant", "content": output_text})
 
-            # Save updated conversation history back to store
+            # ---- Save full assistant message after streaming ends ----
+            if current_assistant_message.strip():
+                input_items.append({"role": "assistant", "content": current_assistant_message})
+
             conversation_store[message.thread_id] = input_items
 
     return StreamingResponse(generate_stream(), media_type="text/event-stream")
 
-    
 
 @app.post("/clear_context")
 def clear_chat_context(user_id: str, thread_id: str):

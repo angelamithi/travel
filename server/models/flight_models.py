@@ -1,5 +1,5 @@
 from typing import Optional, List, Dict
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 # --- Models for Multi-City Flights ---
 class MultiCityLeg(BaseModel):
@@ -82,10 +82,18 @@ class PriceCalculationInput(BaseModel):
     include_flight: Optional[bool] = True
     include_accommodation: Optional[bool] = True
 
+class BreakdownDetail(BaseModel):
+    flight_cost: Optional[float] = None
+    accommodation_cost: Optional[float] = None
+    taxes_and_fees: Optional[float] = None
+    currency: str = "USD"
+
 class PriceCalculationOutput(BaseModel):
     total_cost: float
-    breakdown: dict
-
+    breakdown: BreakdownDetail
+    formatted_output: Optional[str] = None  # Make this optional
+    
+    model_config = ConfigDict(extra='forbid')
 # --- Last Booking Details ---
 class LastBookingOutput(BaseModel):
     message: str

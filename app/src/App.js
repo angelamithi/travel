@@ -8,27 +8,52 @@ const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 function formatMessage(content) {
   if (!content) return "";
 
-  // If content includes HTML tags, assume it's already formatted correctly
   if (/<[a-z][\s\S]*>/i.test(content)) {
     return content;
   }
 
-  // Otherwise, escape HTML and apply Markdown-like formatting
   const escapeHtml = (str) =>
-    str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-  const escaped = escapeHtml(content);
+  let escaped = escapeHtml(content);
 
+  // --- STEP 1: Insert line breaks before each flight option ---
+  escaped = escaped.replace(/(###\s*✈️\s*Option\s*\d+:)/g, "\n$1\n");
+
+  // --- STEP 2: Insert breaks before each bolded field ---
+  escaped = escaped.replace(/(\*\*🛫 Departure:|\*\*🛬 Arrival:|\*\*⏱️ Duration:|\*\*🛋️ Cabin:|💰)/g, "\n$1");
+
+  // --- STEP 3: Split flight options into blocks ---
+  if (/###\s*✈️\s*Option\s*\d+:/i.test(escaped)) {
+    const parts = escaped.trim().split(/\n(?=###\s*✈️\s*Option\s*\d+:)/);
+
+    return parts
+      .map((part) => {
+        const lines = part.trim().split("\n").filter(Boolean);
+        const title = lines.shift() || "";
+        const details = lines
+          .map((line) =>
+            `<li>${line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</li>`
+          )
+          .join("");
+
+        return `
+          <div class="flight-option">
+            <h3>${title.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</h3>
+            <ul>${details}</ul>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  // Default formatting if not flight options
   return escaped
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/^\d+\.\s(.*)$/gm, "<p><strong>$1</strong></p>")
     .replace(/^- (.*)$/gm, "<li>$1</li>")
-    .replace(/\n{2,}/g, "<br/><br/>")
     .replace(/\n/g, "<br/>");
 }
+
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -82,24 +107,33 @@ const App = () => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantMessage = "";
+const decoder = new TextDecoder();
+let assistantMessage = "";
+let buffer = "";
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        assistantMessage += chunk;
-        setCurrentAssistantMessage(assistantMessage);
-      }
+  buffer += decoder.decode(value, { stream: true });
 
-      setMessages(prev => [...prev, { role: "assistant", content: assistantMessage }]);
-      setCurrentAssistantMessage("");
-    } catch (error) {
-      console.error("Failed to send message:", error);
-      setMessages(prev => [...prev, { role: "assistant", content: "Sorry, there was an error processing your request." }]);
-    } finally {
+  // Split on double newlines (SSE message delimiter)
+  let parts = buffer.split("\n\n");
+  buffer = parts.pop(); // keep incomplete chunk
+
+  for (let part of parts) {
+    if (part.startsWith("data: ")) {
+      const text = part.replace(/^data: /, "");
+      assistantMessage += text;
+      setCurrentAssistantMessage(assistantMessage); // live update
+    }
+  }
+}
+
+setMessages(prev => [...prev, { role: "assistant", content: assistantMessage }]);
+setCurrentAssistantMessage("");
+
+       } finally {
       setLoading(false);
     }
   };
@@ -108,76 +142,103 @@ const App = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, currentAssistantMessage]);
 
-  const getAvatar = (role) => (role === "user" ? "🧑" : "🤖");
+  const getAvatar = (role) => (role === "user" ? "🧳" : "🌍");
 
   return (
     <div className="app">
-      <aside className="sidebar">
-        <h2>🌍 TravelBot</h2>
-        <button onClick={fetchHistory} className="sidebar-button">
-          🔄 Refresh History
-        </button>
-        <button
-          onClick={async () => {
-            await fetch(`${BACKEND_URL}/clear_context?user_id=${userId.current}&thread_id=${threadId.current}`, {
-              method: "POST",
-            });
-            setMessages([]);
-          }}
-          className="sidebar-button red"
-        >
-          🧹 Clear Chat
-        </button>
-      </aside>
+     
+<aside className="sidebar">
+  <div className="sidebar-header">
+    <h2>Tara</h2>
+    <p>Your Travel Mate</p>
+  </div>
+  
+  <div className="search-options">
 
+    <ul>
+      <li>✈️ Flight bookings</li>
+      <li>🏨 Hotel accommodations</li>
+      <li>🗺️ Travel itineraries</li>
+      <li>🌤️ Weather information</li>
+      <li>🍽️ Restaurant recommendations</li>
+      <li>🚗 Car rentals</li>
+      <li>🎟️ Tour packages</li>
+    </ul>
+  </div>
+  
+  <div className="sidebar-buttons-container">
+    <button onClick={fetchHistory} className="sidebar-button">
+      🔄 Refresh History
+    </button>
+    <button
+      onClick={async () => {
+        await fetch(`${BACKEND_URL}/clear_context?user_id=${userId.current}&thread_id=${threadId.current}`, {
+          method: "POST",
+        });
+        setMessages([]);
+      }}
+      className="sidebar-button red"
+    >
+      🧹 Clear Chat
+    </button>
+  </div>
+</aside>
       <main className="chat-container">
+        <div className="chat-header">
+          <h1>Tara - Your Travel Mate</h1>
+          <p className="tagline">"Explore the world with confidence and ease!"</p>
+        </div>
+        
         <div className="chat-box">
-         
-          {messages.map((msg, idx) => {
-            // Correct placement of console.log - before the return statement
-            console.log("Message content:", msg.content);
-            console.log("Formatted content:", formatMessage(msg.content));
-            
-            return (
-              <div
-                key={idx}
-                className={`message ${msg.role === "user" ? "user" : "assistant"}`}
-              >
-                <span className="avatar">{getAvatar(msg.role)}</span>
-                <div 
-                  dangerouslySetInnerHTML={{ 
-                    __html: formatMessage(msg.content) 
-                  }} 
-                  style={{ 
-                    display: 'inline-block',
-                    maxWidth: '100%',
-                    overflowX: 'auto'
-                  }}
-                />
-              </div>
-            );
-          })}
-            {currentAssistantMessage && (
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`message ${msg.role === "user" ? "user" : "assistant"}`}
+            >
+              <span className="avatar">{getAvatar(msg.role)}</span>
+              <div 
+                dangerouslySetInnerHTML={{ 
+                  __html: formatMessage(msg.content) 
+                }} 
+                style={{ 
+                  display: 'inline-block',
+                  maxWidth: '100%',
+                  overflowX: 'auto'
+                }}
+              />
+            </div>
+          ))}
+          
+          {currentAssistantMessage && (
             <div className="message assistant">
-              <span className="avatar">🤖</span>
+              <span className="avatar">🌍</span>
               <span dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }} />
+            </div>
+          )}
+
+          {loading && (
+            <div className="loading-indicator">
+              <div className="loading-spinner"></div>
+              <span>Planning your adventure...</span>
             </div>
           )}
 
           <div ref={chatEndRef} />
         </div>
 
-        <div className="input-bar">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Ask me about travel plans: flights, hotels, itineraries..."
-            disabled={loading}
-          />
-          <button onClick={sendMessage} disabled={loading || !input.trim()}>
-            {loading ? "Loading..." : "Send"}
-          </button>
+        <div className="input-container">
+          <div className="input-bar">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && !loading && sendMessage()}
+              placeholder="Where would you like to go today? Ask about flights, hotels, or destinations..."
+              disabled={loading}
+            />
+            <button onClick={sendMessage} disabled={loading || !input.trim()}>
+              {loading ? "✈️ Planning..." : "✈️ Send"}
+            </button>
+          </div>
         </div>
       </main>
     </div>
