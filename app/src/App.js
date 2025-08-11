@@ -65,6 +65,27 @@ const App = () => {
   const userId = useRef(localStorage.getItem("user_id") || uuidv4());
   const threadId = useRef(localStorage.getItem("thread_id") || "default");
 
+  const [typingText, setTypingText] = useState("");
+const fullTypingText = "Tara is typing...";
+
+useEffect(() => {
+  if (loading) {
+    setTypingText("");
+    let i = 0;
+    const interval = setInterval(() => {
+      setTypingText(fullTypingText.slice(0, i + 1));
+      i++;
+      if (i > fullTypingText.length) {
+        i = 0; // restart typing
+      }
+    }, 100); // typing speed
+    return () => clearInterval(interval);
+  } else {
+    setTypingText("");
+  }
+}, [loading]);
+
+
   useEffect(() => {
     localStorage.setItem("user_id", userId.current);
     localStorage.setItem("thread_id", threadId.current);
@@ -216,29 +237,34 @@ setCurrentAssistantMessage("");
             </div>
           )}
 
-          {loading && (
-            <div className="loading-indicator">
-              <div className="loading-spinner"></div>
-              <span>Planning your adventure...</span>
-            </div>
-          )}
+        {loading && (
+  <div className="typing-indicator">
+    <span className="avatar">🌍</span>
+    <span className="typing-text">{typingText}</span>
+  </div>
+)}
+
+
 
           <div ref={chatEndRef} />
         </div>
 
         <div className="input-container">
-          <div className="input-bar">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && !loading && sendMessage()}
-              placeholder="Where would you like to go today? Ask about flights, hotels, or destinations..."
-              disabled={loading}
-            />
-            <button onClick={sendMessage} disabled={loading || !input.trim()}>
-              {loading ? "✈️ Planning..." : "✈️ Send"}
-            </button>
-          </div>
+          
+<div className="input-bar">
+  <textarea
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+    onKeyPress={(e) => e.key === "Enter" && !loading && !e.shiftKey && sendMessage()}
+    placeholder="Where would you like to go today? Ask about flights, hotels, or destinations..."
+    disabled={loading}
+    rows={3} // More rows for bigger height
+  />
+  <button onClick={sendMessage} disabled={loading || !input.trim()}>
+    {loading ? "✈️ Sending..." : "✈️ Send"}
+  </button>
+</div>
+
         </div>
       </main>
     </div>
