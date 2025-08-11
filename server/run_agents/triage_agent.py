@@ -219,9 +219,6 @@ Examples:
 
 
 
-📝 Important Formatting Rule:
-- Format all  responses using **raw HTML**, not Markdown.
-- Use `<h3>` for titles, `<ul>`/`<li>` for lists, `<img src="">` for images, and `<a href="">` for links.
 
 🤖 Be proactive, polite, and efficient. Avoid asking unnecessary follow-up questions when intent is clear.
 """,

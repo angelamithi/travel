@@ -163,7 +163,7 @@ setCurrentAssistantMessage("");
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, currentAssistantMessage]);
 
-  const getAvatar = (role) => (role === "user" ? "🧳" : "🌍");
+  const getAvatar = (role) => (role === "user" ? "🧑" : "🌍");
 
   return (
     <div className="app">
@@ -171,7 +171,7 @@ setCurrentAssistantMessage("");
 <aside className="sidebar">
   <div className="sidebar-header">
     <h2>Tara</h2>
-    <p>Your Travel Mate</p>
+    <p>Your Ultimate Travel Partner</p>
   </div>
   
   <div className="search-options">
