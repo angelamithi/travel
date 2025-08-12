@@ -2,58 +2,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./App.css";
+import { marked } from "marked";
 
 const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 
-function formatMessage(content) {
-  if (!content) return "";
+function formatMessage(rawText) {
+  // First, remove all ** markdown
+  let formattedText = rawText.replace(/\*\*/g, '');
+  
+  // Then apply other formatting cleanups
+  formattedText = formattedText
+    // Ensure proper list formatting
+    .replace(/(\n|^)(\d+)\.(\s*)/g, '$1$2. $3')
+    // Ensure double newlines between paragraphs
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/([^\n])\n([^\n])/g, '$1\n\n$2');
 
-  if (/<[a-z][\s\S]*>/i.test(content)) {
-    return content;
-  }
-
-  const escapeHtml = (str) =>
-    str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-  let escaped = escapeHtml(content);
-
-  // --- STEP 1: Insert line breaks before each flight option ---
-  escaped = escaped.replace(/(###\s*✈️\s*Option\s*\d+:)/g, "\n$1\n");
-
-  // --- STEP 2: Insert breaks before each bolded field ---
-  escaped = escaped.replace(/(\*\*🛫 Departure:|\*\*🛬 Arrival:|\*\*⏱️ Duration:|\*\*🛋️ Cabin:|💰)/g, "\n$1");
-
-  // --- STEP 3: Split flight options into blocks ---
-  if (/###\s*✈️\s*Option\s*\d+:/i.test(escaped)) {
-    const parts = escaped.trim().split(/\n(?=###\s*✈️\s*Option\s*\d+:)/);
-
-    return parts
-      .map((part) => {
-        const lines = part.trim().split("\n").filter(Boolean);
-        const title = lines.shift() || "";
-        const details = lines
-          .map((line) =>
-            `<li>${line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</li>`
-          )
-          .join("");
-
-        return `
-          <div class="flight-option">
-            <h3>${title.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</h3>
-            <ul>${details}</ul>
-          </div>
-        `;
-      })
-      .join("");
-  }
-
-  // Default formatting if not flight options
-  return escaped
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/^- (.*)$/gm, "<li>$1</li>")
-    .replace(/\n/g, "<br/>");
+  return marked.parse(formattedText);
 }
-
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -66,25 +32,24 @@ const App = () => {
   const threadId = useRef(localStorage.getItem("thread_id") || "default");
 
   const [typingText, setTypingText] = useState("");
-const fullTypingText = "Tara is typing...";
+  const fullTypingText = "Tara is typing...";
 
-useEffect(() => {
-  if (loading) {
-    setTypingText("");
-    let i = 0;
-    const interval = setInterval(() => {
-      setTypingText(fullTypingText.slice(0, i + 1));
-      i++;
-      if (i > fullTypingText.length) {
-        i = 0; // restart typing
-      }
-    }, 100); // typing speed
-    return () => clearInterval(interval);
-  } else {
-    setTypingText("");
-  }
-}, [loading]);
-
+  useEffect(() => {
+    if (loading) {
+      setTypingText("");
+      let i = 0;
+      const interval = setInterval(() => {
+        setTypingText(fullTypingText.slice(0, i + 1));
+        i++;
+        if (i > fullTypingText.length) {
+          i = 0; // restart typing
+        }
+      }, 100); // typing speed
+      return () => clearInterval(interval);
+    } else {
+      setTypingText("");
+    }
+  }, [loading]);
 
   useEffect(() => {
     localStorage.setItem("user_id", userId.current);
@@ -105,8 +70,7 @@ useEffect(() => {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
+    setMessages(prev => [...prev, { role: "user", content: input }]);
     const userInput = input;
     setInput("");
     setLoading(true);
@@ -115,9 +79,7 @@ useEffect(() => {
     try {
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_id: userId.current,
           thread_id: threadId.current,
@@ -128,33 +90,54 @@ useEffect(() => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const reader = response.body.getReader();
-const decoder = new TextDecoder();
-let assistantMessage = "";
-let buffer = "";
+      const decoder = new TextDecoder();
+      let assistantMessage = "";
+      let buffer = "";
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-  buffer += decoder.decode(value, { stream: true });
+        buffer += decoder.decode(value, { stream: true });
+        let parts = buffer.split("\n\n");
+        buffer = parts.pop();
 
-  // Split on double newlines (SSE message delimiter)
-  let parts = buffer.split("\n\n");
-  buffer = parts.pop(); // keep incomplete chunk
+        for (let part of parts) {
+          if (part.startsWith("data: ")) {
+            const data = part.replace(/^data: /, "");
+            try {
+              const parsed = JSON.parse(data);
+              
+              if (parsed.type === "text") {
+                // Regular text chunk
+                assistantMessage += parsed.content;
+                setCurrentAssistantMessage(formatMessage(assistantMessage));
+                
+                // Natural typing delay for streaming effect
+                const delay = Math.min(200, parsed.content.length * 15);
+                await new Promise(res => setTimeout(res, delay));
+              } else if (parsed.type === "final") {
+                // Final message - we already have this content in assistantMessage
+                // No need to do anything special here
+              }
+            } catch (e) {
+              // Fallback for non-JSON messages (shouldn't happen with our new backend)
+              assistantMessage += data;
+              setCurrentAssistantMessage(formatMessage(assistantMessage));
+            }
+          }
+        }
+      }
 
-  for (let part of parts) {
-    if (part.startsWith("data: ")) {
-      const text = part.replace(/^data: /, "");
-      assistantMessage += text;
-      setCurrentAssistantMessage(assistantMessage); // live update
-    }
-  }
-}
+      // Push final formatted message
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { role: "assistant", content: formatMessage(assistantMessage) }
+      ]);
 
-setMessages(prev => [...prev, { role: "assistant", content: assistantMessage }]);
-setCurrentAssistantMessage("");
+      setCurrentAssistantMessage("");
 
-       } finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -167,43 +150,41 @@ setCurrentAssistantMessage("");
 
   return (
     <div className="app">
-     
-<aside className="sidebar">
-  <div className="sidebar-header">
-    <h2>Tara</h2>
-    <p>Your Ultimate Travel Partner</p>
-  </div>
-  
-  <div className="search-options">
-
-    <ul>
-      <li>✈️ Flight bookings</li>
-      <li>🏨 Hotel accommodations</li>
-      <li>🗺️ Travel itineraries</li>
-      <li>🌤️ Weather information</li>
-      <li>🍽️ Restaurant recommendations</li>
-      <li>🚗 Car rentals</li>
-      <li>🎟️ Tour packages</li>
-    </ul>
-  </div>
-  
-  <div className="sidebar-buttons-container">
-    <button onClick={fetchHistory} className="sidebar-button">
-      🔄 Refresh History
-    </button>
-    <button
-      onClick={async () => {
-        await fetch(`${BACKEND_URL}/clear_context?user_id=${userId.current}&thread_id=${threadId.current}`, {
-          method: "POST",
-        });
-        setMessages([]);
-      }}
-      className="sidebar-button red"
-    >
-      🧹 Clear Chat
-    </button>
-  </div>
-</aside>
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <h2>Tara</h2>
+          <p>Your Ultimate Travel Partner</p>
+        </div>
+        
+        <div className="search-options">
+          <ul>
+            <li>✈️ Flight bookings</li>
+            <li>🏨 Hotel accommodations</li>
+            <li>🗺️ Travel itineraries</li>
+            <li>🌤️ Weather information</li>
+            <li>🍽️ Restaurant recommendations</li>
+            <li>🚗 Car rentals</li>
+            <li>🎟️ Tour packages</li>
+          </ul>
+        </div>
+        
+        <div className="sidebar-buttons-container">
+          <button onClick={fetchHistory} className="sidebar-button">
+            🔄 Refresh History
+          </button>
+          <button
+            onClick={async () => {
+              await fetch(`${BACKEND_URL}/clear_context?user_id=${userId.current}&thread_id=${threadId.current}`, {
+                method: "POST",
+              });
+              setMessages([]);
+            }}
+            className="sidebar-button red"
+          >
+            🧹 Clear Chat
+          </button>
+        </div>
+      </aside>
       <main className="chat-container">
         <div className="chat-header">
           <h1>Tara - Your Travel Mate</h1>
@@ -218,14 +199,8 @@ setCurrentAssistantMessage("");
             >
               <span className="avatar">{getAvatar(msg.role)}</span>
               <div 
-                dangerouslySetInnerHTML={{ 
-                  __html: formatMessage(msg.content) 
-                }} 
-                style={{ 
-                  display: 'inline-block',
-                  maxWidth: '100%',
-                  overflowX: 'auto'
-                }}
+                dangerouslySetInnerHTML={{ __html: msg.content }}
+                className="message-content"
               />
             </div>
           ))}
@@ -233,38 +208,39 @@ setCurrentAssistantMessage("");
           {currentAssistantMessage && (
             <div className="message assistant">
               <span className="avatar">🌍</span>
-              <span dangerouslySetInnerHTML={{ __html: formatMessage(currentAssistantMessage) }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: currentAssistantMessage
+                }}
+                className="message-content markdown-body"
+              />
             </div>
           )}
 
-        {loading && (
-  <div className="typing-indicator">
-    <span className="avatar">🌍</span>
-    <span className="typing-text">{typingText}</span>
-  </div>
-)}
-
-
+          {loading && (
+            <div className="typing-indicator">
+              <span className="avatar">🌍</span>
+              <span className="typing-text">{typingText}</span>
+            </div>
+          )}
 
           <div ref={chatEndRef} />
         </div>
 
         <div className="input-container">
-          
-<div className="input-bar">
-  <textarea
-    value={input}
-    onChange={(e) => setInput(e.target.value)}
-    onKeyPress={(e) => e.key === "Enter" && !loading && !e.shiftKey && sendMessage()}
-    placeholder="Where would you like to go today? Ask about flights, hotels, or destinations..."
-    disabled={loading}
-    rows={3} // More rows for bigger height
-  />
-  <button onClick={sendMessage} disabled={loading || !input.trim()}>
-    {loading ? "✈️ Sending..." : "✈️ Send"}
-  </button>
-</div>
-
+          <div className="input-bar">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && !loading && !e.shiftKey && sendMessage()}
+              placeholder="Where would you like to go today? Ask about flights, hotels, or destinations..."
+              disabled={loading}
+              rows={3}
+            />
+            <button onClick={sendMessage} disabled={loading || !input.trim()}>
+              {loading ? "✈️ Sending..." : "✈️ Send"}
+            </button>
+          </div>
         </div>
       </main>
     </div>

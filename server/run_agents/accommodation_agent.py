@@ -68,7 +68,7 @@ Assume current year is: **{{this_year}}** unless the date has passed.
           <a href=""> for links
 
     > Example format for options display:
-      <h3>1. Hotel Name</h3>
+      <h3>Hotel Name</h3>
        <img src="image_url" alt="Hotel image" style="max-width:200px">
        <a href="link_url" target="_blank">View More Details</a>
 

@@ -65,6 +65,7 @@ body {
 
 .sidebar {
   width: 300px;
+  flex-shrink: 0; /* 🔹 Prevent shrinking */
   background-color: #2A9D8F;
   color: white;
   display: flex;
@@ -164,8 +165,78 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 1.2rem; /* 🔹 Increased font size for both user & assistant messages */
 }
+.message div {
+  white-space: pre-wrap; /* Preserve line breaks and spaces */
+  word-wrap: break-word; /* Break long words if needed */
+}
+
+/* Ensure lists are properly styled */
+.message ul, .message ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
 
 
+/* Markdown-specific styles */
+.message strong {
+  font-weight: bold;
+  color: #2A9D8F;
+}
+
+.message em {
+  font-style: italic;
+}
+
+.message ul, .message ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.message li {
+  margin: 0.25em 0;
+  list-style-position: outside;
+}
+
+.message p {
+  margin: 0.5em 0;
+}
+.message-content {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Style for markdown formatted messages */
+.message-content p {
+  margin: 0.5em 0;
+}
+
+.message-content ol,
+.message-content ul {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.message-content li {
+  margin: 0.25em 0;
+}
+
+.message-content pre {
+  background: #f5f5f5;
+  padding: 0.5em;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.streaming-message {
+  white-space: pre-wrap;
+}
+
+.streaming-message ol,
+.streaming-message ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
 .avatar {
   font-size: 1.6rem;
   margin-right: 8px;
@@ -388,4 +459,38 @@ body {
   height: 1px;
   background-color: #ddd;
   margin: 20px 0;
+}
+
+/* Keep sidebar fixed width on tablet/desktop */
+@media (min-width: 769px) {
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+  }
+}
+
+.markdown-body {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.markdown-body h1, 
+.markdown-body h2, 
+.markdown-body h3 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-body ul, 
+.markdown-body ol {
+  padding-left: 2em;
+  margin: 0.5em 0;
+}
+
+.markdown-body li {
+  margin: 0.25em 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
 }

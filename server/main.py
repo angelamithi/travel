@@ -71,8 +71,6 @@ SERP_API_KEY=os.getenv("SERP_API_KEY")
  
 
 
-def strip_html_tags(text):
-    return re.sub(r'<[^>]*>', '', text)
 
 # In-memory conversation store
 conversation_store: dict[str, List[TResponseInputItem]] = {}
@@ -85,52 +83,52 @@ class ChatMessage(BaseModel):
 
 
 
+# In-memory conversation store
+conversation_store: dict[str, List[TResponseInputItem]] = {}
+
+# Incoming chat message model
+class ChatMessage(BaseModel):
+    user_id: str
+    thread_id: str
+    message: str
+
+
+
+from fastapi.responses import StreamingResponse
+import json
+
 @app.post("/chat")
 async def chat(message: ChatMessage):
     print(">>> /chat endpoint hit")
     print(">>> Message:", message)
 
-    # Retrieve conversation history or start new
     input_items: List[TResponseInputItem] = conversation_store.get(message.thread_id, [])
-
-    # Context object
-    user_info = UserInfo(
-        user_id=message.user_id,
-        thread_id=message.thread_id,
-        email="",  # fill from DB if needed
-        name="",
-        phone=""
-    )
+    user_info = UserInfo(user_id=message.user_id, thread_id=message.thread_id)
     context = user_info
-
-    # Append latest user input
     user_input = message.message
     input_items.append({"content": user_input, "role": "user"})
 
-    # Start with triage agent
     current_agent = triage_agent
+    current_assistant_message = ""  # full response buffer
 
     async def generate_stream():
-        nonlocal current_agent
-        current_assistant_message = ""  # buffer for complete message
+        nonlocal current_agent, current_assistant_message
 
         with trace("travel service", group_id=message.thread_id):
             result = Runner.run_streamed(current_agent, input_items, context=context)
 
             async for event in result.stream_events():
-
-                # ---- Streaming text chunks ----
                 if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
-                    chunk = strip_html_tags(event.data.delta)
+                    chunk = event.data.delta
+                    print(f"Sending to frontend: {repr(chunk)}")  # debug log
                     current_assistant_message += chunk
-                    yield f"data: {chunk}\n\n"  # SSE format
-                    await asyncio.sleep(0)      # flush
+                    # Send as regular text chunk
+                    yield f"data: {json.dumps({'type': 'text', 'content': chunk})}\n\n"
+                    await asyncio.sleep(0)
 
-                # ---- Agent handoff ----
                 elif event.type == "agent_updated_stream_event":
                     print(f"Handed off to {event.new_agent.name}")
                     current_agent = event.new_agent
-
                     for item in result.new_items:
                         if isinstance(item, MessageOutputItem):
                             assistant_reply = ItemHelpers.text_message_output(item)
@@ -139,19 +137,21 @@ async def chat(message: ChatMessage):
                     input_items.append({"role": "user", "content": user_input})
                     result = Runner.run_streamed(current_agent, input_items, context=context)
 
-                # ---- Final assistant message output items ----
                 elif event.type == "run_item_stream_event":
                     if isinstance(event.item, MessageOutputItem):
                         output_text = ItemHelpers.text_message_output(event.item)
                         input_items.append({"role": "assistant", "content": output_text})
 
-            # ---- Save full assistant message after streaming ends ----
+            # Save in store
             if current_assistant_message.strip():
                 input_items.append({"role": "assistant", "content": current_assistant_message})
-
             conversation_store[message.thread_id] = input_items
 
+            # Send final message with a special type
+            yield f"data: {json.dumps({'type': 'final', 'content': current_assistant_message})}\n\n"
+
     return StreamingResponse(generate_stream(), media_type="text/event-stream")
+
 
 
 @app.post("/clear_context")
