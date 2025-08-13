@@ -28,7 +28,7 @@ function formatMessage(rawText) {
   return doc.body.innerHTML;
 }
 
-// Function to parse HTML and extract option cards
+// Updated function to parse HTML and extract option cards including Total Price
 function parseOptionsFromHTML(htmlContent) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlContent, 'text/html');
@@ -41,25 +41,33 @@ function parseOptionsFromHTML(htmlContent) {
     let content = '';
     let currentElement = heading.nextElementSibling;
 
-    while (
-      currentElement &&
-      !['H1', 'H2', 'H3'].includes(currentElement.tagName)
-    ) {
-      // Stop if we find outro-like text (e.g., "Which option would you like to choose?")
-      if (
-        /which option/i.test(currentElement.textContent.trim())
-      ) {
+    while (currentElement) {
+      // Check if we've reached the next option heading
+      if (['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
+        const nextHeadingText = currentElement.textContent.toLowerCase();
+        if (nextHeadingText.includes('option') || 
+            nextHeadingText.includes('✈️') || 
+            nextHeadingText.includes('🏨')) {
+          break;
+        }
+      }
+      
+      // Stop if we find outro-like text but not if it's a price section
+      const elementText = currentElement.textContent.trim().toLowerCase();
+      if (/which option/i.test(elementText) || 
+          /choose/i.test(elementText) ||
+          /would you like/i.test(elementText)) {
         break;
       }
+
       content += currentElement.outerHTML;
       currentElement = currentElement.nextElementSibling;
     }
 
-    if (
-      headingText.toLowerCase().includes('option') ||
-      headingText.includes('✈️') ||
-      headingText.includes('🏨')
-    ) {
+    // Check if this is an option heading
+    if (headingText.toLowerCase().includes('option') ||
+        headingText.includes('✈️') ||
+        headingText.includes('🏨')) {
       options.push({
         id: `option-${index}`,
         title: headingText,
@@ -69,24 +77,55 @@ function parseOptionsFromHTML(htmlContent) {
     }
   });
 
-  // Now capture the outro
+  // Capture the outro (text after all options)
   let outroHTML = "";
-  const lastOption = options[options.length - 1];
-  if (lastOption) {
-    const lastOptionDoc = parser.parseFromString(lastOption.content, 'text/html');
-    const lastOptionLastEl = lastOptionDoc.body.lastElementChild;
-    let currentElement = headings[headings.length - 1].nextElementSibling;
-
-    // Skip over the actual option's content elements
-    while (currentElement && lastOptionLastEl && currentElement.outerHTML !== lastOptionLastEl.outerHTML) {
-      currentElement = currentElement.nextElementSibling;
-    }
-    if (currentElement) currentElement = currentElement.nextElementSibling;
-
-    // Everything else after belongs to outro
-    while (currentElement) {
-      outroHTML += currentElement.outerHTML;
-      currentElement = currentElement.nextElementSibling;
+  if (options.length > 0) {
+    const lastOptionIndex = headings.length - 1;
+    let foundLastOption = false;
+    
+    // Find where the last option content ends
+    for (let i = lastOptionIndex; i >= 0; i--) {
+      const heading = headings[i];
+      const headingText = heading.textContent.toLowerCase();
+      
+      if (headingText.includes('option') || 
+          headingText.includes('✈️') || 
+          headingText.includes('🏨')) {
+        
+        let currentElement = heading.nextElementSibling;
+        
+        // Skip through the option's content
+        while (currentElement) {
+          const elementText = currentElement.textContent.trim().toLowerCase();
+          
+          // If we hit outro text, capture everything from here
+          if (/which option/i.test(elementText) || 
+              /choose/i.test(elementText) ||
+              /would you like/i.test(elementText)) {
+            
+            while (currentElement) {
+              outroHTML += currentElement.outerHTML;
+              currentElement = currentElement.nextElementSibling;
+            }
+            foundLastOption = true;
+            break;
+          }
+          
+          // If we hit another option heading, stop
+          if (['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
+            const nextHeadingText = currentElement.textContent.toLowerCase();
+            if (nextHeadingText.includes('option') || 
+                nextHeadingText.includes('✈️') || 
+                nextHeadingText.includes('🏨')) {
+              break;
+            }
+          }
+          
+          currentElement = currentElement.nextElementSibling;
+        }
+        
+        if (foundLastOption) break;
+      }
     }
   }
 
@@ -220,108 +259,122 @@ const App = () => {
 
   const getAvatar = (role) => (role === "user" ? "🧑" : "🌍");
 
-  // Component to render assistant messages with option cards
-// Update your AssistantMessage component with this version
-const AssistantMessage = ({ content, isStreaming = false }) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(content, "text/html");
+  // Enhanced AssistantMessage component with better Total Price handling
+  const AssistantMessage = ({ content, isStreaming = false }) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
 
-  // Process links and images for the entire message
-  doc.querySelectorAll("a").forEach(a => {
-    a.textContent = "View more details";
-    a.setAttribute("target", "_blank");
-    a.setAttribute("rel", "noopener noreferrer");
-  });
+    // Process links and images for the entire message
+    doc.querySelectorAll("a").forEach(a => {
+      a.textContent = "View more details";
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener noreferrer");
+    });
 
-  doc.querySelectorAll("img").forEach(img => {
-    img.style.maxWidth = "100%";
-    img.style.borderRadius = "8px";
-    img.style.margin = "8px 0";
-  });
+    doc.querySelectorAll("img").forEach(img => {
+      img.style.maxWidth = "100%";
+      img.style.borderRadius = "8px";
+      img.style.margin = "8px 0";
+    });
 
-  // For streaming messages, just show the raw content without parsing options
-  if (isStreaming) {
+    // For streaming messages, just show the raw content without parsing options
+    if (isStreaming) {
+      return (
+        <div
+          dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
+          className="message-content"
+        />
+      );
+    }
+
+    // For complete messages, parse the options
+    const { options, outroHTML } = parseOptionsFromHTML(doc.body.innerHTML);
+
+    if (options.length > 0) {
+      const firstOptionHeading = doc.querySelector("h3, h2");
+      let introContent = "";
+      if (firstOptionHeading) {
+        let currentElement = doc.body.firstElementChild;
+        while (currentElement && currentElement !== firstOptionHeading) {
+          introContent += currentElement.outerHTML;
+          currentElement = currentElement.nextElementSibling;
+        }
+      }
+
+      return (
+        <div className="message-content">
+          {introContent && (
+            <div dangerouslySetInnerHTML={{ __html: introContent }} />
+          )}
+          <div className="options-container">
+            {options.map((option) => {
+              const optDoc = parser.parseFromString(option.content, "text/html");
+              
+              // Handle images
+              const imgs = optDoc.querySelectorAll("img");
+              if (imgs.length > 0) {
+                const wrapper = optDoc.createElement("div");
+                wrapper.classList.add("option-card-images");
+                
+                imgs.forEach(img => {
+                  img.style.maxWidth = "200px";
+                  img.style.height = "auto";
+                  wrapper.appendChild(img);
+                });
+
+                const detailsLink = optDoc.querySelector("a");
+                if (detailsLink && detailsLink.parentNode) {
+                  detailsLink.parentNode.insertBefore(wrapper, detailsLink);
+                } else {
+                  optDoc.body.appendChild(wrapper);
+                }
+              }
+
+              // Process links
+              optDoc.querySelectorAll("a").forEach(a => {
+                a.textContent = "View more details";
+                a.setAttribute("target", "_blank");
+                a.setAttribute("rel", "noopener noreferrer");
+              });
+
+              // Highlight Total Price section
+              const priceElements = optDoc.querySelectorAll("*");
+              priceElements.forEach(el => {
+                if (el.textContent.includes("Total Price")) {
+                  el.style.backgroundColor = "#f0f8ff";
+                  el.style.padding = "8px";
+                  el.style.borderRadius = "4px";
+                  el.style.border = "1px solid #007bff";
+                  el.style.marginTop = "10px";
+                  el.style.fontWeight = "bold";
+                }
+              });
+
+              return (
+                <div key={option.id} className="option-card">
+                  <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
+                  <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
+                </div>
+              );
+            })}
+          </div>
+          {outroHTML && (
+            <div 
+              dangerouslySetInnerHTML={{ __html: outroHTML }} 
+              className="outro-card" 
+            />
+          )}
+        </div>
+      );
+    }
+
     return (
       <div
         dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
         className="message-content"
       />
     );
-  }
-
-  // For complete messages, parse the options
-  const { options, outroHTML } = parseOptionsFromHTML(doc.body.innerHTML);
-
-  if (options.length > 0) {
-    const firstOptionHeading = doc.querySelector("h3, h2");
-    let introContent = "";
-    if (firstOptionHeading) {
-      let currentElement = doc.body.firstElementChild;
-      while (currentElement && currentElement !== firstOptionHeading) {
-        introContent += currentElement.outerHTML;
-        currentElement = currentElement.nextElementSibling;
-      }
-    }
-
-    return (
-      <div className="message-content">
-        {introContent && (
-          <div dangerouslySetInnerHTML={{ __html: introContent }} />
-        )}
-        <div className="options-container">
-          {options.map((option) => {
-            const optDoc = parser.parseFromString(option.content, "text/html");
-            const imgs = optDoc.querySelectorAll("img");
-            
-            if (imgs.length > 0) {
-              const wrapper = optDoc.createElement("div");
-              wrapper.classList.add("option-card-images");
-              
-              imgs.forEach(img => {
-                img.style.maxWidth = "200px";
-                img.style.height = "auto";
-                wrapper.appendChild(img);
-              });
-
-              const detailsLink = optDoc.querySelector("a");
-              if (detailsLink && detailsLink.parentNode) {
-                detailsLink.parentNode.insertBefore(wrapper, detailsLink);
-              } else {
-                optDoc.body.appendChild(wrapper);
-              }
-            }
-
-            optDoc.querySelectorAll("a").forEach(a => {
-              a.textContent = "View more details";
-              a.setAttribute("target", "_blank");
-              a.setAttribute("rel", "noopener noreferrer");
-            });
-
-            return (
-              <div key={option.id} className="option-card">
-                <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
-                <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
-              </div>
-            );
-          })}
-        </div>
-        {outroHTML && (
-          <div 
-            dangerouslySetInnerHTML={{ __html: outroHTML }} 
-            className="outro-card" 
-          />
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
-      className="message-content"
-    />
-  );
-};
+  };
 
   return (
     <div className="app">
