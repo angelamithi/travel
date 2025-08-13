@@ -222,6 +222,19 @@ const App = () => {
     img.style.margin = "8px 0";
   });
 
+   // ✅ Wrap images inside a container for horizontal display
+// ✅ Wrap images in `.option-card-images` for ALL option cards
+  doc.querySelectorAll(".option-card").forEach(card => {
+    const imgs = Array.from(card.querySelectorAll("img"));
+    if (imgs.length > 0) {
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("option-card-images");
+      imgs.forEach(img => wrapper.appendChild(img.cloneNode(true)));
+      imgs.forEach(img => img.remove()); // remove original imgs from mixed text
+      card.appendChild(wrapper);
+    }
+  });
+
   const processedHTML = doc.body.innerHTML;
 
   const options = parseOptionsFromHTML(processedHTML);
@@ -243,12 +256,42 @@ const App = () => {
           <div dangerouslySetInnerHTML={{ __html: introContent }} />
         )}
         <div className="options-container">
-          {options.map((option) => (
-            <div key={option.id} className="option-card">
-              <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
-              <div dangerouslySetInnerHTML={{ __html: option.content }} />
-            </div>
-          ))}
+         {options.map((option) => {
+  // Parse the option HTML so we can wrap images
+  const optDoc = new DOMParser().parseFromString(option.content, "text/html");
+  const imgs = optDoc.querySelectorAll("img");
+if (imgs.length > 0) {
+  const wrapper = optDoc.createElement("div");
+  wrapper.classList.add("option-card-images");
+
+  imgs.forEach(img => {
+    img.style.maxWidth = "200px";
+    img.style.height = "auto";
+    wrapper.appendChild(img);
+  });
+
+  // Find the "View more details" link
+  const detailsLink = optDoc.querySelector("a");
+
+  if (detailsLink && detailsLink.parentNode) {
+    // Insert gallery before the link
+    detailsLink.parentNode.insertBefore(wrapper, detailsLink);
+  } else {
+    // Fallback: append at the very end
+    optDoc.body.appendChild(wrapper);
+  }
+}
+
+
+
+  return (
+    <div key={option.id} className="option-card">
+      <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
+      <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
+    </div>
+  );
+})}
+
         </div>
       </div>
     );

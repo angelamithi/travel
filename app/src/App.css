@@ -214,7 +214,7 @@ body {
 
 .message-content li {
   margin: 0.05em 0 !important;
-  line-height: 0.2;
+  line-height: 0.6;
 }
 
 .message-content pre {
@@ -228,7 +228,7 @@ body {
 .message.assistant .message-content li {
   margin-top: 0.05em;
   margin-bottom: 0.05em;
-  line-height: 0.2 /* slightly closer lines */
+  line-height: 0.6 /* slightly closer lines */
 }
 
 /* Optional: Reduce padding in nested lists */
@@ -499,9 +499,26 @@ body {
 /* Style images within option cards */
 .option-card img {
   border-radius: 8px;
-  margin: 10px 0;
+  margin: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 200px; /* limit image width so they fit side-by-side */
+  height: auto;
+  margin-top: 4px;   /* reduce top spacing */
+  margin-bottom: 10px; /* increase bottom spacing */
 }
+/* New container for images inside option cards */
+/* Image gallery inside option cards */
+.option-card-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+
+  /* Less space above, more space below */
+  margin-top: 4px;   /* reduce top spacing */
+  margin-bottom: 10px; /* increase bottom spacing */
+}
+
 
 /* Style links within option cards */
 .option-card a {
