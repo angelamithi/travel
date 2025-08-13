@@ -13,7 +13,7 @@ function formatMessage(rawText) {
   // Then apply other formatting cleanups
   formattedText = formattedText
     // Ensure proper list formatting
-    .replace(/(\n|^)(\d+)\.(\s*)/g, '$1$2. $3')
+    .replace(/\n\s*\n\s*(\d+\.|\*)\s/g, '\n$1 ')
     // Ensure double newlines between paragraphs
     .replace(/\n{3,}/g, '\n\n')
     .replace(/([^\n])\n([^\n])/g, '$1\n\n$2');

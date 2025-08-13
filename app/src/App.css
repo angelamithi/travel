@@ -218,7 +218,8 @@ body {
 }
 
 .message-content li {
-  margin: 0.25em 0;
+  margin: 0.05em 0 !important;
+  line-height: 0.2;
 }
 
 .message-content pre {
@@ -226,6 +227,19 @@ body {
   padding: 0.5em;
   border-radius: 4px;
   overflow-x: auto;
+}
+/* Reduce spacing between list items in assistant messages */
+.message.assistant .message-content li {
+  margin-top: 0.05em;
+  margin-bottom: 0.05em;
+  line-height: 0.2 /* slightly closer lines */
+}
+
+/* Optional: Reduce padding in nested lists */
+.message.assistant .message-content ul,
+.message.assistant .message-content ol {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 .streaming-message {
