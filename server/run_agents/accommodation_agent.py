@@ -168,7 +168,7 @@ Use the `search_accommodation` tool with the confirmed user input to fetch avail
   - Amenities
   - Images
   - View More Details ancho text
-- Ask the user which option they prefer or if they'd like to see more.
+- Then Ask the user in a separate message which option they prefer or if they'd like to see more.
 
 Example of how to display:
 ```python

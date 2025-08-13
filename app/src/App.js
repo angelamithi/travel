@@ -7,31 +7,26 @@ import { marked } from "marked";
 const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 
 function formatMessage(rawText) {
-  // Remove bold markdown markers
-  let formattedText = rawText.replace(/\*\*/g, '');
-
-  // --- Parse HTML so we can clean up images and links ---
+  // Only remove double asterisks that aren't part of markdown bold syntax
+  let formattedText = rawText.replace(/(?<!\*)\*\*(?!\*)/g, '');
+  
   const parser = new DOMParser();
   const doc = parser.parseFromString(marked.parse(formattedText), "text/html");
 
-  // ✅ Replace long links with "View more details"
   doc.querySelectorAll("a").forEach(a => {
     a.textContent = "View more details";
     a.setAttribute("target", "_blank");
     a.setAttribute("rel", "noopener noreferrer");
   });
 
-  // ✅ Keep images as actual <img> and style them
   doc.querySelectorAll("img").forEach(img => {
     img.style.maxWidth = "100%";
     img.style.borderRadius = "8px";
     img.style.margin = "8px 0";
   });
 
-  // Return cleaned HTML string
   return doc.body.innerHTML;
 }
-
 
 // Function to parse HTML and extract option cards
 function parseOptionsFromHTML(htmlContent) {
@@ -46,21 +41,24 @@ function parseOptionsFromHTML(htmlContent) {
     let content = '';
     let currentElement = heading.nextElementSibling;
 
-    while (currentElement && !['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
+    while (
+      currentElement &&
+      !['H1', 'H2', 'H3'].includes(currentElement.tagName)
+    ) {
+      // Stop if we find outro-like text (e.g., "Which option would you like to choose?")
+      if (
+        /which option/i.test(currentElement.textContent.trim())
+      ) {
+        break;
+      }
       content += currentElement.outerHTML;
       currentElement = currentElement.nextElementSibling;
     }
 
-    const combinedText = (headingText + " " + content).toLowerCase();
-
-    // ✅ Match if heading OR content indicates a relevant option
     if (
       headingText.toLowerCase().includes('option') ||
-      headingText.toLowerCase().includes('flight') ||
-      headingText.toLowerCase().includes('hotel') ||
       headingText.includes('✈️') ||
-      headingText.includes('🏨') ||
-      combinedText.includes('vacation rental') // <— Added this check
+      headingText.includes('🏨')
     ) {
       options.push({
         id: `option-${index}`,
@@ -71,9 +69,29 @@ function parseOptionsFromHTML(htmlContent) {
     }
   });
 
-  return options;
-}
+  // Now capture the outro
+  let outroHTML = "";
+  const lastOption = options[options.length - 1];
+  if (lastOption) {
+    const lastOptionDoc = parser.parseFromString(lastOption.content, 'text/html');
+    const lastOptionLastEl = lastOptionDoc.body.lastElementChild;
+    let currentElement = headings[headings.length - 1].nextElementSibling;
 
+    // Skip over the actual option's content elements
+    while (currentElement && lastOptionLastEl && currentElement.outerHTML !== lastOptionLastEl.outerHTML) {
+      currentElement = currentElement.nextElementSibling;
+    }
+    if (currentElement) currentElement = currentElement.nextElementSibling;
+
+    // Everything else after belongs to outro
+    while (currentElement) {
+      outroHTML += currentElement.outerHTML;
+      currentElement = currentElement.nextElementSibling;
+    }
+  }
+
+  return { options, outroHTML };
+}
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -203,41 +221,36 @@ const App = () => {
   const getAvatar = (role) => (role === "user" ? "🧑" : "🌍");
 
   // Component to render assistant messages with option cards
- const AssistantMessage = ({ content }) => {
+// Update your AssistantMessage component with this version
+const AssistantMessage = ({ content, isStreaming = false }) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(content, "text/html");
 
-  // ✅ Replace all anchor text with "View more details"
+  // Process links and images for the entire message
   doc.querySelectorAll("a").forEach(a => {
     a.textContent = "View more details";
-    a.setAttribute("target", "_blank"); // open in new tab
+    a.setAttribute("target", "_blank");
     a.setAttribute("rel", "noopener noreferrer");
   });
 
-  // ✅ Leave <img> tags alone so they display normally
-  // If you want to resize or style, do it here
   doc.querySelectorAll("img").forEach(img => {
     img.style.maxWidth = "100%";
     img.style.borderRadius = "8px";
     img.style.margin = "8px 0";
   });
 
-   // ✅ Wrap images inside a container for horizontal display
-// ✅ Wrap images in `.option-card-images` for ALL option cards
-  doc.querySelectorAll(".option-card").forEach(card => {
-    const imgs = Array.from(card.querySelectorAll("img"));
-    if (imgs.length > 0) {
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("option-card-images");
-      imgs.forEach(img => wrapper.appendChild(img.cloneNode(true)));
-      imgs.forEach(img => img.remove()); // remove original imgs from mixed text
-      card.appendChild(wrapper);
-    }
-  });
+  // For streaming messages, just show the raw content without parsing options
+  if (isStreaming) {
+    return (
+      <div
+        dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
+        className="message-content"
+      />
+    );
+  }
 
-  const processedHTML = doc.body.innerHTML;
-
-  const options = parseOptionsFromHTML(processedHTML);
+  // For complete messages, parse the options
+  const { options, outroHTML } = parseOptionsFromHTML(doc.body.innerHTML);
 
   if (options.length > 0) {
     const firstOptionHeading = doc.querySelector("h3, h2");
@@ -256,55 +269,59 @@ const App = () => {
           <div dangerouslySetInnerHTML={{ __html: introContent }} />
         )}
         <div className="options-container">
-         {options.map((option) => {
-  // Parse the option HTML so we can wrap images
-  const optDoc = new DOMParser().parseFromString(option.content, "text/html");
-  const imgs = optDoc.querySelectorAll("img");
-if (imgs.length > 0) {
-  const wrapper = optDoc.createElement("div");
-  wrapper.classList.add("option-card-images");
+          {options.map((option) => {
+            const optDoc = parser.parseFromString(option.content, "text/html");
+            const imgs = optDoc.querySelectorAll("img");
+            
+            if (imgs.length > 0) {
+              const wrapper = optDoc.createElement("div");
+              wrapper.classList.add("option-card-images");
+              
+              imgs.forEach(img => {
+                img.style.maxWidth = "200px";
+                img.style.height = "auto";
+                wrapper.appendChild(img);
+              });
 
-  imgs.forEach(img => {
-    img.style.maxWidth = "200px";
-    img.style.height = "auto";
-    wrapper.appendChild(img);
-  });
+              const detailsLink = optDoc.querySelector("a");
+              if (detailsLink && detailsLink.parentNode) {
+                detailsLink.parentNode.insertBefore(wrapper, detailsLink);
+              } else {
+                optDoc.body.appendChild(wrapper);
+              }
+            }
 
-  // Find the "View more details" link
-  const detailsLink = optDoc.querySelector("a");
+            optDoc.querySelectorAll("a").forEach(a => {
+              a.textContent = "View more details";
+              a.setAttribute("target", "_blank");
+              a.setAttribute("rel", "noopener noreferrer");
+            });
 
-  if (detailsLink && detailsLink.parentNode) {
-    // Insert gallery before the link
-    detailsLink.parentNode.insertBefore(wrapper, detailsLink);
-  } else {
-    // Fallback: append at the very end
-    optDoc.body.appendChild(wrapper);
-  }
-}
-
-
-
-  return (
-    <div key={option.id} className="option-card">
-      <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
-      <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
-    </div>
-  );
-})}
-
+            return (
+              <div key={option.id} className="option-card">
+                <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
+                <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
+              </div>
+            );
+          })}
         </div>
+        {outroHTML && (
+          <div 
+            dangerouslySetInnerHTML={{ __html: outroHTML }} 
+            className="outro-card" 
+          />
+        )}
       </div>
     );
   }
 
   return (
     <div
-      dangerouslySetInnerHTML={{ __html: processedHTML }}
+      dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }}
       className="message-content"
     />
   );
 };
-
 
   return (
     <div className="app">
@@ -349,40 +366,33 @@ if (imgs.length > 0) {
           <p className="tagline">"Explore the world with confidence and ease!"</p>
         </div>
         
-        <div className="chat-box">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`message ${msg.role === "user" ? "user" : "assistant"}`}
-            >
-              <span className="avatar">{getAvatar(msg.role)}</span>
-              {msg.role === "assistant" ? (
-                <AssistantMessage content={msg.content} />
-              ) : (
-                <div 
-                  dangerouslySetInnerHTML={{ __html: msg.content }}
-                  className="message-content"
-                />
-              )}
-            </div>
-          ))}
-          
-          {currentAssistantMessage && (
-            <div className="message assistant">
-              <span className="avatar">🌍</span>
-              <AssistantMessage content={currentAssistantMessage} />
-            </div>
-          )}
+       <div className="chat-box">
+  {messages.map((msg, idx) => (
+    <div
+      key={idx}
+      className={`message ${msg.role === "user" ? "user" : "assistant"}`}
+    >
+      <span className="avatar">{getAvatar(msg.role)}</span>
+      <AssistantMessage content={msg.content} />
+    </div>
+  ))}
+  
+  {currentAssistantMessage && (
+    <div className="message assistant">
+      <span className="avatar">🌍</span>
+      <AssistantMessage content={currentAssistantMessage} isStreaming={true} />
+    </div>
+  )}
 
-          {loading && (
-            <div className="typing-indicator">
-              <span className="avatar">🌍</span>
-              <span className="typing-text">{typingText}</span>
-            </div>
-          )}
+  {loading && !currentAssistantMessage && (
+    <div className="typing-indicator">
+      <span className="avatar">🌍</span>
+      <span className="typing-text">{typingText}</span>
+    </div>
+  )}
 
-          <div ref={chatEndRef} />
-        </div>
+  <div ref={chatEndRef} />
+</div>
 
         <div className="input-container">
           <div className="input-bar">

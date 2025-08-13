@@ -80,7 +80,6 @@ def format_flight_option(option: FlightOption, index: int, trip_type: str) -> st
             f"- 🛫 {format_datetime(leg.departure_date_time)} → 🛬 {format_datetime(leg.arrival_date_time)}\n"
             f"- ⏱️ Duration: {leg.total_duration}, ✈️ {stops}\n"
             f"- 👨‍✈️ Airline: {airline_names}\n"
-            f"- 🪪 Flight(s): {flight_nums}\n"
             f"- 🛋️ Cabin: {cabin_class}"
             f"{layover_lines}\n"
         )

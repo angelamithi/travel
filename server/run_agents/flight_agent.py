@@ -514,7 +514,7 @@ Once all fields are verified, say:
     - Adults: $[adult_total], Children: $[children_total], Infants: $[infants_total]
     ---
 
-    ### ❓ Then ask:
+    ### ❓ Then ask in a separate message:
     > “Which option would you like to choose?”
 
 ---
@@ -550,7 +550,7 @@ Once all fields are verified, say:
     ---
     ---
 
-    ### ❓ Then ask:
+    ### ❓ Then ask in a separate message:
     > “Which option would you like to choose?”
 
 
@@ -597,7 +597,7 @@ Present options    per leg   , where each option may consist of    multiple flig
 
   ###  ✅ Traveler Instructions
 
-  Then ask the traveler to choose    one option from each leg   . Example:
+  Then ask the traveler in a separate message to choose   one option from each leg   . Example:
 
   > “Leg 1: Option 2, Leg 2: Option 1”
 
