@@ -459,16 +459,24 @@ body {
 }
 .outro-card {
   background-color: #ffffff; 
-   font-size: 2.0rem;
-   font-weight: 600;
-   color: #2A9D8F;
-   font-family: Arial, Helvetica, sans-serif;
-   margin-left:15px;
-   margin-top:15px;
- 
-
+  font-size: 1.6rem; /* slightly smaller for balance */
+  font-weight: 600;
+  color: #2A9D8F;
+  font-family: Arial, Helvetica, sans-serif;
   
-
+  /* Position & spacing */
+  margin: 20px auto; /* center horizontally with equal spacing */
+  padding: 16px 20px; /* add padding so text has breathing space */
+  max-width: 90%; /* keep it contained and readable */
+  text-align: left; /* move text left */
+  
+  /* Visual prominence */
+  border-left: 5px solid #2A9D8F; /* action-oriented visual cue */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15); /* soft shadow for focus */
+  
+  /* Subtle animation */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .option-card:hover {
@@ -479,7 +487,7 @@ body {
 
 .option-card h3 {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
   color: #2A9D8F;
   border-bottom: 2px solid #A4D8E1;
   padding-bottom: 10px;
@@ -489,14 +497,14 @@ body {
 
 .option-card ul {
   padding-left: 20px;
-  margin: 10px 0;
+  margin: 7px 0;
 }
 
 .option-card li {
   margin-bottom: 0.5px;
   margin-top: 0.5px;
   color: #1b4d4f;
-  line-height: 0.8;
+  line-height: 0.6;
 }
 
 .option-card strong {
@@ -517,7 +525,6 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 200px; /* limit image width so they fit side-by-side */
   height: auto;
-  margin-top: 4px;   /* reduce top spacing */
   margin-bottom: 10px; /* increase bottom spacing */
 }
 /* New container for images inside option cards */
@@ -529,7 +536,7 @@ body {
   align-items: flex-start;
 
   /* Less space above, more space below */
-  margin-top: 4px;   /* reduce top spacing */
+ 
   margin-bottom: 10px; /* increase bottom spacing */
 }
 

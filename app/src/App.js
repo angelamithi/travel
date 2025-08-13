@@ -29,34 +29,68 @@ function formatMessage(rawText) {
 }
 
 // Updated function to parse HTML and extract option cards including Total Price
+// Updated function to parse HTML and extract option cards including accommodation types
 function parseOptionsFromHTML(htmlContent) {
   const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlContent, 'text/html');
+  const doc = parser.parseFromString(htmlContent, "text/html");
 
   const options = [];
-  const headings = doc.querySelectorAll('h3, h2');
+  const headings = doc.querySelectorAll("h3, h2");
 
+  const accommodationKeywords = [
+    "vacation rental",
+    "hotel",
+    "apartment",
+    "hostel",
+    "resort",
+    "guest house",
+    "bnb",
+    "bed and breakfast",
+    "lodge",
+    "villa",
+    "cottage",
+    "inn"
+  ];
+
+  // --- Collect options ---
   headings.forEach((heading, index) => {
-    const headingText = heading.textContent;
-    let content = '';
+    const headingText = heading.textContent.trim();
+    let content = "";
     let currentElement = heading.nextElementSibling;
 
+    // Determine if this heading is likely an option heading
+    const isLikelyOptionHeading =
+      headingText.toLowerCase().includes("option") ||
+      headingText.includes("✈️") ||
+      headingText.includes("🏨") ||
+      (currentElement &&
+        accommodationKeywords.some(keyword =>
+          currentElement.textContent.toLowerCase().includes(keyword)
+        ));
+
+    if (!isLikelyOptionHeading) return;
+
+    // Collect content until the next option heading or outro trigger
     while (currentElement) {
-      // Check if we've reached the next option heading
-      if (['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
-        const nextHeadingText = currentElement.textContent.toLowerCase();
-        if (nextHeadingText.includes('option') || 
-            nextHeadingText.includes('✈️') || 
-            nextHeadingText.includes('🏨')) {
-          break;
-        }
+      if (["H1", "H2", "H3"].includes(currentElement.tagName)) {
+        const nextHeadingText = currentElement.textContent.trim().toLowerCase();
+        const nextSiblingText = currentElement.nextElementSibling
+          ? currentElement.nextElementSibling.textContent.trim().toLowerCase()
+          : "";
+
+        const isNextHeadingLikelyOption =
+          nextHeadingText.includes("option") ||
+          nextHeadingText.includes("✈️") ||
+          nextHeadingText.includes("🏨") ||
+          accommodationKeywords.some(keyword =>
+            nextSiblingText.includes(keyword) || nextHeadingText.includes(keyword)
+          );
+
+        if (isNextHeadingLikelyOption) break;
       }
-      
-      // Stop if we find outro-like text but not if it's a price section
+
       const elementText = currentElement.textContent.trim().toLowerCase();
-      if (/which option/i.test(elementText) || 
-          /choose/i.test(elementText) ||
-          /would you like/i.test(elementText)) {
+      if (/which option/i.test(elementText) || /choose/i.test(elementText) || /would you like/i.test(elementText)) {
         break;
       }
 
@@ -64,73 +98,46 @@ function parseOptionsFromHTML(htmlContent) {
       currentElement = currentElement.nextElementSibling;
     }
 
-    // Check if this is an option heading
-    if (headingText.toLowerCase().includes('option') ||
-        headingText.includes('✈️') ||
-        headingText.includes('🏨')) {
-      options.push({
-        id: `option-${index}`,
-        title: headingText,
-        content: content,
-        fullHTML: heading.outerHTML + content
-      });
-    }
+    options.push({
+      id: `option-${index}`,
+      title: headingText,
+      content: content,
+      fullHTML: heading.outerHTML + content
+    });
   });
 
-  // Capture the outro (text after all options)
+  // --- Collect outro (text after last option) ---
   let outroHTML = "";
   if (options.length > 0) {
-    const lastOptionIndex = headings.length - 1;
-    let foundLastOption = false;
-    
-    // Find where the last option content ends
-    for (let i = lastOptionIndex; i >= 0; i--) {
-      const heading = headings[i];
-      const headingText = heading.textContent.toLowerCase();
-      
-      if (headingText.includes('option') || 
-          headingText.includes('✈️') || 
-          headingText.includes('🏨')) {
-        
-        let currentElement = heading.nextElementSibling;
-        
-        // Skip through the option's content
-        while (currentElement) {
-          const elementText = currentElement.textContent.trim().toLowerCase();
-          
-          // If we hit outro text, capture everything from here
-          if (/which option/i.test(elementText) || 
-              /choose/i.test(elementText) ||
-              /would you like/i.test(elementText)) {
-            
-            while (currentElement) {
-              outroHTML += currentElement.outerHTML;
-              currentElement = currentElement.nextElementSibling;
-            }
-            foundLastOption = true;
-            break;
-          }
-          
-          // If we hit another option heading, stop
-          if (['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
-            const nextHeadingText = currentElement.textContent.toLowerCase();
-            if (nextHeadingText.includes('option') || 
-                nextHeadingText.includes('✈️') || 
-                nextHeadingText.includes('🏨')) {
-              break;
-            }
-          }
-          
-          currentElement = currentElement.nextElementSibling;
+    // Find the heading node for the last option
+    let lastOption = options[options.length - 1];
+    let lastOptionHeading = Array.from(headings).find(
+      h => h.textContent.trim() === lastOption.title.trim()
+    );
+
+    if (lastOptionHeading) {
+      let currentElement = lastOptionHeading.nextElementSibling;
+
+      // Skip last option's content
+      while (currentElement) {
+        const text = currentElement.textContent.trim().toLowerCase();
+        if (/which option/i.test(text) || /choose/i.test(text) || /would you like/i.test(text)) {
+          break; // found outro trigger
         }
-        
-        if (foundLastOption) break;
+        currentElement = currentElement.nextElementSibling;
+      }
+
+      // Collect actual outro after the trigger
+      while (currentElement) {
+        outroHTML += currentElement.outerHTML;
+        currentElement = currentElement.nextElementSibling;
       }
     }
   }
 
   return { options, outroHTML };
 }
+
 
 const App = () => {
   const [messages, setMessages] = useState([]);
