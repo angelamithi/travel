@@ -10,25 +10,18 @@ body {
   height: 100vh;
 }
 
-
-
-
 /* Update search options */
 .search-options {
   margin-bottom: 20px;
   flex-grow: 1; /* Allow this section to take available space */
 }
 
-
-
 .search-options h3 {
   font-size: 1.3rem; /* Increased font size */
   margin-bottom: 15px;
   color: #fff;
-    text-align: center;
+  text-align: center;
 }
-
-
 
 .sidebar-header h2 {
   font-size: 2rem;
@@ -59,6 +52,7 @@ body {
   border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
   color: #F0F4F8;
 }
+
 .search-options li::before {
   font-size: 1.2em;
 }
@@ -101,7 +95,6 @@ body {
   gap: 8px;
 }
 
-
 .sidebar-button:hover {
   background-color: #A4D8E1;
 }
@@ -135,6 +128,7 @@ body {
   color: #2A9D8F;
   font-size: 2rem;
 }
+
 .tagline {
   margin: 5px 0 0;
   color: #2A9D8F;
@@ -165,6 +159,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 1.2rem; /* 🔹 Increased font size for both user & assistant messages */
 }
+
 .message div {
   white-space: pre-wrap; /* Preserve line breaks and spaces */
   word-wrap: break-word; /* Break long words if needed */
@@ -175,7 +170,6 @@ body {
   margin: 0.5em 0;
   padding-left: 1.5em;
 }
-
 
 /* Markdown-specific styles */
 .message strong {
@@ -200,6 +194,7 @@ body {
 .message p {
   margin: 0.5em 0;
 }
+
 .message-content {
   display: inline-block;
   max-width: 100%;
@@ -228,6 +223,7 @@ body {
   border-radius: 4px;
   overflow-x: auto;
 }
+
 /* Reduce spacing between list items in assistant messages */
 .message.assistant .message-content li {
   margin-top: 0.05em;
@@ -251,6 +247,7 @@ body {
   list-style-position: inside;
   padding-left: 0;
 }
+
 .avatar {
   font-size: 1.6rem;
   margin-right: 8px;
@@ -279,12 +276,12 @@ body {
   background-color: #fff;
   transition: border-color 0.3s;
 }
+
 .input-bar textarea::placeholder {
   font-size: 1.2rem; /* Increase font size */
   font-weight: 500;  /* Make it slightly bolder for emphasis */
   opacity: 1;        /* Ensure full visibility */
 }
-
 
 .input-bar input:focus {
   border-color: #2A9D8F;
@@ -305,13 +302,11 @@ body {
 .input-bar button:hover:not(:disabled) {
   background-color: #20756b;
 }
+
 .input-bar input::placeholder {
   font-size: 1.1rem; /* Match the input text size */
- 
   opacity: 1; /* Ensure full visibility */
 }
-/* App.css */
-
 
 /* User message — keep cool tone */
 .message.user {
@@ -329,7 +324,6 @@ body {
   border: 1px solid #A4D8E1;
   color: #1b4d4f; /* Deep teal text for readability */
 }
-
 
 .loading-indicator {
   display: flex;
@@ -363,7 +357,6 @@ body {
   transition: border-color 0.3s;
 }
 
-
 .input-bar textarea:focus {
   border-color: #2A9D8F;
 }
@@ -392,7 +385,6 @@ body {
   }
 }
 
-
 .dot {
   animation: blink 1.4s infinite both;
   font-size: 1.5rem;
@@ -412,8 +404,6 @@ body {
   50% { opacity: 1; }
   100% { opacity: 0; }
 }
-
-
 
 /* Rest of your existing message styling remains the same */
 @keyframes spin {
@@ -448,31 +438,89 @@ body {
   }
 }
 
-.flight-option {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* NEW OPTION CARDS STYLING */
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
 }
 
-.flight-option h3 {
-  color: #2c3e50;
+.option-card {
+  background-color: #ffffff; /* Same as assistant message background */
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 3px 12px rgba(42, 157, 143, 0.15);
+  border: 1px solid #A4D8E1;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(42, 157, 143, 0.25);
+  border-color: #2A9D8F;
+}
+
+.option-card h3 {
   margin-top: 0;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
+  margin-bottom: 12px;
+  color: #2A9D8F;
+  border-bottom: 2px solid #A4D8E1;
+  padding-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
-.flight-details p {
+.option-card ul {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.option-card li {
+  margin-bottom: 0.5px;
+  margin-top: 0.5px;
+  color: #1b4d4f;
+  line-height: 0.8;
+}
+
+.option-card strong {
+  font-weight: 600;
+  color: #2A9D8F;
+}
+
+.option-card p {
+  color: #1b4d4f;
   margin: 8px 0;
   line-height: 1.5;
+}
+
+/* Style images within option cards */
+.option-card img {
+  border-radius: 8px;
+  margin: 10px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style links within option cards */
+.option-card a {
+  color: #2A9D8F;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.option-card a:hover {
+  color: #20756b;
+  text-decoration: underline;
 }
 
 .flight-divider {
   border: none;
   height: 1px;
-  background-color: #ddd;
-  margin: 20px 0;
+  background-color: #A4D8E1;
+  margin: 15px 0;
 }
 
 /* Keep sidebar fixed width on tablet/desktop */

@@ -28,6 +28,7 @@ Your primary role is to classify the user's request and forward it to one of the
 📝 Important Formatting Rule:
 - Format all flight responses using raw HTML not Markdown.
 - Don't send any responses with markdown
+-
 - Use `<h3>` for titles, `<ul>`/`<li>` for lists, `<img src="">` for images, and `<a href="">` for links.
 
 

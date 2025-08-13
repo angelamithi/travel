@@ -7,19 +7,73 @@ import { marked } from "marked";
 const BACKEND_URL = "http://localhost:8000"; // Update this if needed
 
 function formatMessage(rawText) {
-  // First, remove all ** markdown
+  // Remove bold markdown markers
   let formattedText = rawText.replace(/\*\*/g, '');
-  
-  // Then apply other formatting cleanups
-  formattedText = formattedText
-    // Ensure proper list formatting
-    .replace(/\n\s*\n\s*(\d+\.|\*)\s/g, '\n$1 ')
-    // Ensure double newlines between paragraphs
-    .replace(/\n{3,}/g, '\n\n')
-    .replace(/([^\n])\n([^\n])/g, '$1\n\n$2');
 
-  return marked.parse(formattedText);
+  // --- Parse HTML so we can clean up images and links ---
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(marked.parse(formattedText), "text/html");
+
+  // ✅ Replace long links with "View more details"
+  doc.querySelectorAll("a").forEach(a => {
+    a.textContent = "View more details";
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener noreferrer");
+  });
+
+  // ✅ Keep images as actual <img> and style them
+  doc.querySelectorAll("img").forEach(img => {
+    img.style.maxWidth = "100%";
+    img.style.borderRadius = "8px";
+    img.style.margin = "8px 0";
+  });
+
+  // Return cleaned HTML string
+  return doc.body.innerHTML;
 }
+
+
+// Function to parse HTML and extract option cards
+function parseOptionsFromHTML(htmlContent) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlContent, 'text/html');
+
+  const options = [];
+  const headings = doc.querySelectorAll('h3, h2');
+
+  headings.forEach((heading, index) => {
+    const headingText = heading.textContent;
+    let content = '';
+    let currentElement = heading.nextElementSibling;
+
+    while (currentElement && !['H1', 'H2', 'H3'].includes(currentElement.tagName)) {
+      content += currentElement.outerHTML;
+      currentElement = currentElement.nextElementSibling;
+    }
+
+    const combinedText = (headingText + " " + content).toLowerCase();
+
+    // ✅ Match if heading OR content indicates a relevant option
+    if (
+      headingText.toLowerCase().includes('option') ||
+      headingText.toLowerCase().includes('flight') ||
+      headingText.toLowerCase().includes('hotel') ||
+      headingText.includes('✈️') ||
+      headingText.includes('🏨') ||
+      combinedText.includes('vacation rental') // <— Added this check
+    ) {
+      options.push({
+        id: `option-${index}`,
+        title: headingText,
+        content: content,
+        fullHTML: heading.outerHTML + content
+      });
+    }
+  });
+
+  return options;
+}
+
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -148,6 +202,67 @@ const App = () => {
 
   const getAvatar = (role) => (role === "user" ? "🧑" : "🌍");
 
+  // Component to render assistant messages with option cards
+ const AssistantMessage = ({ content }) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, "text/html");
+
+  // ✅ Replace all anchor text with "View more details"
+  doc.querySelectorAll("a").forEach(a => {
+    a.textContent = "View more details";
+    a.setAttribute("target", "_blank"); // open in new tab
+    a.setAttribute("rel", "noopener noreferrer");
+  });
+
+  // ✅ Leave <img> tags alone so they display normally
+  // If you want to resize or style, do it here
+  doc.querySelectorAll("img").forEach(img => {
+    img.style.maxWidth = "100%";
+    img.style.borderRadius = "8px";
+    img.style.margin = "8px 0";
+  });
+
+  const processedHTML = doc.body.innerHTML;
+
+  const options = parseOptionsFromHTML(processedHTML);
+
+  if (options.length > 0) {
+    const firstOptionHeading = doc.querySelector("h3, h2");
+    let introContent = "";
+    if (firstOptionHeading) {
+      let currentElement = doc.body.firstElementChild;
+      while (currentElement && currentElement !== firstOptionHeading) {
+        introContent += currentElement.outerHTML;
+        currentElement = currentElement.nextElementSibling;
+      }
+    }
+
+    return (
+      <div className="message-content">
+        {introContent && (
+          <div dangerouslySetInnerHTML={{ __html: introContent }} />
+        )}
+        <div className="options-container">
+          {options.map((option) => (
+            <div key={option.id} className="option-card">
+              <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
+              <div dangerouslySetInnerHTML={{ __html: option.content }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: processedHTML }}
+      className="message-content"
+    />
+  );
+};
+
+
   return (
     <div className="app">
       <aside className="sidebar">
@@ -198,22 +313,21 @@ const App = () => {
               className={`message ${msg.role === "user" ? "user" : "assistant"}`}
             >
               <span className="avatar">{getAvatar(msg.role)}</span>
-              <div 
-                dangerouslySetInnerHTML={{ __html: msg.content }}
-                className="message-content"
-              />
+              {msg.role === "assistant" ? (
+                <AssistantMessage content={msg.content} />
+              ) : (
+                <div 
+                  dangerouslySetInnerHTML={{ __html: msg.content }}
+                  className="message-content"
+                />
+              )}
             </div>
           ))}
           
           {currentAssistantMessage && (
             <div className="message assistant">
               <span className="avatar">🌍</span>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: currentAssistantMessage
-                }}
-                className="message-content markdown-body"
-              />
+              <AssistantMessage content={currentAssistantMessage} />
             </div>
           )}
 
