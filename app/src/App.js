@@ -314,56 +314,64 @@ const App = () => {
             <div dangerouslySetInnerHTML={{ __html: introContent }} />
           )}
           <div className="options-container">
-            {options.map((option) => {
-              const optDoc = parser.parseFromString(option.content, "text/html");
-              
-              // Handle images
-              const imgs = optDoc.querySelectorAll("img");
-              if (imgs.length > 0) {
-                const wrapper = optDoc.createElement("div");
-                wrapper.classList.add("option-card-images");
-                
-                imgs.forEach(img => {
-                  img.style.maxWidth = "200px";
-                  img.style.height = "auto";
-                  wrapper.appendChild(img);
-                });
+            
+{options.map((option) => {
+  const optDoc = parser.parseFromString(option.content, "text/html");
+  
+  // Process links first
+  const detailsLinks = optDoc.querySelectorAll("a");
+  detailsLinks.forEach(a => {
+    a.textContent = "View more details";
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener noreferrer");
+    
+    // Move the link to the beginning of the content
+    if (a.parentNode) {
+      a.parentNode.insertBefore(a, a.parentNode.firstChild);
+    }
+  });
 
-                const detailsLink = optDoc.querySelector("a");
-                if (detailsLink && detailsLink.parentNode) {
-                  detailsLink.parentNode.insertBefore(wrapper, detailsLink);
-                } else {
-                  optDoc.body.appendChild(wrapper);
-                }
-              }
+  // Then handle images
+  const imgs = optDoc.querySelectorAll("img");
+  if (imgs.length > 0) {
+    const wrapper = optDoc.createElement("div");
+    wrapper.classList.add("option-card-images");
+    
+    imgs.forEach(img => {
+      img.style.maxWidth = "200px";
+      img.style.height = "auto";
+      wrapper.appendChild(img);
+    });
 
-              // Process links
-              optDoc.querySelectorAll("a").forEach(a => {
-                a.textContent = "View more details";
-                a.setAttribute("target", "_blank");
-                a.setAttribute("rel", "noopener noreferrer");
-              });
+    // Insert the images after the first element (which should now be the link)
+    const firstElement = optDoc.body.firstElementChild;
+    if (firstElement) {
+      firstElement.parentNode.insertBefore(wrapper, firstElement.nextSibling);
+    } else {
+      optDoc.body.appendChild(wrapper);
+    }
+  }
 
-              // Highlight Total Price section
-              const priceElements = optDoc.querySelectorAll("*");
-              priceElements.forEach(el => {
-                if (el.textContent.includes("Total Price")) {
-                  el.style.backgroundColor = "#f0f8ff";
-                  el.style.padding = "8px";
-                  el.style.borderRadius = "4px";
-                  el.style.border = "1px solid #007bff";
-                  el.style.marginTop = "10px";
-                  el.style.fontWeight = "bold";
-                }
-              });
+  // Rest of your code (highlighting Total Price, etc.)
+  const priceElements = optDoc.querySelectorAll("*");
+  priceElements.forEach(el => {
+    if (el.textContent.includes("Total Price")) {
+      
+      el.style.padding = "8px";
+      el.style.borderRadius = "4px";
+      el.style.marginTop = "10px";
+      el.style.fontWeight = "bold";
+      // Removed the border style
+    }
+  });
 
-              return (
-                <div key={option.id} className="option-card">
-                  <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
-                  <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
-                </div>
-              );
-            })}
+  return (
+    <div key={option.id} className="option-card">
+      <h3 dangerouslySetInnerHTML={{ __html: option.title }} />
+      <div dangerouslySetInnerHTML={{ __html: optDoc.body.innerHTML }} />
+    </div>
+  );
+})}
           </div>
           {outroHTML && (
             <div 

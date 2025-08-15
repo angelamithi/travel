@@ -459,15 +459,15 @@ body {
 }
 .outro-card {
   background-color: #ffffff; 
-  font-size: 1.6rem; /* slightly smaller for balance */
+  font-size: 1.5rem; /* slightly smaller for balance */
   font-weight: 600;
   color: #2A9D8F;
   font-family: Arial, Helvetica, sans-serif;
   
   /* Position & spacing */
-  margin: 20px auto; /* center horizontally with equal spacing */
+  margin: 5px auto; /* center horizontally with equal spacing */
   padding: 16px 20px; /* add padding so text has breathing space */
-  max-width: 90%; /* keep it contained and readable */
+  max-width: 100%; /* keep it contained and readable */
   text-align: left; /* move text left */
   
   /* Visual prominence */
@@ -487,36 +487,63 @@ body {
 
 .option-card h3 {
   margin-top: 0;
-  margin-bottom: 7px;
+ 
   color: #2A9D8F;
   border-bottom: 2px solid #A4D8E1;
-  padding-bottom: 10px;
+
   font-size: 1.3rem;
   font-weight: 600;
+  margin-bottom: 5px;  /* Reduced from 7px */
+  padding-bottom: 8px; /* Reduced from 10px */
+}
+
+.option-card li {
+  margin-bottom: 0.2em;  /* Reduced from 0.5px */
+  margin-top: 0.2em;     /* Reduced from 0.5px */
+  color: #1b4d4f;
+  line-height: 1.2;      /* Increased from 0.6 for better readability but tighter than default */
 }
 
 .option-card ul {
   padding-left: 20px;
-  margin: 7px 0;
+  margin: 5px 0;         /* Reduced from 7px */
 }
 
-.option-card li {
-  margin-bottom: 0.5px;
-  margin-top: 0.5px;
+.option-card p {
   color: #1b4d4f;
-  line-height: 0.6;
+  margin: 6px 0;         /* Reduced from 8px */
+  line-height: 1.4;      /* Slightly tighter than default */
 }
 
 .option-card strong {
   font-weight: 600;
   color: #2A9D8F;
 }
-
-.option-card p {
-  color: #1b4d4f;
-  margin: 8px 0;
-  line-height: 1.5;
+/* Add this to your CSS */
+.message.assistant p:has(strong:contains("Amenities")) {
+  margin-bottom: 5px !important; /* Reduce space after amenities */
 }
+
+.message.assistant div[style*="margin: 10px 0"] {
+  margin-top: 5px !important; /* Reduce space before images */
+}
+/* Add this to your CSS */
+.message.assistant .option-card ul {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+}
+
+.message.assistant .option-card li {
+  margin-top: 0.1em !important;
+  margin-bottom: 0.1em !important;
+  line-height: 1.2 !important;
+  padding: 0 !important;
+}
+
+.message.assistant .option-card p {
+  margin: 2px 0 !important;
+}
+
 
 /* Style images within option cards */
 .option-card img {
@@ -554,12 +581,6 @@ body {
   text-decoration: underline;
 }
 
-.flight-divider {
-  border: none;
-  height: 1px;
-  background-color: #A4D8E1;
-  margin: 15px 0;
-}
 
 /* Keep sidebar fixed width on tablet/desktop */
 @media (min-width: 769px) {
